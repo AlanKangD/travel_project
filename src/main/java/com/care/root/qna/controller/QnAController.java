@@ -1,5 +1,7 @@
 package com.care.root.qna.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,13 +82,14 @@ public class QnAController {
 	@PostMapping(value = "addReply", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String addReply(@RequestBody QnARepDTO dto) {
-		System.out.println(dto.getId());
-		System.out.println(dto.getQrContent());
-		System.out.println(dto.getQrWriteGroup());
-		
-		String msg = qs.addReply(dto);
-		
-		return msg;
+		return qs.addReply(dto);
 	}
+	
+	@GetMapping(value = "getReply/{qnaWriteGroup}", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public List<QnARepDTO> getReply(@PathVariable int qnaWriteGroup) {
+		return qs.getReply(qnaWriteGroup);
+	}
+	
 	
 }

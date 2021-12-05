@@ -16,5 +16,6 @@ public interface QnAMapper {
 	public int modify(QnADTO dto);
 	public int getDataCount();
 	public int addReply(QnARepDTO dto);
-	
+	public List<QnARepDTO> getReply(int qnaWriteGroup);
+	public List<QnARepDTO> repCheck(int qnaNo);
 }

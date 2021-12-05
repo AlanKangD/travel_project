@@ -29,7 +29,7 @@ public class QnARepDTO {
 		return saveDate;
 	}
 	public void setSaveDate(java.sql.Timestamp saveDate) { 
-		SimpleDateFormat fo = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		SimpleDateFormat fo = new SimpleDateFormat("YYYY년 MM월 dd일 HH:mm");
 		this.saveDate = fo.format(saveDate);
 	}
 }

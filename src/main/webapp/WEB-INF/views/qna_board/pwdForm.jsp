@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:import url="../default/header.jsp" />
 	<h1>비밀글 보기</h1>
 	
 	이 글은 비밀글입니다. 비밀번호를 입력해주세요.<br>
@@ -22,5 +23,6 @@
 				onclick="location.href='${contextPath }/qna/allList'">목록</button>
 	<button type="submit">확인</button>
 	</form>
+<c:import url="../default/footer.jsp" />
 </body>
 </html>

@@ -2,6 +2,9 @@ package com.care.root.qna.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,8 +39,23 @@ public class QnAServiceImpl implements QnAService{
 		int end = num * pageLetter;
 		int start = end + 1 - pageLetter;
 		
+		List<QnADTO> list = mapper.qnaAllList(start, end);
+		
+		for(QnADTO dto : list) {
+			if(mapper.repCheck(dto.getQnaNo()).size() == 0) {
+				dto.setRepCheck("답변예정");
+			}else {
+				dto.setRepCheck("답변완료");
+			}
+		}
+		
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        String nowday = format.format(cal.getTime());
+       System.out.println(nowday);
+        model.addAttribute("nowday",nowday);
 		model.addAttribute("repeat",repeat);
-		model.addAttribute("qnaList",mapper.qnaAllList(start, end));
+		model.addAttribute("qnaList",list);
 	}	
 
 	@Override
@@ -203,6 +221,16 @@ public class QnAServiceImpl implements QnAService{
 		}else {
 			return "{\"result\" : false}";
 		}
+	}
+
+	@Override
+	public List<QnARepDTO> getReply(int qnaWriteGroup) {
+		return mapper.getReply(qnaWriteGroup);
+	}
+
+	@Override
+	public List<QnARepDTO> repCheck(int qnaNo) {
+		return mapper.repCheck(qnaNo);
 	}
 	
 }

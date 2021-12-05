@@ -15,10 +15,20 @@
 	   <result property="qnaPwd" column="qna_pwd"/>
 	   <result property="id" column="id"/>
     </resultMap>
+    <resultMap  id="qnaReply" type="com.care.root.qna.dto.QnARepDTO">
+	   <result property="id" column="id"/>
+	   <result property="qrContent" column="qr_content"/>
+	   <result property="qrWriteGroup" column="qr_write_group"/>
+	   <result property="saveDate" column="savedate"/>
+    </resultMap>
     
     <select id="qnaAllList" resultMap="qna">
     	select B.* from(select rownum rn, A.* from
     	(select * from qna_board order by qna_no desc)A)B where rn between #{s} and #{e}
+    </select>
+    
+    <select id="repCheck" resultMap="qnaReply">
+    	select * from qna_reply where qr_write_group = #{qnaNo}
     </select>
     
     <insert id="writeSave">
@@ -51,5 +61,10 @@
     	insert into qna_reply(id,qr_content,qr_write_group)
     	values(#{id},#{qrContent},#{qrWriteGroup})
     </insert>
+    
+    <select id="getReply" resultMap="qnaReply">
+     	select * from qna_reply where qr_write_group = #{qrWriteGroup}
+     	order by savedate asc
+    </select>
   
 </mapper> 

@@ -24,16 +24,8 @@
 		}
 	}
 	
-	
-	var click = 1;
 	function replyShow() {
-		if(click == 1){
-			 $("#reply").slideDown('fast');
-			 click = 0;
-		}else{
-			$("#reply").slideUp('fast');
-			click = 1;
-		}
+		$("#reply").slideDown('fast');
 	}
 	
 	
@@ -55,6 +47,9 @@
 				console.log(data.result)
 				if(data.result == true){
 					alert("답변이 정상적으로 작성되었습니다.")
+					$("#reply").slideUp('fast');
+					$("#repContent").val("");
+					getReply();
 				}else{
 					alert("답변작성 도중 오류가 발생하였습니다.")
 				}
@@ -62,17 +57,32 @@
 			},error : function(){
 				alert("서버문제 발생");
 			}
-			
 		})
-		
-		
-		
-		
+	}
+	
+	function getReply() {
+		$.ajax({
+			url : "getReply/"+${dto.qnaNo},
+			type : "get",
+			dataType : "json",
+			success : function(list){
+				console.log(list)
+				let html = "";
+				list.forEach(function(data){
+					html += "<div><b>작성자 : 관리자</b><br>"
+	                html += "<b>작성일</b> : "+data.saveDate+"<br>"
+	                html += "<b>내용</b> : "+data.qrContent+"</div><hr>"										
+				})
+				$("#getReply").html(html)
+			},erorr : function(){
+				alert("서버문제 발생");
+			}
+		})
 	}
 	
 </script>
 </head>
-<body>
+<body onload="getReply()">
 <c:import url="../default/header.jsp" />
 
 <c:if test="${dto.qnaPwd != null}">
@@ -122,12 +132,14 @@
 	</table>
 </form>
 
+<div id="getReply"></div>
+
 <div id="reply" style="display: none;">
 <form id="replyFo">
 	<h3>답변을 작성하세요</h3>
-	<input type="hidden"  name="qrWriteGroup" value="${dto.qnaNo }">
+	<input type="hidden" name="qrWriteGroup" value="${dto.qnaNo }">
 	<input type="hidden"  name="id" value="admin">
-	<textarea rows="10" cols="50" name="qrContent"></textarea>
+	<textarea rows="10" cols="50" name="qrContent" id="repContent"></textarea>
 	<button type="button" onclick="addReply()">답변 작성완료</button>
 </form>
 </div>

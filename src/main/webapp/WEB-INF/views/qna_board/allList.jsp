@@ -17,6 +17,7 @@
 
 <table border="1" style="width: 500px;">
 		<tr>
+			<th>답변여부</th>
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
@@ -33,9 +34,20 @@
 				<c:forEach var="dto" items="${qnaList}">
 					<tr>
 						<td>
+							${dto.repCheck}
+						</td>
+						<td>						
 							<a href="${contextPath}/qna/contentView?qnaNo=${dto.qnaNo}">
 							${dto.qnaTitle}
 							</a> 
+						<c:if test="${dto.qnaPwd != null}">
+							<img src="${contextPath }/resources/img/lock.svg" 
+															width="12px" height="12px">
+						</c:if>	
+						<c:if test="${dto.saveDate == nowday}">	
+							<img src="${contextPath }/resources/img/new.png" 
+															width="15px" height="15px">								
+						</c:if>
 						</td>
 						<td>${dto.id}</td>
 						<td>${dto.saveDate}</td>
@@ -46,7 +58,7 @@
 		</c:choose>
 		
 		<tr>
-			<td colspan="4">
+			<td colspan="5">
 				<div align="left">
 				
 				<c:choose>

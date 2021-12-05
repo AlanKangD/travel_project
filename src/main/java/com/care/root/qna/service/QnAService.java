@@ -1,5 +1,7 @@
 package com.care.root.qna.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,4 +21,6 @@ public interface QnAService {
 	public void pwdCheck(int qnaNo,String qnaPwd, HttpServletResponse response,
 																HttpServletRequest request);
 	public String addReply(QnARepDTO dto);
+	public List<QnARepDTO> getReply(int qnaWriteGroup);
+	public List<QnARepDTO> repCheck(int qnaNo);
 }
