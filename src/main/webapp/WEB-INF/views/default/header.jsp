@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +35,7 @@ nav ul li a:hover {
 <nav>
     <ul>
 <li><a href="index">HOME</a></li>
+<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>
 <li><a href="memberInfo">회원 정보</a></li>
 <li><a href="login">로그인</a></li>
 
