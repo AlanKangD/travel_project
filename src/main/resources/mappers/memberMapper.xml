@@ -16,9 +16,15 @@
 		<result property="phoneNumber" column="phone_number" />
 		
 	</resultMap>
-
 	<select id="memberAllList" resultMap="member">
 		select * from member
 	</select>
-
+	<insert id="registerWrite">
+		insert into member(id, pw, addr1, addr2, addr3, email, phone_number, session_id) 
+			values(#{id},#{pw},#{addr1},#{addr2},#{addr3},#{email},#{phoneNumber},#{sessionId})
+	</insert>
+	<delete id="memberDelete">
+	delete from member(id, pw, addr1, addr2, addr3, email, phone_number, session_id)
+			values(#{id},#{pw},#{addr1},#{addr2},#{addr3},#{email},#{phoneNumber},#{sessionId})
+	</delete>
 </mapper>

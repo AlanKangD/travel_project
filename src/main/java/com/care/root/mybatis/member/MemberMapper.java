@@ -6,4 +6,5 @@ import com.care.root.member.dto.MemberDTO;
 
 public interface MemberMapper {
 	public ArrayList<MemberDTO> memberAllList();
+	public int registerWrite(MemberDTO dto);
 }
