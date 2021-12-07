@@ -68,8 +68,12 @@
      	order by savedate asc
     </select>
     
-    <select id="getQnaPwd" resultType="String">
-    	select qna_pwd from qna_board where qna_no = #{qnaNo}
-    </select>
+     <delete id="repDelete">
+    	delete from qna_reply where qr_id = #{qrId}
+    </delete>
+    
+     <update id="repModify">
+    	update qna_reply set qr_content = #{qrContent} where qr_id = #{qrId}
+    </update>
 
 </mapper> 

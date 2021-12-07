@@ -8,6 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+</script>
 </head>
 <body>
 
@@ -26,6 +29,17 @@
 	</c:choose>
 
 총 ${dataCount}개의 글  ( 페이지 ${num } / ${repeat} )
+
+<form method="get" action="${contextPath}/qna/allList">
+    <select name="search_option">
+    	<option value="all">전체</option>
+        <option value="title" >제목</option>
+        <option value="content" >내용</option>
+		<option value="user_id">작성자</option>
+     </select>
+    <input name="keyword">
+    <input type="submit" value="검색">
+</form>
 
 <table border="1" style="width: 500px;">
 		<tr>

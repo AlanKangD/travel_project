@@ -25,4 +25,7 @@ public interface QnAService {
 	//															HttpServletRequest request);
 	public String addReply(QnARepDTO dto);
 	public List<QnARepDTO> getReply(int qnaWriteGroup);
+	public String repDelete(int qrId);
+	public void repModify(int qrId, String qrContent,HttpServletResponse response,
+																	HttpServletRequest request);
 }

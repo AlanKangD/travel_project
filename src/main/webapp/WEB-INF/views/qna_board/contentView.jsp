@@ -69,12 +69,43 @@
 				console.log(list)
 				let html = "";
 				list.forEach(function(data){
+					let qrIdContent = data.qrId + data.qrContent
 					html += "<div><b>작성자 : 관리자</b><br>"
 	                html += "<b>작성일</b> : "+data.saveDate+"<br>"
-	                html += "<b>내용</b> : "+data.qrContent+"</div><hr>"
+	                html += "<form action='${contextPath }/qna/repModify' method='post'>"
+	                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
+	                html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent'>"+data.qrContent+"</textarea><br>"
+	                html += "<button type='submit'>수정</button>"
+	                html += "<button type='button' onclick='repDelete("+data.qrId+")'>삭제</button></div><hr>"
+	                html += "</form>"
 				})
 				$("#getReply").html(html)
 			},erorr : function(){
+				alert("서버문제 발생");
+			}
+		})
+	}
+	
+	function repModify(qrContent) {
+		console.log(qrContent)
+	}
+	
+	function repDelete(qrId) {
+		console.log(qrId)
+		$.ajax({
+			url : "repDelete/"+qrId,
+			type : "get",
+			dataType : "json",
+			success : function(data){
+				console.log(data)
+				console.log(data.result)
+				if(data.result == true){
+					alert("답변이 정상적으로 삭제되었습니다.")
+					getReply();
+				}else{
+					alert("삭제 도중 오류가 발생하였습니다.")
+				}
+			},error : function(){
 				alert("서버문제 발생");
 			}
 		})

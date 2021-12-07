@@ -29,7 +29,11 @@ public class QnAController {
 	
 	@GetMapping("allList")
 	public String qnaAllList(Model model,
-					@RequestParam(required = false, defaultValue = "1") int num) {
+					@RequestParam(required = false, defaultValue = "1") int num,
+					@RequestParam(required = false) String search_option,
+					@RequestParam(required = false) String keyword) {
+		System.out.println(search_option);
+		System.out.println(keyword);
 		qs.qnaAllList(model,num);
 		return "qna_board/allList";
 	}
@@ -113,5 +117,19 @@ public class QnAController {
 		return qs.getReply(qnaWriteGroup);
 	}
 	
+	
+	@GetMapping(value = "repDelete/{qrId}", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String repDelete(@PathVariable int qrId) {
+		return qs.repDelete(qrId);
+	}
+	
+	@PostMapping("repModify")
+	public void repModify(@RequestParam int qrId, @RequestParam String qrContent,
+								HttpServletResponse response, HttpServletRequest request) {
+		System.out.println(qrId);
+		System.out.println(qrContent);
+		qs.repModify(qrId,qrContent,response,request);
+	}
 	
 }

@@ -282,5 +282,44 @@ public class QnAServiceImpl implements QnAService{
 	public List<QnARepDTO> getReply(int qnaWriteGroup) {
 		return mapper.getReply(qnaWriteGroup);
 	}
+
+	@Override
+	public String repDelete(int qrId) {
+		int result = 0;
+		result = mapper.repDelete(qrId);
+		if(result == 1) {
+			return "{\"result\" : true}";
+		}else {
+			return "{\"result\" : false}";
+		}
+	}
+
+	@Override
+	public void repModify(int qrId, String qrContent, HttpServletResponse response, 
+																HttpServletRequest request) {
+		int result = 0;
+		String msg, url;
+		
+		result = mapper.repModify(qrId,qrContent);
+		
+		if(result == 1) {
+			msg = "답변이 수정되었습니다.";
+			url = "/qna/allList";
+		}else {
+			msg = "수정하는중 오류가 발생하였습니다.";
+			url = "/qna/allList";
+		}
+		
+		String message = getMessage(request,msg,url);
+		
+		PrintWriter out = null;
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.println(message);
+	}
 	
 }

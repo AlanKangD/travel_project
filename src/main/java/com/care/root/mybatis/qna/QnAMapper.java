@@ -18,5 +18,6 @@ public interface QnAMapper {
 	public int addReply(QnARepDTO dto);
 	public List<QnARepDTO> getReply(int qnaWriteGroup);
 	public List<QnARepDTO> repAllList();
-	public String getQnaPwd(int qnaNo);
+	public int repDelete(int qrId);
+	public int repModify(@Param("qrId") int qrId,@Param("qrContent") String qrContent);
 }
