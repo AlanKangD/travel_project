@@ -36,7 +36,16 @@ nav ul li a:hover {
     <ul>
 <li><a href="/index">HOME</a></li>
 <li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
-<li><a href="login">로그인</a></li>
+<c:choose>
+	<c:when test="${userId == null && adminId == null }">
+		<li><a href="${contextPath }/member/loginForm">로그인</a></li>
+	</c:when>
+	<c:otherwise>
+		<li><a href="${contextPath }/member/logout">로그아웃</a></li>
+	</c:otherwise>
+</c:choose>
+
+
 
     </ul>
 </nav>

@@ -23,6 +23,32 @@ public class MemberServiceImpl implements MemberService{
 		int result=mapper.registerWrite(dto);
 		return result;
 	}
+
+	@Override
+	public void memberView(String id, Model model) {
+		model.addAttribute("user",mapper.getMember(id));
+		
+		
+	}
+
+	@Override
+	public void memberDelete(String id) {
+		mapper.memberDelete(id);
+	}
+	
+	@Override
+	public int loginChk( String id, String pw) {
+		MemberDTO dto = mapper.getMember(id);
+		if(dto != null) {
+			if(dto.getPw().equals(pw)) {
+				if(id.equals("admin")) {
+					return 2; //관리자 로그인 성공
+				}
+			return 1; //유저 로그인 성공
+			}		
+		}
+		return 0; //아이디 없음
+	}
 	
 
 }

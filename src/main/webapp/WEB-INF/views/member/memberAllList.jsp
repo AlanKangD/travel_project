@@ -16,7 +16,9 @@
 	</tr>
 	<c:forEach items="${memberList }" var="list">
 	<tr>
-		<th>${list.id }</th> <th>${list.pw }</th> <th>${list.email }</th> <th>${list.phoneNumber }</th>
+		<th>
+			<a href="${contextPath }/member/memberView?id=${list.id }">${list.id }</a>
+		</th> <th>${list.pw }</th> <th>${list.email }</th> <th>${list.phoneNumber }</th>
 	</tr>
 	</c:forEach>
 </table>

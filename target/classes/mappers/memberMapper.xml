@@ -23,8 +23,12 @@
 		insert into member(id, pw, addr1, addr2, addr3, email, phone_number, session_id) 
 			values(#{id},#{pw},#{addr1},#{addr2},#{addr3},#{email},#{phoneNumber},#{sessionId})
 	</insert>
+	<select id="getMember" resultMap="member">
+		select * from member where id=#{id}
+	</select>
+	
+	
 	<delete id="memberDelete">
-	delete from member(id, pw, addr1, addr2, addr3, email, phone_number, session_id)
-			values(#{id},#{pw},#{addr1},#{addr2},#{addr3},#{email},#{phoneNumber},#{sessionId})
+		delete from member where id=#{id}
 	</delete>
 </mapper>
