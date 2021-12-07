@@ -1,5 +1,67 @@
 package com.care.root.review.dto;
 
-public class ReviewDTO {
+import java.sql.Timestamp;
 
+import org.springframework.stereotype.Component;
+
+@Component
+public class ReviewDTO {
+	private int review_no;
+	private String id;
+	private String review_title;
+	private String review_content;
+	private int review_hit_num;
+	private int review_like;
+	private Timestamp review_date;
+	private String review_file_name;
+	
+	public String getReview_file_name() {
+		return review_file_name;
+	}
+	public void setReview_file_name(String review_file_name) {
+		this.review_file_name = review_file_name;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getReview_title() {
+		return review_title;
+	}
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
+	}
+	public String getReview_content() {
+		return review_content;
+	}
+	public void setReview_content(String review_content) {
+		this.review_content = review_content;
+	}
+	public int getReview_hit_num() {
+		return review_hit_num;
+	}
+	public void setReview_hit_num(int review_hit_num) {
+		this.review_hit_num = review_hit_num;
+	}
+	public int getReview_like() {
+		return review_like;
+	}
+	public void setReview_like(int review_like) {
+		this.review_like = review_like;
+	}
+	public Timestamp getReview_date() {
+		return review_date;
+	}
+	public void setReview_date(Timestamp review_date) {
+		this.review_date = review_date;
+	}
+	public int getReview_no() {
+		return review_no;
+	}
+	public void setReview_no(int review_no) {
+		this.review_no = review_no;
+	}
+	
 }
