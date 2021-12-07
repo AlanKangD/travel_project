@@ -1,5 +1,7 @@
 package com.care.root.qna.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,12 +46,21 @@ public class QnAController {
 		qs.writeSave(dto, request, response);
 	}
 	
+//	@GetMapping("contentView")
+//	public String contentView(@RequestParam int qnaNo, Model model,
+//								@RequestParam(required = false) String pwd) {
+//		qs.contentView(qnaNo,pwd, model);
+//		return "qna_board/contentView";
+//	}
+	
 	@GetMapping("contentView")
-	public String contentView(@RequestParam int qnaNo, Model model,
-								@RequestParam(required = false) String pwd) {
-		qs.contentView(qnaNo,pwd, model);
-		return "qna_board/contentView";
-	}
+	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req) { 	   
+			int result = qs.contentView(qnaNo, model);
+			if(result == 1) {
+				return "qna_board/secretView";
+			 }
+			return "qna_board/contentView";	   
+	   }
 	
 	@PostMapping("modify")
 	public void modify(QnADTO dto, HttpServletResponse response,
@@ -65,18 +76,29 @@ public class QnAController {
 		qs.delete(qnaNo,response,request);		
 	}
 	
-	@GetMapping("pwdForm")
-	public String pwdForm(@RequestParam int qnaNo, Model model) {
-		model.addAttribute("qnaNo",qnaNo);
-		return "qna_board/pwdForm";
-	}
+//	@GetMapping("pwdForm")
+//	public String z(@RequestParam int qnaNo, Model model) {
+//		model.addAttribute("qnaNo",qnaNo);
+//		return "qna_board/pwdForm";
+//	}
 	
-	@PostMapping("pwdCheck")
-	public void pwdCheck(QnADTO dto, HttpServletResponse response,
-	         							HttpServletRequest request) throws Exception {	
-		int qnaNo = dto.getQnaNo();
-		String qnaPwd = dto.getQnaPwd();
-		qs.pwdCheck(qnaNo, qnaPwd, response, request);
+//	@PostMapping("pwdCheck")
+//	public void pwdCheck(QnADTO dto, HttpServletResponse response,
+//	         							HttpServletRequest request) throws Exception {	
+//		int qnaNo = dto.getQnaNo();
+//		String qnaPwd = dto.getQnaPwd();
+//		qs.pwdCheck(qnaNo, qnaPwd, response, request);
+//	}
+	
+	@PostMapping("secretPwd") //비밀글 비밀번호 체크 
+	public String secretPwd(@RequestParam int qnaNo,@RequestParam String inputPwd,
+							Model model, HttpServletResponse response) {
+		int result = qs.secretPwdChk(inputPwd, qnaNo, model, response);
+		
+		if(result == 1) {
+			return "qna_board/contentView"; 
+		}		
+		return "qna_board/secretView";	
 	}
 	
 	@PostMapping(value = "addReply", produces = "application/json;charset=utf-8")

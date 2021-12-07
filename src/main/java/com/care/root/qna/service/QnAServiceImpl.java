@@ -2,6 +2,8 @@ package com.care.root.qna.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -40,23 +42,43 @@ public class QnAServiceImpl implements QnAService{
 		int start = end + 1 - pageLetter;
 		
 		List<QnADTO> list = mapper.qnaAllList(start, end);
-		
-		for(QnADTO dto : list) {
-			if(mapper.repCheck(dto.getQnaNo()).size() == 0) {
-				dto.setRepCheck("답변예정");
-			}else {
-				dto.setRepCheck("답변완료");
-			}
-		}
-		
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        String nowday = format.format(cal.getTime());
-       System.out.println(nowday);
-        model.addAttribute("nowday",nowday);
+		replyConfirm(list);
+
+        model.addAttribute("dataCount",dataCount);
+        model.addAttribute("nowday",makeNew());
 		model.addAttribute("repeat",repeat);
-		model.addAttribute("qnaList",list);
+		model.addAttribute("qnaList",list);		
 	}	
+	
+	private String makeNew() { // [new] 새글 로직
+		   SimpleDateFormat simp = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		   Calendar cal = Calendar.getInstance();
+	       cal.add(Calendar.DAY_OF_MONTH, -1); //1일간 보이도록 하기위해서 (전날 현재시간과 비교)
+	       String nowday = simp.format(cal.getTime());
+		   return nowday;
+	   }
+	
+	private List<QnADTO> replyConfirm(List<QnADTO> list){ 
+		List<QnARepDTO> repList = mapper.repAllList();
+		
+		if(repList.size() == 0) {
+			for(QnADTO dto : list) {
+				dto.setRepCheck("답변예정");
+			}
+		}else {	
+			for(QnADTO dto : list) {
+				for(QnARepDTO repDto : repList) {
+					if(dto.getQnaNo() ==  repDto.getQrWriteGroup()) {
+						dto.setRepCheck("답변완료");
+						break;
+					}else {
+						dto.setRepCheck("답변예정");
+					}
+				}
+			}
+		}	
+		return list;
+	}
 
 	@Override
 	public void writeSave(QnADTO dto, HttpServletRequest request,HttpServletResponse response) {
@@ -104,19 +126,34 @@ public class QnAServiceImpl implements QnAService{
 		return message;
 	}
 
+//	@Override
+//	public void contentView(int qnaNo,String pwd, Model model) {
+//		QnADTO dto = mapper.contentView(qnaNo);
+//		
+//		if(dto.getQnaPwd() == null) {
+//			upHit(qnaNo);
+//		}else {
+//			if(pwd != null) {
+//				model.addAttribute("pwd",pwd);
+//				upHit(qnaNo);
+//			}
+//		}
+//		model.addAttribute("dto",dto);
+//	}
+	
 	@Override
-	public void contentView(int qnaNo,String pwd, Model model) {
-		QnADTO dto = mapper.contentView(qnaNo);
-		
-		if(dto.getQnaPwd() == null) {
-			upHit(qnaNo);
-		}else {
-			if(pwd != null) {
-				model.addAttribute("pwd",pwd);
-				upHit(qnaNo);
-			}
-		}
-		model.addAttribute("dto",dto);
+	public int contentView(int qnaNo, Model model) {	
+		int result = 0 ;			
+		QnADTO	dto = mapper.contentView(qnaNo);
+		if(dto.getQnaPwd() == null) {  // 비밀번호가 없으면(=비밀글이 아니면) 0
+			upHit(qnaNo);	
+	   		model.addAttribute("dto", dto);
+		} else {  //비밀글이면  1 
+				model.addAttribute("qnaPwd", dto.getQnaPwd());
+				model.addAttribute("qnaNo", qnaNo);
+				result = 1;
+		}   
+		return result;
 	}
 	
 	private void upHit(int qnaNo) {
@@ -184,32 +221,50 @@ public class QnAServiceImpl implements QnAService{
 		mapper.getDataCount();
 	}
 
+//	@Override
+//	public void pwdCheck(int qnaNo,String qnaPwd, HttpServletResponse response, 
+//													HttpServletRequest request) {
+//		
+//		QnADTO dto = mapper.contentView(qnaNo);
+//		int result = 0;
+//		String msg, url;
+//		
+//		if(dto != null && encoder.matches(qnaPwd, dto.getQnaPwd())) {
+//				msg = "비밀번호 일치";
+//		    	url = "/qna/contentView?qnaNo="+qnaNo+"&pwd=true";
+//			}else {
+//				msg = "비밀글 비밀번호가 틀립니다.";
+//		    	  url = "/qna/pwdForm?qnaNo="+qnaNo;
+//			}
+//		
+//		String message = getMessage(request, msg, url);
+//	      
+//	    PrintWriter out = null;
+//		response.setContentType("text/html; charset=utf-8");
+//		try {
+//			out = response.getWriter();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		out.println(message);
+//	}
+	
 	@Override
-	public void pwdCheck(int qnaNo,String qnaPwd, HttpServletResponse response, 
-													HttpServletRequest request) {
-		
+	public int secretPwdChk(String userPwd, int qnaNo, Model model,
+								HttpServletResponse response) {
+		int result = 0;	
+		PrintWriter out = null;
 		QnADTO dto = mapper.contentView(qnaNo);
-		int result = 0;
-		String msg, url;
-		
-		if(dto != null && encoder.matches(qnaPwd, dto.getQnaPwd())) {
-				msg = "비밀번호 일치";
-		    	url = "/qna/contentView?qnaNo="+qnaNo+"&pwd=true";
-			}else {
-				msg = "비밀글 비밀번호가 틀립니다.";
-		    	  url = "/qna/pwdForm?qnaNo="+qnaNo;
-			}
-		
-		String message = getMessage(request, msg, url);
-	      
-	    PrintWriter out = null;
-		response.setContentType("text/html; charset=utf-8");
-		try {
-			out = response.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(encoder.matches(userPwd,dto.getQnaPwd())) {			
+			upHit(qnaNo);
+			model.addAttribute("dto", dto);
+			result =1;
+		}else {			
+			model.addAttribute("check", "fail");
+			model.addAttribute("qnaNo", qnaNo);
+			model.addAttribute("qnaPwd", dto.getQnaPwd());
 		}
-		out.println(message);
+		return result;
 	}
 
 	@Override
@@ -226,11 +281,6 @@ public class QnAServiceImpl implements QnAService{
 	@Override
 	public List<QnARepDTO> getReply(int qnaWriteGroup) {
 		return mapper.getReply(qnaWriteGroup);
-	}
-
-	@Override
-	public List<QnARepDTO> repCheck(int qnaNo) {
-		return mapper.repCheck(qnaNo);
 	}
 	
 }

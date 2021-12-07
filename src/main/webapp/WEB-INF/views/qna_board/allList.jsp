@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -14,6 +15,17 @@
 
 <h1>QnA</h1>
 궁금한 부분이 있으면 해결해드립니다.<p>
+
+	<c:choose>
+		<c:when test="${param.num == null }">
+			<c:set var="num" value="1"/>
+		</c:when>
+		<c:otherwise>
+			<c:set var="num" value="${param.num }"/>
+		</c:otherwise>
+	</c:choose>
+
+총 ${dataCount}개의 글  ( 페이지 ${num } / ${repeat} )
 
 <table border="1" style="width: 500px;">
 		<tr>
@@ -37,20 +49,22 @@
 							${dto.repCheck}
 						</td>
 						<td>						
-							<a href="${contextPath}/qna/contentView?qnaNo=${dto.qnaNo}">
-							${dto.qnaTitle}
-							</a> 
-						<c:if test="${dto.qnaPwd != null}">
-							<img src="${contextPath }/resources/img/lock.svg" 
-															width="12px" height="12px">
-						</c:if>	
-						<c:if test="${dto.saveDate == nowday}">	
-							<img src="${contextPath }/resources/img/new.png" 
-															width="15px" height="15px">								
-						</c:if>
+								<a href="${contextPath}/qna/contentView?qnaNo=${dto.qnaNo}">
+								${dto.qnaTitle}
+								</a> 
+							<c:if test="${dto.qnaPwd != null}">
+								<img src="${contextPath }/resources/img/lock.svg" 
+																width="12px" height="12px">
+							</c:if>	
+							<c:if test="${dto.saveDate >= nowday}">	
+								<img src="${contextPath }/resources/img/new.png" 
+																width="15px" height="15px">								
+							</c:if>
 						</td>
 						<td>${dto.id}</td>
-						<td>${dto.saveDate}</td>
+						<td>
+							${dto.viewDate}
+						</td>
 						<td>${dto.qnaHit}</td>
 					</tr>
 				</c:forEach>
@@ -60,15 +74,6 @@
 		<tr>
 			<td colspan="5">
 				<div align="left">
-				
-				<c:choose>
-					<c:when test="${param.num == null }">
-						<c:set var="num" value="1"/>
-					</c:when>
-					<c:otherwise>
-						<c:set var="num" value="${param.num }"/>
-					</c:otherwise>
-				</c:choose>
 				
 				<c:choose>
 					<c:when test="${num > 1 }">

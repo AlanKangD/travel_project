@@ -7,6 +7,14 @@ public class QnARepDTO {
     private String qrContent;
     private int qrWriteGroup;
     private String saveDate;
+    private int qrId;
+
+    public int getQrId() {
+		return qrId;
+	}
+	public void setQrId(int qrId) {
+		this.qrId = qrId;
+	}
 	public String getId() {
 		return id;
 	}

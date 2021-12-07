@@ -4,17 +4,25 @@ import java.text.SimpleDateFormat;
 
 public class QnADTO {
 	private int qnaNo;
+	private int qnaHit;
 	
 	private String qnaTitle;
 	private String qnaContent;
 	
-	private int qnaHit;
+	
 	private String saveDate;
+	private String viewDate;
 	
 	private String qnaPwd;
 	private String id;
-	
 	private String repCheck;
+	
+	public String getViewDate() {
+		return viewDate;
+	}
+	public void setViewDate(String viewDate) {
+		this.viewDate = viewDate;
+	}
 	
 	public String getRepCheck() {
 		return repCheck;
@@ -51,8 +59,11 @@ public class QnADTO {
 		return saveDate;
 	}
 	public void setSaveDate(java.sql.Timestamp saveDate) { 
-		SimpleDateFormat fo = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat fo = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		this.saveDate = fo.format(saveDate);
+		
+		SimpleDateFormat fo2 = new SimpleDateFormat("YYYY-MM-dd");
+		viewDate = fo2.format(saveDate);
 	}
 	public String getQnaPwd() {
 		return qnaPwd;

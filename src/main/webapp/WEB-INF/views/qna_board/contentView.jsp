@@ -71,7 +71,7 @@
 				list.forEach(function(data){
 					html += "<div><b>작성자 : 관리자</b><br>"
 	                html += "<b>작성일</b> : "+data.saveDate+"<br>"
-	                html += "<b>내용</b> : "+data.qrContent+"</div><hr>"										
+	                html += "<b>내용</b> : "+data.qrContent+"</div><hr>"
 				})
 				$("#getReply").html(html)
 			},erorr : function(){
@@ -84,13 +84,14 @@
 </head>
 <body onload="getReply()">
 <c:import url="../default/header.jsp" />
-
+<%-- 
 <c:if test="${dto.qnaPwd != null}">
 	<c:if test="${pwd == null}">
 		<c:redirect url="/qna/pwdForm?qnaNo=${dto.qnaNo}"/>
 	</c:if>
 </c:if>
-
+--%>
+ 
 <form id="fo" action="${contextPath }/qna/modify" method="post">
  	<input type="hidden" name="qnaNo" value="${dto.qnaNo }">
 	<table>
