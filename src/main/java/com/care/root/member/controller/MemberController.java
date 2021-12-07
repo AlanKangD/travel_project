@@ -89,4 +89,15 @@ public class MemberController implements SessionCommonName{
 		session.invalidate();
 		return "redirect:/index";
 	}
+	@GetMapping("memberModifyForm")
+	public String memberModifyForm(@RequestParam String id, Model model) {
+		model.addAttribute("id", id);
+		return "member/memberModify";
+	}
+	@PostMapping("memberModify")
+	public String memberModify(MemberDTO dto) {
+		ms.memberModify(dto);
+		return "redirect:memberInfo";
+	}
+	
  }

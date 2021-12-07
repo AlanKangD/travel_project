@@ -18,7 +18,7 @@
 				<th>${user.id }</th> <th>${user.pw }</th>	<th>${user.registerDate }</th><th>${user.email }</th>			 	
 			</tr>
 		</table>
-		<a href="${contextPath }/member/memberModify?id=${user.id }">수정하기</a>
+		<a href="${contextPath }/member/memberModifyForm?id=${user.id }">수정하기</a>
 		<a href="${contextPath }/member/memberDelete?id=${user.id }">삭제하기</a>
 	</div>
 

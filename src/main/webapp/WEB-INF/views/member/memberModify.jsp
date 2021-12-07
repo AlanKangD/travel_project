@@ -46,16 +46,16 @@
 <body>
 	<c:import url="../default/header.jsp" />
 <div align="center">
-	<form id=fo action="${contextPath }/member/registerWrite" method="post">
-		아이디 : <input type="text" name="id" placeholder="(필수)가입할 아이디 입력"><br> 
-		비밀번호 : <input type="text" name="pw" placeholder="(필수)가입할 비밀번호 입력"><br> 
-		이메일 : <input type="text" name="email" placeholder="(필수)가입할 이메일 입력"><br> 
+	<form id=fo action="${contextPath }/member/memberModify" method="post">
+		아이디 : <input type="text" name="id" value="${id }" readonly><br> 
+		비밀번호 : <input type="text" name="pw" placeholder="수정 할 비밀번호 입력"><br> 
+		이메일 : <input type="text" name="email" placeholder="수정 할 이메일 입력"><br> 
 		전화번호 : <input type="text" name="phoneNumber" value="010--"><br> 
 		주소 입력 : <input type="text" id="addr1" name="addr1"  readonly placeholder="우편번호" >
 		<input type="button" onclick="daumpost()" value="우편번호 찾기"><br>
 		<input type="text" id="addr2" name="addr2" readonly placeholder="주소" ><br>
 		<input type="text"id="addr3" name="addr3"  placeholder="상세주소"><br>
-		<input type="submit"  value="가입하기">
+		<input type="submit"  value="수정하기">
 	</form>
 </div>
 	<c:import url="../default/footer.jsp" />

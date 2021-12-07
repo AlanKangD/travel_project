@@ -31,4 +31,9 @@
 	<delete id="memberDelete">
 		delete from member where id=#{id}
 	</delete>
+	
+	<update id="memberModify">
+		update member set pw=#{pw}, addr1=#{addr1}, addr2=#{addr2}, addr3=#{addr3}, email=#{email},phone_number=#{phoneNumber},session_id=#{sessionId}
+			where id=#{id} 
+	</update>
 </mapper>

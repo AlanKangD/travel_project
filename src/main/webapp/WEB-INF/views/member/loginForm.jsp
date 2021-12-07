@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:import url="../default/header.jsp"/>
-	<div>
+	<div align="right">
 		<c:choose>
 			<c:when test="${adminId != null}">
 				관리자님 환영합니다!
@@ -24,6 +24,7 @@
 		<form action="${contextPath }/member/loginChk" method="post"> 
 			<input type="text" name="id" placeholder="로그인할 아이디 입력"> <br>
 			<input type="password" name="pw" placeholder="로그인할 비밀번호 입력"> <br>
+			<a href="${contextPath }/member/registerForm">회원가입</a>
 			<input type="submit" value="로그인">
 		</form>
 		</c:if>

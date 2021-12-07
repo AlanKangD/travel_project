@@ -9,4 +9,5 @@ public interface MemberMapper {
 	public int registerWrite(MemberDTO dto); //회원 가입 기능
 	public MemberDTO getMember(String id); //회원 조회 기능
 	public void memberDelete(String id);//회원 삭제 기능
+	public void memberModify(MemberDTO dto); //회원 수정 기능
 }

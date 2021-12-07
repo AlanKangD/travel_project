@@ -49,6 +49,13 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return 0; //아이디 없음
 	}
+
+	@Override
+	public void memberModify(MemberDTO dto) {
+		dto.setSessionId("nan");
+		mapper.memberModify(dto);
+		
+	}
 	
 
 }
