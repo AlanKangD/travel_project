@@ -60,11 +60,11 @@ public class MemberController implements SessionCommonName{
 		int result = ms.loginChk(id, pw);
 		if(result == 2 ) {
 			System.out.println("admin" + id);
-			model.addAttribute("adminId", id);
+			model.addAttribute(adminSession, id);
 			return "redirect:loginSuccess";
 		}else if(result == 1) {
 			System.out.println("user" + id);
-			model.addAttribute("userId",id);
+			model.addAttribute(userSession,id);
 			return "redirect:loginSuccess";
 		}
 		return "redirect:loginForm";

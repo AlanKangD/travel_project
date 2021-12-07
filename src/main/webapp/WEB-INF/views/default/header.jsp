@@ -34,7 +34,7 @@ nav ul li a:hover {
 <div class="wrap">
 <nav>
     <ul>
-<li><a href="/index">HOME</a></li>
+<li><a href="${contextPath }/index">HOME</a></li>
 <li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
 <c:choose>
 	<c:when test="${userId == null && adminId == null }">

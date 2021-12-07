@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:import url="../default/header.jsp"/>
 	<div align="center">
 		<table border="1">
 			<tr>
@@ -21,6 +22,6 @@
 		<a href="${contextPath }/member/memberModifyForm?id=${user.id }">수정하기</a>
 		<a href="${contextPath }/member/memberDelete?id=${user.id }">삭제하기</a>
 	</div>
-
+<c:import url="../default/footer.jsp"/>
 </body>
 </html>

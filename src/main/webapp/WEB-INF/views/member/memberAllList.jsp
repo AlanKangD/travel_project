@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<c:import url="../default/header.jsp"/>
 <table border="1">
 	<tr>
 		<td>id</td> <td>pw</td> <td>email</td> <td>phoneNumber</td>
@@ -22,7 +22,7 @@
 	</tr>
 	</c:forEach>
 </table>
-
+<c:import url="../default/footer.jsp"/>
 
 
 </body>
