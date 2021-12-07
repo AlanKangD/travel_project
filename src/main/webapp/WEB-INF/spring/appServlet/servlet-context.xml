@@ -23,6 +23,12 @@
 	
 	<context:component-scan base-package="com.care.root" />
 	
+	<beans:bean id="ci" class="com.care.root.common.intercepter.CommonIntercepter"/>
 	
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/index"/>
+			<beans:ref bean="ci"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>
