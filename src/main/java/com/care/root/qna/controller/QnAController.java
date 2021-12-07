@@ -1,5 +1,135 @@
 package com.care.root.qna.controller;
 
-public class QnAController {
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.care.root.qna.dto.QnADTO;
+import com.care.root.qna.dto.QnARepDTO;
+import com.care.root.qna.service.QnAService;
+
+@Controller
+@RequestMapping("qna")
+public class QnAController {
+	@Autowired QnAService qs;
+	
+	@GetMapping("allList")
+	public String qnaAllList(Model model,
+					@RequestParam(required = false, defaultValue = "1") int num,
+					@RequestParam(required = false) String search_option,
+					@RequestParam(required = false) String keyword) {
+		System.out.println(search_option);
+		System.out.println(keyword);
+		qs.qnaAllList(model,num);
+		return "qna_board/allList";
+	}
+	
+	@GetMapping("writeForm")
+	public String writeForm() {
+		
+		return "qna_board/writeForm";
+	}
+	
+	@PostMapping("writeSave")
+	public void writeSave(QnADTO dto, HttpServletResponse response,
+	         							HttpServletRequest request) throws Exception {
+		qs.writeSave(dto, request, response);
+	}
+	
+//	@GetMapping("contentView")
+//	public String contentView(@RequestParam int qnaNo, Model model,
+//								@RequestParam(required = false) String pwd) {
+//		qs.contentView(qnaNo,pwd, model);
+//		return "qna_board/contentView";
+//	}
+	
+	@GetMapping("contentView")
+	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req) { 	   
+			int result = qs.contentView(qnaNo, model);
+			if(result == 1) {
+				return "qna_board/secretView";
+			 }
+			return "qna_board/contentView";	   
+	   }
+	
+	@PostMapping("modify")
+	public void modify(QnADTO dto, HttpServletResponse response,
+						HttpServletRequest request){
+		
+		qs.modify(dto,response,request);
+	}
+	
+	@GetMapping("delete")
+	public void delete(@RequestParam int qnaNo, HttpServletResponse response,
+				HttpServletRequest request) {
+		
+		qs.delete(qnaNo,response,request);		
+	}
+	
+//	@GetMapping("pwdForm")
+//	public String z(@RequestParam int qnaNo, Model model) {
+//		model.addAttribute("qnaNo",qnaNo);
+//		return "qna_board/pwdForm";
+//	}
+	
+//	@PostMapping("pwdCheck")
+//	public void pwdCheck(QnADTO dto, HttpServletResponse response,
+//	         							HttpServletRequest request) throws Exception {	
+//		int qnaNo = dto.getQnaNo();
+//		String qnaPwd = dto.getQnaPwd();
+//		qs.pwdCheck(qnaNo, qnaPwd, response, request);
+//	}
+	
+	@PostMapping("secretPwd") //비밀글 비밀번호 체크 
+	public String secretPwd(@RequestParam int qnaNo,@RequestParam String inputPwd,
+							Model model, HttpServletResponse response) {
+		int result = qs.secretPwdChk(inputPwd, qnaNo, model, response);
+		
+		if(result == 1) {
+			return "qna_board/contentView"; 
+		}		
+		return "qna_board/secretView";	
+	}
+	
+	@PostMapping(value = "addReply", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String addReply(@RequestBody QnARepDTO dto) {
+		return qs.addReply(dto);
+	}
+	
+	@GetMapping(value = "getReply/{qnaWriteGroup}", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public List<QnARepDTO> getReply(@PathVariable int qnaWriteGroup) {
+		return qs.getReply(qnaWriteGroup);
+	}
+	
+	
+	@GetMapping(value = "repDelete/{qrId}", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String repDelete(@PathVariable int qrId) {
+		return qs.repDelete(qrId);
+	}
+	
+	@PostMapping("repModify")
+	public void repModify(@RequestParam int qrId, @RequestParam String qrContent,
+								HttpServletResponse response, HttpServletRequest request) {
+		System.out.println(qrId);
+		System.out.println(qrContent);
+		qs.repModify(qrId,qrContent,response,request);
+	}
+	
 }

@@ -44,9 +44,7 @@ nav ul li a:hover {
 		<li><a href="${contextPath }/member/logout">로그아웃</a></li>
 	</c:otherwise>
 </c:choose>
-
-
-
+<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>
     </ul>
 </nav>
 </div>

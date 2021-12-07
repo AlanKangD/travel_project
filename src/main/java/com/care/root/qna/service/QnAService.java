@@ -1,5 +1,31 @@
 package com.care.root.qna.service;
 
-public interface QnAService {
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.care.root.qna.dto.QnADTO;
+import com.care.root.qna.dto.QnARepDTO;
+
+public interface QnAService {
+	public void qnaAllList(Model model, int num);
+	public void writeSave(QnADTO dto, HttpServletRequest request,HttpServletResponse response);
+	//public void contentView(int qnaNo,String pwd, Model model);
+	public int contentView(int qnaNo, Model model);
+	public void modify(QnADTO dto, HttpServletResponse response,HttpServletRequest request);
+	public void delete(int qnaNo, HttpServletResponse response,HttpServletRequest request);
+	public void getDataCount();
+	public int secretPwdChk(String userPwd, int qnaNo, Model model,
+														HttpServletResponse response);
+	//public void pwdCheck(int qnaNo,String qnaPwd, HttpServletResponse response,
+	//															HttpServletRequest request);
+	public String addReply(QnARepDTO dto);
+	public List<QnARepDTO> getReply(int qnaWriteGroup);
+	public String repDelete(int qrId);
+	public void repModify(int qrId, String qrContent,HttpServletResponse response,
+																	HttpServletRequest request);
 }
