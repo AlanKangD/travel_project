@@ -10,17 +10,20 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	var photo_count = 1;
+	var preview_img = preview_0;
+	
 	$(document).ready(function(){
 		$("#photo_delete").on("click",function(e){
 			e.preventDefault();
+			preview_delete("#preview_img")
 			photo_delete($(this))
 		})
 	});
-	
    
    function photo_delete(obj){
-	   obj.parent().remove();
+		obj.parent().remove();   
    }
+   function preview_delete(img){}
    /* function photo_add(){
        var str = "<p><input type='file' name='file_"+(photo_count++)+"' /><a href='#this' id='photo_delete' class='btn'>삭제하기</a></p> ";
        $("#photo_div").append(str);
@@ -30,24 +33,44 @@
            fn_fileDelete($(this));         
        })
    } */
-   function readURL(input) {
-	      var file = input.files[0] //파일에 대한 정보
-	      var str = 
-	    	  "<p><img style='align:right;' alt='선택된 이미지가 없습니다.' src='#' id='preview_"+(photo_count)+"' width='160' height='90'>
-	    	  <input type='file' name='review_file_name"+(photo_count++)+"' onchange='readURL(this)' />
-	    	  <a href='#this' id='photo_delete' class='btn'>삭제하기</a></p> ";
-	      
-	      console.log(file)
-	      if (file != '') {
-	         var reader = new FileReader();
-	         reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
-	         reader.onload = function (e) { // 파일 로드한 값을 표현한다
-	          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
-	           $('#preview').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
-	           $("#photo_div").append(str);
-	          }
-	      }
+	function readURL(input) {
+		var file = input.files[0] //파일에 대한 정보
+		var str_file =
+	    	  "<p><input type='file' name='review_file_name"+(photo_count++)+"' onchange='readURL(this)' /><a href='#this' id='photo_delete' class='btn'>삭제하기</a></p>";
+		var str_preview = 
+			"<span><img style='align:right;' alt='선택된 이미지가 없습니다.' src='#' id='preview_"+(photo_count)+"' width='160' height='90'></span>"
+			
+			
+			
+    console.log(file)
+	if(photo_count < 11){
+		if (file != '') {
+			var reader = new FileReader();
+			reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
+			reader.onload = function (e) { // 파일 로드한 값을 표현한다
+				//e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
+				$("#preview_div").append(str_preview)
+				$("#photo_div").append(str_file);
+				$('#preview_0').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
+				$('#preview_1').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
+			} 
+		}
+	}else{
+		alert("사진을 최대로 등록하셨습니다.")
 	}
+	      /* for(; photo_count < 11 ; photo_count++){
+	    	  if(file != ''){
+	    		  var reader = new FileReader();
+	    		  reader.readAsDataURL(file);
+	    		  reader.onload = function(e){
+	    			  $("#photo_div").append(str);
+	    			  $('#preview_"(photo_count)"').att('src',e.target.result);
+	    		  }
+	    	  }
+	      } */
+	      
+	}
+	
 </script>
 </head>
 <body>review_write.jsp<br>
@@ -74,11 +97,15 @@
 				<textarea style="resize:none;" rows="20" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
 				<hr>
 				
+				<div id="preview_div">
+					<span>
+					<img style="align:right;" alt="선택된 이미지가 없습니다." src="#" id="preview_0" width="160" height="90">
+					</span>
+				</div>
 				<div id="photo_div">
 					<p>
-					<img style="align:right;" alt="선택된 이미지가 없습니다." src="#" id="preview" width="160" height="90">
 					<input type="file" name="review_file_name_0" onchange="readURL(this)"><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
-					<a href="#this" id="photo_delete" class="btn">삭제하기</a>
+					<a href="#this" id="photo_delete" class="button">삭제하기</a>
 					</p>
 				</div>
 				<hr>
