@@ -10,6 +10,18 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+	function selectFunc() {
+		var keyword = document.getElementById('keyword').value;
+		console.log(keyword);
+		console.log(keyword.length);
+		
+		if(keyword.length < 2){
+			alert('검색시 2글자 이상 입력해주세요');
+		}else{
+			selectFo.submit();
+		}
+		
+	}
 </script>
 </head>
 <body>
@@ -29,20 +41,20 @@
 	</c:choose>
 
 총 ${dataCount}개의 글  ( 페이지 ${num } / ${repeat} )
-
-<form method="get" action="${contextPath}/qna/allList">
-    <select name="search_option">
-    	<option value="all">전체</option>
-        <option value="title" >제목</option>
-        <option value="content" >내용</option>
-		<option value="user_id">작성자</option>
-     </select>
-    <input name="keyword">
-    <input type="submit" value="검색">
+<form id="selectFo" method="get" action="${contextPath}/qna/allList">
+    <select name="searchOption">
+	    	<option value="all"<c:if test='${searchOption == "all"}'>selected</c:if> >전체</option>
+	        <option value="tc"<c:if test='${searchOption == "tc"}'>selected</c:if> >제목+내용</option>
+	        <option value="title"<c:if test='${searchOption == "title"}'>selected</c:if> >제목</option>
+	        <option value="content"<c:if test='${searchOption == "content"}'>selected</c:if> >내용</option>
+	        <option value="id"<c:if test='${searchOption == "id"}'>selected</c:if> >작성자</option>
+    </select>
+    <input name="keyword" id="keyword" value="${keyword }">
+    <input type="button" onclick="selectFunc()" value="검색">
 </form>
-
 <table border="1" style="width: 500px;">
 		<tr>
+			<th>번호</th>
 			<th>답변여부</th>
 			<th>제목</th>
 			<th>작성자</th>
@@ -53,12 +65,16 @@
 		<c:choose>
 			<c:when test="${qnaList.size() == 0}">
 				<tr>
-					<th colspan="4">등록된 글이 없습니다.</th>
+					<th colspan="6">등록된 글이 없습니다.</th>
 				</tr>
 			</c:when>
 			<c:otherwise>
+				<c:set var="boardNum" value="${dataCount - ((num-1) * 4) }"/>
 				<c:forEach var="dto" items="${qnaList}">
 					<tr>
+						<td>
+							${boardNum}
+						</td>
 						<td>
 							${dto.repCheck}
 						</td>
@@ -81,18 +97,30 @@
 						</td>
 						<td>${dto.qnaHit}</td>
 					</tr>
+					<c:set var="boardNum" value="${boardNum-1 }"></c:set>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 		
 		<tr>
-			<td colspan="5">
+			<td colspan="6">
 				<div align="left">
+				
+				<c:choose>
+					<c:when test="${num != 1 }">
+						<button type="button" onclick=
+						"location.href='${contextPath}/qna/allList?num=1&searchOption=${searchOption}&keyword=${keyword}'">
+						 &lt;&lt; </button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" disabled>&lt;&lt;</button>
+					</c:otherwise>
+				</c:choose>
 				
 				<c:choose>
 					<c:when test="${num > 1 }">
 						<button type="button" onclick=
-						"location.href='${contextPath}/qna/allList?num=${num - 1}'">
+						"location.href='${contextPath}/qna/allList?num=${num - 1}&searchOption=${searchOption}&keyword=${keyword}'">
 						 &lt; </button>
 					</c:when>
 					<c:otherwise>
@@ -100,13 +128,13 @@
 					</c:otherwise>
 				</c:choose>
 				
-					<c:forEach var="cnt" begin="1" end="${repeat}">
+					<c:forEach var="cnt" begin="${beginpage}" end="${endPage}">
 						<c:choose>
 						<c:when test="${num == cnt }">
-							<a href="${contextPath}/qna/allList?num=${cnt}"><b>[${cnt}]</b></a>
+							<a href="${contextPath}/qna/allList?num=${cnt}&searchOption=${searchOption}&keyword=${keyword}"><b>[${cnt}]</b></a>
 						</c:when>
 						<c:otherwise>
-							<a href="${contextPath}/qna/allList?num=${cnt}">[${cnt}]</a>
+							<a href="${contextPath}/qna/allList?num=${cnt}&searchOption=${searchOption}&keyword=${keyword}">[${cnt}]</a>
 						</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -114,13 +142,25 @@
 				<c:choose>
 					<c:when test="${num < repeat}">
 						<button type="button" onclick=
-						"location.href='${contextPath}/qna/allList?num=${num + 1}'">
+						"location.href='${contextPath}/qna/allList?num=${num + 1}&searchOption=${searchOption}&keyword=${keyword}'">
 						 &gt; </button>
 					</c:when>
 					<c:otherwise>
 						<button type="button" disabled>&gt;</button>
 					</c:otherwise>
 				</c:choose>
+				
+				<c:choose>
+					<c:when test="${num != repeat}">
+						<button type="button" onclick=
+						"location.href='${contextPath}/qna/allList?num=${repeat}&searchOption=${searchOption}&keyword=${keyword}'">
+						 &gt;&gt; </button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" disabled>&gt;&gt;</button>
+					</c:otherwise>
+				</c:choose>
+
 				
 				</div>	
 				<button onclick="location.href='${contextPath}/qna/writeForm'">글작성</button>

@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.sql.CommonDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,23 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.qna.dto.QnADTO;
 import com.care.root.qna.dto.QnARepDTO;
 import com.care.root.qna.service.QnAService;
 
 @Controller
 @RequestMapping("qna")
-public class QnAController {
+public class QnAController implements SessionCommonName{
 	@Autowired QnAService qs;
 	
 	@GetMapping("allList")
 	public String qnaAllList(Model model,
 					@RequestParam(required = false, defaultValue = "1") int num,
-					@RequestParam(required = false) String search_option,
+					@RequestParam(required = false) String searchOption,
 					@RequestParam(required = false) String keyword) {
-		System.out.println(search_option);
+		System.out.println(searchOption);
 		System.out.println(keyword);
-		qs.qnaAllList(model,num);
+		qs.qnaAllList(model,num, searchOption, keyword);
 		return "qna_board/allList";
 	}
 	
@@ -75,24 +78,9 @@ public class QnAController {
 	
 	@GetMapping("delete")
 	public void delete(@RequestParam int qnaNo, HttpServletResponse response,
-				HttpServletRequest request) {
-		
-		qs.delete(qnaNo,response,request);		
+				HttpServletRequest request, HttpSession session) {
+			qs.delete(qnaNo,response,request,(String)session.getAttribute(userSession));	
 	}
-	
-//	@GetMapping("pwdForm")
-//	public String z(@RequestParam int qnaNo, Model model) {
-//		model.addAttribute("qnaNo",qnaNo);
-//		return "qna_board/pwdForm";
-//	}
-	
-//	@PostMapping("pwdCheck")
-//	public void pwdCheck(QnADTO dto, HttpServletResponse response,
-//	         							HttpServletRequest request) throws Exception {	
-//		int qnaNo = dto.getQnaNo();
-//		String qnaPwd = dto.getQnaPwd();
-//		qs.pwdCheck(qnaNo, qnaPwd, response, request);
-//	}
 	
 	@PostMapping("secretPwd") //비밀글 비밀번호 체크 
 	public String secretPwd(@RequestParam int qnaNo,@RequestParam String inputPwd,
@@ -118,7 +106,7 @@ public class QnAController {
 	}
 	
 	
-	@GetMapping(value = "repDelete/{qrId}", produces = "application/json;charset=utf-8")
+	@PostMapping(value = "repDelete/{qrId}", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String repDelete(@PathVariable int qrId) {
 		return qs.repDelete(qrId);

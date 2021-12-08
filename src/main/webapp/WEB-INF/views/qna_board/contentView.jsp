@@ -72,13 +72,18 @@
 					let qrIdContent = data.qrId + data.qrContent
 					html += "<div><b>작성자 : 관리자</b><br>"
 	                html += "<b>작성일</b> : "+data.saveDate+"<br>"
-	                html += "<form action='${contextPath }/qna/repModify' method='post'>"
-	                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
-	                html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent'>"+data.qrContent+"</textarea><br>"
-	                html += "<button type='submit'>수정</button>"
-	                html += "<button type='button' onclick='repDelete("+data.qrId+")'>삭제</button></div><hr>"
-	                html += "</form>"
-				})
+	                
+	                if('${adminId}' == ""){
+	                	html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent' readonly>"+data.qrContent+"</textarea><br>"
+	                }else{
+		                html += "<form action='${contextPath }/qna/repModify' method='post'>"
+		                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
+		                html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent'>"+data.qrContent+"</textarea><br>"
+		                html += "<button type='submit'>수정</button>"
+		                html += "<button type='button' onclick='repDelete("+data.qrId+")'>삭제</button></div><hr>"
+		                html += "</form>"
+	                }
+	             })
 				$("#getReply").html(html)
 			},erorr : function(){
 				alert("서버문제 발생");
@@ -94,7 +99,7 @@
 		console.log(qrId)
 		$.ajax({
 			url : "repDelete/"+qrId,
-			type : "get",
+			type : "post",
 			dataType : "json",
 			success : function(data){
 				console.log(data)
@@ -128,7 +133,16 @@
 	<table>
 		<tr>
 			<th>제목</th> 
-			<td><input type="text" name="qnaTitle" id="title" value="${dto.qnaTitle }"></td>
+			<td>
+				<c:choose>
+					<c:when test="${dto.id == userId}">
+						<input type="text" name="qnaTitle" id="title" value="${dto.qnaTitle }">
+					</c:when>
+					<c:otherwise>
+						${dto.qnaTitle }
+					</c:otherwise>
+				</c:choose>
+			</td>
 		</tr>
 		<tr>
 			<th>작성자</th> 
@@ -140,8 +154,18 @@
 		</tr>	
 		<tr>	
 			<th>내용</th>
-			<td><textarea rows="10" cols="30" name="qnaContent"
-								 id="content">${dto.qnaContent }</textarea> </td>
+			<td>
+				<c:choose>
+					<c:when test="${dto.id == userId}">
+						<textarea rows="10" cols="30" name="qnaContent"
+												 id="content">${dto.qnaContent }</textarea> 
+					</c:when>
+					<c:otherwise>
+						<textarea rows="10" cols="30" name="qnaContent" readonly
+												 id="content">${dto.qnaContent }</textarea> 
+					</c:otherwise>
+				</c:choose>	 
+			</td>
 		</tr>	
 
 		<tr>	
@@ -153,15 +177,18 @@
 			<td colspan="2"> <button type="button" 
 				onclick="location.href='${contextPath }/qna/allList'">목록</button>
 			
+			<c:if test="${dto.id == userId or dto.id == adminId}">
 				<button type="button" onclick="modify()">수정</button>	
-			
 				<button type="button" 
 				onclick="location.href='${contextPath }/qna/delete?qnaNo=${dto.qnaNo}'">삭제</button>
-			
-				<button type="button" onclick="replyShow()">답변달기</button>
+			</c:if>	
+				<c:if test="${adminId != null }">
+					<button type="button" onclick="replyShow()">답변달기</button>
+				</c:if>
 			</td>	
 		</tr>
 	</table>
+	<hr>
 </form>
 
 <div id="getReply"></div>

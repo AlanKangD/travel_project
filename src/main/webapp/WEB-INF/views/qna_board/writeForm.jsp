@@ -56,7 +56,8 @@
 		
 		<tr>
 			<th>작성자</th> 
-			<td><input type="text" name="id" id="id"></td>
+			<td><input type="hidden" name="id" id="id" value="${userId }">
+				${userId }</td>
 		</tr>
 
 		<tr>	
