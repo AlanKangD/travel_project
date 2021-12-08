@@ -10,9 +10,13 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
-		<property name="jdbcUrl"
+		<!-- <property name="jdbcUrl"
 			value="jdbc:oracle:thin:@210.221.253.215:1521:xe" />
 		<property name="username" value="foracle" />
+		<property name="password" value="1234" /> -->
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="java" />
 		<property name="password" value="1234" />
 	</bean>
 	<!-- 히카리 데이터소스 빈 등록 -->

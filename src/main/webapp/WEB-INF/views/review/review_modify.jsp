@@ -28,7 +28,7 @@
 		<h1 style="text-align:center;">review modify</h1>
 		<br>
 		<div id="wrap" style="width:600px; margin: 0 auto;">
-			<form action="${contextPath}/review/modify" enctype="multipart/form-data" method="post" >
+			<form action="${contextPath}/review/r_modify" enctype="multipart/form-data" method="post" >
 				<input type="hidden" name="review_no" value="${contentData.review_no}"><!--  -->
 		  		<input type="hidden" name="originFileName" value="${contentData.review_file_name}">
 		  		<!-- 작성자 부분 나중에 수정해야함 -->
@@ -38,9 +38,11 @@
 			 	<hr>
 			    <c:if test="${ contentData.review_file_name != 'nan' }">
 				    <img width="200px" height="150px" id="preview"
-				    	src="${contextPath}/review/download?imageFileName=${contentData.review_file_name}">
+				    	src="${contextPath}/review/download?review_file_name=${contentData.review_file_name}">
 			 	</c:if>
-			 	<img style="align:right;" alt="선택된 이미지가 없습니다." src="#" id="preview" width="200" height="150">
+			 	<c:if test="${contentData.review_file_name == 'nan' }">
+			 		<img style="align:right;" alt="선택된 이미지가 없습니다." src="#" id="preview" width="200" height="150">
+			 	</c:if>
 			  	<input type="file" name="review_file_name" onchange="readURL(this)">
 			  	<hr>
 			  	<div align="right">

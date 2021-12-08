@@ -51,7 +51,7 @@ public class ReviewController {
 	
 	
 	//review관련 기능 구현
-	@PostMapping("writeSave")
+	@PostMapping("r_writeSave")
 	public void writeSave(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
 			HttpServletRequest request) throws Exception {
@@ -61,7 +61,7 @@ public class ReviewController {
 		out = response.getWriter();
 		out.println(message);
 	}
-	@PostMapping("modify")
+	@PostMapping("r_modify")
 	public void modify(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
 			HttpServletRequest request) throws Exception {

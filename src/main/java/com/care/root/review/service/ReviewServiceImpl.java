@@ -23,12 +23,14 @@ public class ReviewServiceImpl implements ReviewService{
 		dto.setReview_title(mul.getParameter("review_title"));
 		dto.setReview_content(mul.getParameter("review_content"));
 		
+		
 		MultipartFile file = mul.getFile("review_file_name");
 		if(file.getSize() != 0) {
 			dto.setReview_file_name(rfs.saveFile(file));//
 		}else {
 			dto.setReview_file_name("nan");
 		}
+		
 		
 		int result = 0;
 		String msg, url;
@@ -50,6 +52,7 @@ public class ReviewServiceImpl implements ReviewService{
 		dto.setReview_title(mul.getParameter("title"));
 		dto.setReview_content(mul.getParameter("content"));
 		
+		
 		MultipartFile file = mul.getFile("review_file_name");
 		if(file.getSize() != 0 ) {
 	         //이미지 변경시
@@ -58,6 +61,8 @@ public class ReviewServiceImpl implements ReviewService{
 	      }else {
 	         dto.setReview_file_name(mul.getParameter("originFileName"));
 	      }
+		
+		
 		int result = mapper.modify(dto);
 		String msg, url;
 		if(result == 1) {

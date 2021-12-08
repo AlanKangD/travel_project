@@ -9,25 +9,52 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+	var photo_count = 1;
+	$(document).ready(function(){
+		$("#photo_delete").on("click",function(e){
+			e.preventDefault();
+			photo_delete($(this))
+		})
+	});
+	
+   
+   function photo_delete(obj){
+	   obj.parent().remove();
+   }
+   /* function photo_add(){
+       var str = "<p><input type='file' name='file_"+(photo_count++)+"' /><a href='#this' id='photo_delete' class='btn'>삭제하기</a></p> ";
+       $("#photo_div").append(str);
+        
+       $("a[name='delete']").on("click",function(e){
+           e.preventDefault();
+           fn_fileDelete($(this));         
+       })
+   } */
    function readURL(input) {
-      var file = input.files[0] //파일에 대한 정보
-      console.log(file)
-      if (file != '') {
-         var reader = new FileReader();
-         reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
-         reader.onload = function (e) { // 파일 로드한 값을 표현한다
-          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
-           $('#preview').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
-          }
-      }
-  }  
+	      var file = input.files[0] //파일에 대한 정보
+	      var str = 
+	    	  "<p><img style='align:right;' alt='선택된 이미지가 없습니다.' src='#' id='preview_"+(photo_count)+"' width='160' height='90'>
+	    	  <input type='file' name='review_file_name"+(photo_count++)+"' onchange='readURL(this)' />
+	    	  <a href='#this' id='photo_delete' class='btn'>삭제하기</a></p> ";
+	      
+	      console.log(file)
+	      if (file != '') {
+	         var reader = new FileReader();
+	         reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
+	         reader.onload = function (e) { // 파일 로드한 값을 표현한다
+	          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
+	           $('#preview').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
+	           $("#photo_div").append(str);
+	          }
+	      }
+	}
 </script>
 </head>
 <body>review_write.jsp<br>
 	<jsp:include page="../default/header.jsp"></jsp:include>
 		<div id="wrap" style="width:600px; margin: 0 auto;">
 			<h1 style="text-align:center;">review write form</h1><br>
-			<form method="post" action="${contextPath }/review/writeSave" enctype="multipart/form-data">
+			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
 				<%-- <table style="text-align : right;" border="1">
 					<tr>
 						<th>작성자 : </th> <td style="text-align:left">${loginUser }</td>
@@ -46,15 +73,21 @@
 				<b>내 용 : </b><br> 
 				<textarea style="resize:none;" rows="20" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
 				<hr>
-				<div >
-				<b>이미지 첨부</b><br>
-				<img style="align:right;" alt="선택된 이미지가 없습니다." src="#" id="preview" width="200" height="150">
-				<input type="file" name="review_file_name" onchange="readURL(this)"><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
-				<hr>
+				
+				<div id="photo_div">
+					<p>
+					<img style="align:right;" alt="선택된 이미지가 없습니다." src="#" id="preview" width="160" height="90">
+					<input type="file" name="review_file_name_0" onchange="readURL(this)"><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
+					<a href="#this" id="photo_delete" class="btn">삭제하기</a>
+					</p>
 				</div>
+				<hr>
+				
 				<div align="right">
-				<input type="submit" value="저장">
-				<input type="button" value="목록보기" onClick="location.href='${contextPath}/review/review_boardList'">
+					<p>
+					<input type="submit" value="저장">
+					<input type="button" value="목록보기" onClick="location.href='${contextPath}/review/review_boardList'">
+					</p>
 				</div>
 			</form>
 		</div>
