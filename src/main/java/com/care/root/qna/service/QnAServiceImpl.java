@@ -32,14 +32,13 @@ public class QnAServiceImpl implements QnAService{
 	@Override
 	public void qnaAllList(Model model, int num,String searchOption,String keyword) {
 		int pageLetter = 4;
-		int dataCount = mapper.getDataCount(searchOption, keyword);
+		int dataCount = mapper.getDataCount(searchOption, keyword).size();
 		int repeat = dataCount / pageLetter;
 		if(dataCount % pageLetter != 0) {
 			repeat += 1;
 		}
 		int end = num * pageLetter;
 		int start = end + 1 - pageLetter;
-		
 		
 		int pagingNum = 5; // 페이징 넘버링 개수(1 ~ 5 / 6 ~ 10)
 		int beginpage = 0;
@@ -54,6 +53,7 @@ public class QnAServiceImpl implements QnAService{
 		}
 		
 		List<QnADTO> list = mapper.qnaAllList(start, end, searchOption, keyword);
+		List<QnADTO> noticeList = mapper.noticeList();
 		
 		model.addAttribute("beginpage",beginpage);
 		model.addAttribute("endPage",endPage);
@@ -63,6 +63,7 @@ public class QnAServiceImpl implements QnAService{
         model.addAttribute("nowday",makeNew());
 		model.addAttribute("repeat",repeat);
 		model.addAttribute("qnaList",replyConfirm(list));		
+		model.addAttribute("noticeList",noticeList);		
 	}	
 	
 	private String makeNew() { // [new] 새글 로직
@@ -190,14 +191,18 @@ public class QnAServiceImpl implements QnAService{
 	
 
 	@Override
-	public void delete(int qnaNo, HttpServletResponse response, HttpServletRequest request,String userSession){
+	public void delete(int qnaNo, HttpServletResponse response, HttpServletRequest request,
+											String userSession,String adminSession){
 		int result = 0;
 		String msg, url;
 		
 		QnADTO	dto = mapper.contentView(qnaNo);
 		
-		if(userSession == null || !dto.getId().equals(userSession)) {
-			msg = "글을 작성한 사람만 삭제 가능합니다.";
+		if(adminSession == null && userSession == null) {
+			msg = "글을 작성한사람 혹은 관리자만 삭제 가능합니다.";
+			url = "/qna/allList";
+		}else if(userSession != null && !dto.getId().equals(userSession)){
+			msg = "글을 작성한사람 혹은 관리자만 삭제 가능합니다.";
 			url = "/qna/allList";
 		}else {
 			result = mapper.delete(qnaNo);		

@@ -27,6 +27,8 @@
 <body>
 
 <c:import url="../default/header.jsp" />
+<div class="wrap">
+<div align="center">
 
 <h1>QnA</h1>
 궁금한 부분이 있으면 해결해드립니다.<p>
@@ -52,16 +54,41 @@
     <input name="keyword" id="keyword" value="${keyword }">
     <input type="button" onclick="selectFunc()" value="검색">
 </form>
-<table border="1" style="width: 500px;">
+<table border="1">
 		<tr>
-			<th>번호</th>
-			<th>답변여부</th>
+			<th>No.</th>
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
 			<th>조회수</th>
+			<th>답변여부</th>
 		</tr>
-				
+		
+		<c:forEach var="dto" items="${noticeList}">
+					<tr>
+						<td>
+							&lt;공지&gt; 
+						</td>
+						<td>						
+							<a href="${contextPath}/qna/contentView?qnaNo=${dto.qnaNo}">
+							${dto.qnaTitle}
+							</a> 
+							<c:if test="${dto.saveDate >= nowday}">	
+								<img src="${contextPath }/resources/img/new.png" 
+																width="15px" height="15px">								
+							</c:if>
+						</td>
+						<td>관리자</td>
+						<td>	
+							${dto.viewDate}
+						</td>
+						<td>${dto.qnaHit}</td>
+						<td>
+							답변완료
+						</td>
+					</tr>
+				</c:forEach>		
+		
 		<c:choose>
 			<c:when test="${qnaList.size() == 0}">
 				<tr>
@@ -74,9 +101,6 @@
 					<tr>
 						<td>
 							${boardNum}
-						</td>
-						<td>
-							${dto.repCheck}
 						</td>
 						<td>						
 								<a href="${contextPath}/qna/contentView?qnaNo=${dto.qnaNo}">
@@ -96,6 +120,9 @@
 							${dto.viewDate}
 						</td>
 						<td>${dto.qnaHit}</td>
+						<td>
+							${dto.repCheck}
+						</td>
 					</tr>
 					<c:set var="boardNum" value="${boardNum-1 }"></c:set>
 				</c:forEach>
@@ -166,9 +193,9 @@
 				<button onclick="location.href='${contextPath}/qna/writeForm'">글작성</button>
 			</td>
 		</tr>
-	
 </table>
-
+</div>
+</div>
 <c:import url="../default/footer.jsp" />
 
 </body>

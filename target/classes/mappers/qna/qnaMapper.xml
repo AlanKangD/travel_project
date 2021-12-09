@@ -37,60 +37,63 @@
 	      	or id like '%' || #{keyword} || '%' 
 	      	or qna_content like '%' || #{keyword} || '%'
 	      	order by qna_no desc)A)
-	      	B where rn between #{s} and #{e}   
+	      	B where rn between #{s} and #{e} and id not in('admin')   
           </when>
           <when test='searchOption == "tc"'> <!-- 제목+내용 -->
              (select * from qna_board 
 	         where qna_title like '%' || #{keyword} || '%' 
 	         or qna_content like '%' || #{keyword} || '%' 
 	         order by qna_no desc)A)
-             B where rn between #{s} and #{e}
+             B where rn between #{s} and #{e} and id not in('admin') 
           </when>
           <when test='searchOption == "title"'> <!-- 제목 -->
              (select * from qna_board 
          	 where qna_title like '%' || #{keyword} || '%' 
           	 order by qna_no desc)A)
-             B where rn between #{s} and #{e}
+             B where rn between #{s} and #{e} and id not in('admin') 
           </when>
           <when test='searchOption == "id"'> <!-- 작성자 -->
              (select * from qna_board 
          	 where id like '%' || #{keyword} || '%'  
           	 order by qna_no desc)A)
-             B where rn between #{s} and #{e}
+             B where rn between #{s} and #{e} and id not in('admin') 
           </when>
           <when test='searchOption == "content"'> <!-- 본문 -->
              (select * from qna_board 
          	 where qna_content like '%' || #{keyword} || '%'  
           	 order by qna_no desc)A)
-             B where rn between #{s} and #{e}
+             B where rn between #{s} and #{e} and id not in('admin') 
           </when>
           <otherwise>
-          (select * from qna_board order by qna_no desc)A)B where rn between #{s} and #{e}
+          (select * from qna_board where id not in('admin') order by qna_no desc)A)B where rn between #{s} and #{e}
           </otherwise>
        </choose>
    </select> 
    
 	<select id="getDataCount" resultType="Integer">
-    	select count(*) from qna_board
+    	select A.* from (select * from qna_board 
     	<choose>
     		<when test='searchOption == "all"'> <!-- 전체검색 -->
 		      	where qna_title like '%' || #{keyword} || '%' 
 		      	or id like '%' || #{keyword} || '%' 
-		      	or qna_content like '%' || #{keyword} || '%' 
+		      	or qna_content like '%' || #{keyword} || '%')A where id not in('admin')
           	</when>
     		<when test='searchOption == "tc"'>
           		where qna_title like '%' || #{keyword} || '%'
-          		or qna_content like '%' || #{keyword} || '%'
+          		or qna_content like '%' || #{keyword} || '%')A where id not in('admin')
           	</when>
     		<when test='searchOption == "title"'>
-          		where qna_title like '%' || #{keyword} || '%'
+          		where qna_title like '%' || #{keyword} || '%')A where id not in('admin')
           	</when>
     		<when test='searchOption == "content"'>
-          		where qna_content like '%' || #{keyword} || '%'
+          		where qna_content like '%' || #{keyword} || '%')A where id not in('admin')
           	</when>
           	<when test='searchOption == "id"'>
-          		where id like '%' || #{keyword} || '%'
+          		where id like '%' || #{keyword} || '%')A where id not in('admin')
           	</when>
+          	<otherwise>
+          		)A where id not in('admin')
+          	</otherwise>
 		</choose>
 	</select>  
 	
@@ -137,5 +140,9 @@
      <update id="repModify">
     	update qna_reply set qr_content = #{qrContent} where qr_id = #{qrId}
     </update>
+    
+    <select id="noticeList" resultMap="qna">
+    	select * from qna_board where id = 'admin' order by qna_no desc
+    </select>
 
 </mapper> 

@@ -71,14 +71,14 @@
 				list.forEach(function(data){
 					let qrIdContent = data.qrId + data.qrContent
 					html += "<div><b>작성자 : 관리자</b><br>"
-	                html += "<b>작성일</b> : "+data.saveDate+"<br>"
+	                html += "<b>작성일</b> : "+data.saveDate+"<br><br>"
 	                
 	                if('${adminId}' == ""){
 	                	html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent' readonly>"+data.qrContent+"</textarea><br>"
 	                }else{
 		                html += "<form action='${contextPath }/qna/repModify' method='post'>"
 		                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
-		                html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent'>"+data.qrContent+"</textarea><br>"
+		                html += "<textarea id='partB' rows='10' cols='50' name='qrContent'>"+data.qrContent+"</textarea><br>"
 		                html += "<button type='submit'>수정</button>"
 		                html += "<button type='button' onclick='repDelete("+data.qrId+")'>삭제</button></div><hr>"
 		                html += "</form>"
@@ -120,14 +120,7 @@
 </head>
 <body onload="getReply()">
 <c:import url="../default/header.jsp" />
-<%-- 
-<c:if test="${dto.qnaPwd != null}">
-	<c:if test="${pwd == null}">
-		<c:redirect url="/qna/pwdForm?qnaNo=${dto.qnaNo}"/>
-	</c:if>
-</c:if>
---%>
- 
+<div class="wrap">
 <form id="fo" action="${contextPath }/qna/modify" method="post">
  	<input type="hidden" name="qnaNo" value="${dto.qnaNo }">
 	<table>
@@ -157,11 +150,11 @@
 			<td>
 				<c:choose>
 					<c:when test="${dto.id == userId}">
-						<textarea rows="10" cols="30" name="qnaContent"
+						<textarea class="partC" rows="10" cols="30" name="qnaContent"
 												 id="content">${dto.qnaContent }</textarea> 
 					</c:when>
 					<c:otherwise>
-						<textarea rows="10" cols="30" name="qnaContent" readonly
+						<textarea class="partC" rows="10" cols="30" name="qnaContent" readonly
 												 id="content">${dto.qnaContent }</textarea> 
 					</c:otherwise>
 				</c:choose>	 
@@ -202,7 +195,7 @@
 	<button type="button" onclick="addReply()">답변 작성완료</button>
 </form>
 </div>
-
+</div>
 <c:import url="../default/footer.jsp" />
 </body>
 </html>

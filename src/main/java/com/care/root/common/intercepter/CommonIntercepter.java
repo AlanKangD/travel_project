@@ -18,12 +18,11 @@ public class CommonIntercepter extends HandlerInterceptorAdapter implements Sess
 			throws Exception {
 		System.out.println("인터셉터 등록 완료!");
 		HttpSession session = request.getSession();
-		if(session.getAttribute(userSession) == null) {
+		if(session.getAttribute(userSession) == null && session.getAttribute(adminSession) == null ) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print("<script> alert('글작성은 로그인한 사용자만 가능합니다.');"
-					//+ "location.href='/root/member/login'; </script>");
-			+ "location.href='" + request.getContextPath() + "/qna/allList'; </script>");
+			+ "location.href='" + request.getContextPath() + "/member/loginForm'; </script>");
 			return false;
 		}	
 		return true;

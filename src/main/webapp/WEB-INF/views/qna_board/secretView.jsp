@@ -15,6 +15,7 @@
 	</script>
 </c:if>
 <jsp:include page="../default/header.jsp" />
+<div class="wrap">
 <div align="center">
 <h1>비밀글 보기</h1><br><br>
 
@@ -26,9 +27,8 @@
 </form>
 <button onclick="location.href='${contextPath}/qna/allList'">목록</button>
 
-
-
-  	<jsp:include page="../default/footer.jsp" />
+</div>
+<jsp:include page="../default/footer.jsp" />
 </div>
 </body>
 </html>

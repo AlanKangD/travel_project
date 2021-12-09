@@ -79,7 +79,8 @@ public class QnAController implements SessionCommonName{
 	@GetMapping("delete")
 	public void delete(@RequestParam int qnaNo, HttpServletResponse response,
 				HttpServletRequest request, HttpSession session) {
-			qs.delete(qnaNo,response,request,(String)session.getAttribute(userSession));	
+			qs.delete(qnaNo,response,request,(String)session.getAttribute(userSession),
+											 (String)session.getAttribute(adminSession));	
 	}
 	
 	@PostMapping("secretPwd") //비밀글 비밀번호 체크 

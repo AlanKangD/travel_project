@@ -16,7 +16,8 @@ public interface QnAService {
 	public void writeSave(QnADTO dto, HttpServletRequest request,HttpServletResponse response);
 	public int contentView(int qnaNo, Model model);
 	public void modify(QnADTO dto, HttpServletResponse response,HttpServletRequest request);
-	public void delete(int qnaNo, HttpServletResponse response,HttpServletRequest request, String userSession);
+	public void delete(int qnaNo, HttpServletResponse response,HttpServletRequest request,
+															String userSession,String adminSession);
 	public int secretPwdChk(String userPwd, int qnaNo, Model model,
 														HttpServletResponse response);
 	public String addReply(QnARepDTO dto);
