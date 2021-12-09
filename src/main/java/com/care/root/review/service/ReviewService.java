@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface ReviewService {
-	public String writeSave(MultipartHttpServletRequest mul,
+	public String r_writeSave(MultipartHttpServletRequest mul,
 			HttpServletRequest request);
-	public String modify(MultipartHttpServletRequest mul,
+	public String r_modify(MultipartHttpServletRequest mul,
 			HttpServletRequest request);
 	public void boardList(Model model); 
 	public void content(int review_no, Model model);

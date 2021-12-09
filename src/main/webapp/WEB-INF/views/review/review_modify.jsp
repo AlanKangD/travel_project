@@ -37,7 +37,7 @@
 			  	<b>내 용 : </b>   <textarea style="resize:none;" rows="20" cols="80" name="content">${contentData.review_content}</textarea>
 			 	<hr>
 			    <c:if test="${ contentData.review_file_name != 'nan' }">
-				    <img width="200px" height="150px" id="preview"
+				    <img width="360px" height="180px" id="preview"
 				    	src="${contextPath}/review/download?review_file_name=${contentData.review_file_name}">
 			 	</c:if>
 			 	<c:if test="${contentData.review_file_name == 'nan' }">
