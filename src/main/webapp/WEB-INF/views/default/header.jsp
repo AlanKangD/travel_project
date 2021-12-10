@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,18 +34,18 @@ nav ul li a:hover {
 <div class="wrap">
 <nav>
     <ul>
-<li><a href="${contextPath }/index">HOME</a></li>
-<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
-<c:choose>
-	<c:when test="${userId == null && adminId == null }">
-		<li><a href="${contextPath }/member/loginForm">로그인</a></li>
-	</c:when>
-	<c:otherwise>
-		<li><a href="${contextPath }/member/logout">로그아웃</a></li>
-	</c:otherwise>
-</c:choose>
-<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>
-    </ul>
+		<li><a href="${contextPath }/index">HOME</a></li>
+		<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+		<c:choose>
+			<c:when test="${userId == null && adminId == null }">
+				<li><a href="${contextPath }/member/loginForm">로그인</a></li>
+			</c:when>
+			<c:otherwise>
+			<li><a href="${contextPath }/member/logout">로그아웃</a></li>
+			</c:otherwise>
+		</c:choose>
+	<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+	</ul>
 </nav>
 </div>
 </div>

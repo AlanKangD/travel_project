@@ -45,6 +45,7 @@
 </head>
 <body>
 <c:import url="../default/header.jsp" />
+<div class="wrap">
 <h1>문의하고싶은 내용을 작성하세요.</h1>
 
 <form id="fo" action="${contextPath }/qna/writeSave" method="post">
@@ -56,7 +57,16 @@
 		
 		<tr>
 			<th>작성자</th> 
-			<td><input type="text" name="id" id="id"></td>
+			<td>
+				<c:choose>
+					<c:when test="${userId != null}">
+						<input type="hidden" name="id" id="id" value="${userId }">${userId }
+					</c:when>
+					<c:otherwise>
+						<input type="hidden" name="id" id="id" value="admin">관리자
+					</c:otherwise>
+				</c:choose>
+			</td>
 		</tr>
 
 		<tr>	
@@ -109,6 +119,7 @@
 		</tr>
 	</table>
 </form>
+</div>
 <c:import url="../default/footer.jsp" />
 </body>
 </html>

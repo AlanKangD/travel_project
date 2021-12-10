@@ -30,24 +30,40 @@ public class QnAServiceImpl implements QnAService{
 	}
 	
 	@Override
-	public void qnaAllList(Model model, int num) {
-		int pageLetter = 4;
-		int dataCount = mapper.getDataCount();
+	public void qnaAllList(Model model, int num,String searchOption,String keyword) {
+		int pageLetter = 8;
+		int dataCount = mapper.getDataCount(searchOption, keyword);
 		int repeat = dataCount / pageLetter;
 		if(dataCount % pageLetter != 0) {
 			repeat += 1;
 		}
-		
 		int end = num * pageLetter;
 		int start = end + 1 - pageLetter;
 		
-		List<QnADTO> list = mapper.qnaAllList(start, end);
-		replyConfirm(list);
-
-        model.addAttribute("dataCount",dataCount);
+		int pagingNum = 5; // 페이징 넘버링 개수(1 ~ 5 / 6 ~ 10)
+		int beginpage = 0;
+		int endPage = 0;
+		
+		int pageingCount = (num-1) / pagingNum;
+		beginpage = pageingCount * pagingNum + 1 ;
+		endPage = beginpage + 4;
+		
+		if(repeat < endPage) {
+			endPage = repeat;
+		}
+		
+		List<QnADTO> list = mapper.qnaAllList(start, end, searchOption, keyword);
+		List<QnADTO> noticeList = mapper.noticeList();
+		
+		model.addAttribute("beginpage",beginpage);
+		model.addAttribute("endPage",endPage);
+		model.addAttribute("searchOption",searchOption);
+		model.addAttribute("keyword",keyword);
+		model.addAttribute("dataCount",dataCount);
         model.addAttribute("nowday",makeNew());
 		model.addAttribute("repeat",repeat);
-		model.addAttribute("qnaList",list);		
+		model.addAttribute("qnaList",replyConfirm(list));		
+		model.addAttribute("noticeList",noticeList);		
 	}	
 	
 	private String makeNew() { // [new] 새글 로직
@@ -125,21 +141,6 @@ public class QnAServiceImpl implements QnAService{
 
 		return message;
 	}
-
-//	@Override
-//	public void contentView(int qnaNo,String pwd, Model model) {
-//		QnADTO dto = mapper.contentView(qnaNo);
-//		
-//		if(dto.getQnaPwd() == null) {
-//			upHit(qnaNo);
-//		}else {
-//			if(pwd != null) {
-//				model.addAttribute("pwd",pwd);
-//				upHit(qnaNo);
-//			}
-//		}
-//		model.addAttribute("dto",dto);
-//	}
 	
 	@Override
 	public int contentView(int qnaNo, Model model) {	
@@ -190,20 +191,30 @@ public class QnAServiceImpl implements QnAService{
 	
 
 	@Override
-	public void delete(int qnaNo, HttpServletResponse response, HttpServletRequest request) {
+	public void delete(int qnaNo, HttpServletResponse response, HttpServletRequest request,
+											String userSession,String adminSession){
 		int result = 0;
 		String msg, url;
 		
-		result = mapper.delete(qnaNo);		
+		QnADTO	dto = mapper.contentView(qnaNo);
 		
-		if(result == 1) {
-			msg = "글이 삭제되었습니다.";
+		if(adminSession == null && userSession == null) {
+			msg = "글을 작성한사람 혹은 관리자만 삭제 가능합니다.";
+			url = "/qna/allList";
+		}else if(userSession != null && !dto.getId().equals(userSession)){
+			msg = "글을 작성한사람 혹은 관리자만 삭제 가능합니다.";
 			url = "/qna/allList";
 		}else {
-			msg = "삭제도중 오류가 발생하였습니다.";
-			url = "/qna/contentView?qnaNo="+qnaNo;
+			result = mapper.delete(qnaNo);		
+			
+			if(result == 1) {
+				msg = "글이 삭제되었습니다.";
+				url = "/qna/allList";
+			}else {
+				msg = "삭제도중 오류가 발생하였습니다.";
+				url = "/qna/contentView?qnaNo="+qnaNo;
+			}
 		}
-		
 		String message = getMessage(request,msg,url);
 		
 		PrintWriter out = null;
@@ -216,39 +227,6 @@ public class QnAServiceImpl implements QnAService{
 		out.println(message);
 	}
 
-	@Override
-	public void getDataCount() {
-		mapper.getDataCount();
-	}
-
-//	@Override
-//	public void pwdCheck(int qnaNo,String qnaPwd, HttpServletResponse response, 
-//													HttpServletRequest request) {
-//		
-//		QnADTO dto = mapper.contentView(qnaNo);
-//		int result = 0;
-//		String msg, url;
-//		
-//		if(dto != null && encoder.matches(qnaPwd, dto.getQnaPwd())) {
-//				msg = "비밀번호 일치";
-//		    	url = "/qna/contentView?qnaNo="+qnaNo+"&pwd=true";
-//			}else {
-//				msg = "비밀글 비밀번호가 틀립니다.";
-//		    	  url = "/qna/pwdForm?qnaNo="+qnaNo;
-//			}
-//		
-//		String message = getMessage(request, msg, url);
-//	      
-//	    PrintWriter out = null;
-//		response.setContentType("text/html; charset=utf-8");
-//		try {
-//			out = response.getWriter();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		out.println(message);
-//	}
-	
 	@Override
 	public int secretPwdChk(String userPwd, int qnaNo, Model model,
 								HttpServletResponse response) {

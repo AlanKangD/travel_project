@@ -37,7 +37,7 @@ public class QnARepDTO {
 		return saveDate;
 	}
 	public void setSaveDate(java.sql.Timestamp saveDate) { 
-		SimpleDateFormat fo = new SimpleDateFormat("YYYY년 MM월 dd일 HH:mm");
+		SimpleDateFormat fo = new SimpleDateFormat("YYYY년 MM월 dd일");
 		this.saveDate = fo.format(saveDate);
 	}
 }
