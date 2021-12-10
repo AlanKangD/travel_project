@@ -25,7 +25,8 @@
 비밀번호 <input type="text" name="inputPwd"><br><br>
 <button type="submit">확인</button>
 </form>
-<button onclick="location.href='${contextPath}/qna/allList'">목록</button>
+<button type="button" 
+onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
 
 </div>
 <jsp:include page="../default/footer.jsp" />

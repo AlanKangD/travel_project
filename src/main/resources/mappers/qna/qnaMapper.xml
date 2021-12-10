@@ -71,28 +71,28 @@
    </select> 
    
 	<select id="getDataCount" resultType="Integer">
-    	select A.* from (select * from qna_board 
+		select count(*) from qna_board
     	<choose>
     		<when test='searchOption == "all"'> <!-- 전체검색 -->
-		      	where qna_title like '%' || #{keyword} || '%' 
+		      	where (qna_title like '%' || #{keyword} || '%' 
 		      	or id like '%' || #{keyword} || '%' 
-		      	or qna_content like '%' || #{keyword} || '%')A where id not in('admin')
+		      	or qna_content like '%' || #{keyword} || '%') and id not in('admin')
           	</when>
     		<when test='searchOption == "tc"'>
-          		where qna_title like '%' || #{keyword} || '%'
-          		or qna_content like '%' || #{keyword} || '%')A where id not in('admin')
+          		where (qna_title like '%' || #{keyword} || '%'
+          		or qna_content like '%' || #{keyword} || '%') and id not in('admin')
           	</when>
     		<when test='searchOption == "title"'>
-          		where qna_title like '%' || #{keyword} || '%')A where id not in('admin')
+          		where (qna_title like '%' || #{keyword} || '%') and id not in('admin')
           	</when>
     		<when test='searchOption == "content"'>
-          		where qna_content like '%' || #{keyword} || '%')A where id not in('admin')
+          		where (qna_content like '%' || #{keyword} || '%') and id not in('admin')
           	</when>
           	<when test='searchOption == "id"'>
-          		where id like '%' || #{keyword} || '%')A where id not in('admin')
+          		where (id like '%' || #{keyword} || '%') and id not in('admin')
           	</when>
           	<otherwise>
-          		)A where id not in('admin')
+          		where id not in('admin')
           	</otherwise>
 		</choose>
 	</select>  
@@ -130,7 +130,7 @@
     
     <select id="getReply" resultMap="qnaReply">
      	select * from qna_reply where qr_write_group = #{qrWriteGroup}
-     	order by savedate asc
+     	order by savedate desc
     </select>
     
      <delete id="repDelete">

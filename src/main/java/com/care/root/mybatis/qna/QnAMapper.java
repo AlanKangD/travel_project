@@ -15,7 +15,7 @@ public interface QnAMapper {
 	public void upHit(int qnaNo);
 	public int delete(int qnaNo);
 	public int modify(QnADTO dto);
-	public List<QnADTO> getDataCount(@Param("searchOption") String searchOption,@Param("keyword") String keyword);
+	public int getDataCount(@Param("searchOption") String searchOption,@Param("keyword") String keyword);
 	public int addReply(QnARepDTO dto);
 	public List<QnARepDTO> getReply(int qnaWriteGroup);
 	public List<QnARepDTO> repAllList();

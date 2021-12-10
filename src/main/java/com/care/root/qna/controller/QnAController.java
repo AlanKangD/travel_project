@@ -61,8 +61,14 @@ public class QnAController implements SessionCommonName{
 //	}
 	
 	@GetMapping("contentView")
-	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req) { 	   
-			int result = qs.contentView(qnaNo, model);
+	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req,
+								   @RequestParam(required = false, defaultValue = "1") int num,
+								   @RequestParam(required = false) String searchOption,
+								   @RequestParam(required = false) String keyword) { 	   
+		model.addAttribute("num",num);	
+		model.addAttribute("searchOption",searchOption);	
+		model.addAttribute("keyword",keyword);	
+		int result = qs.contentView(qnaNo, model);
 			if(result == 1) {
 				return "qna_board/secretView";
 			 }

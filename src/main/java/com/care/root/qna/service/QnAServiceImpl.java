@@ -31,8 +31,8 @@ public class QnAServiceImpl implements QnAService{
 	
 	@Override
 	public void qnaAllList(Model model, int num,String searchOption,String keyword) {
-		int pageLetter = 4;
-		int dataCount = mapper.getDataCount(searchOption, keyword).size();
+		int pageLetter = 8;
+		int dataCount = mapper.getDataCount(searchOption, keyword);
 		int repeat = dataCount / pageLetter;
 		if(dataCount % pageLetter != 0) {
 			repeat += 1;
