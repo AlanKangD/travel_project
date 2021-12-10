@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.care.root.mybatis.main.MainMapper">
+  
+  <resultMap  id="main" type="com.care.root.main.dto.MainDTO">
+	   <id property="mainId" column="main_id"/>
+	   <result property="mainCategory" column="main_category"/>
+	   <result property="userId" column="user_id"/>
+	   <result property="placeName" column="place_name"/>
+	   <result property="contentOne" column="content_one"/>
+	   <result property="contentTwo" column="content_two"/>
+	   <result property="mainImageFile" column="main_image_file"/>
+	   <result property="take" column="take"/>
+	   <result property="upHit" column="upHit"/>
+    </resultMap>
+    
+    <select id="themeList" resultMap="main">
+    	select main_id, place_name, content_one from main
+    </select>
+    
+    <select id="themeView" resultMap="main">
+    	select * from main where main_id = #{mainId}
+    </select>
+  
+  <insert id="register">
+  	insert into main(main_id, main_category, place_name, content_one, content_two, main_image_file)
+  	values(main_seq.nextval,#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile})
+  </insert>
+  
+  </mapper>
