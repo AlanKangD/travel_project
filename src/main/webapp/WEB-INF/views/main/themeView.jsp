@@ -11,6 +11,20 @@
 		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 	</head>
 	<body>
+	
+	<div id="map" style="width:500px;height:400px;"></div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.469651, 126.493169),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+	</script>
+	
+	
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -56,8 +70,13 @@
 							<p>${dto.contentOne }</p>
 							<p>${dto.contentTwo }</p>
 							<p></p>
+							<p><button>일정 추가하기</button></p>
 						</div>
+					
 					</div>
+					
+					
+					
 
 				<!-- Footer -->
 					<footer id="footer">
@@ -83,7 +102,7 @@
 
 			</div>
 
-		<!-- Scripts -->
+		<!-- Scripts --> 
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
