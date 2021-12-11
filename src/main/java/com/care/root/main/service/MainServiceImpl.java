@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
+import com.care.root.main.dto.MyListDTO;
 import com.care.root.main.imageFile.MainFileStorage;
 import com.care.root.mybatis.main.MainMapper;
 
@@ -81,6 +85,19 @@ public class MainServiceImpl implements MainService {
 		FileInputStream fis = new FileInputStream(file);
 		FileCopyUtils.copy(fis,  response.getOutputStream());
 		fis.close();
+	}
+
+	@Override
+	public void addMyList(MyListDTO dto) {	
+		mapper.addMyList(dto);
+	}
+
+	@Override
+	public List<MyListDTO> getMyList(HttpSession session) {
+		String id = (String)session.getAttribute(SessionCommonName.userSession);
+		System.out.println("세션값 : " +id);
+		return mapper.getMyList(id);
+	
 	}
 	
 	

@@ -490,10 +490,10 @@
 									break;
 
 								case 'checkbox':
-								case 'radio':
+		/*						case 'radio':
 									i.attr('checked', i.attr('defaultValue'));
 									break;
-
+*/
 								case 'text':
 								case 'textarea':
 									i.val(i.attr('defaultValue'));

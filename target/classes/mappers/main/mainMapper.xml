@@ -17,6 +17,17 @@
 	   <result property="upHit" column="upHit"/>
     </resultMap>
     
+    <resultMap  id="mylist" type="com.care.root.main.dto.MyListDTO">
+	      <id property="listNo" column="list_no"/>
+		  <result property="userId" column="user_id"/>
+		  <result property="place" column="place"/>
+		  <result property="image" column="image"/>
+    </resultMap>
+    
+    <insert id="addMyList">
+    	insert into mylist(list_no, user_id, place, image) values(mylist_seq.nextval, #{userId}, #{place},#{image})
+    </insert>      
+    
     <select id="themeList" resultMap="main">
     	select main_id, place_name, content_one from main
     </select>
@@ -29,5 +40,12 @@
   	insert into main(main_id, main_category, place_name, content_one, content_two, main_image_file)
   	values(main_seq.nextval,#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile})
   </insert>
+  
+  <select id="getMyList" resultMap="mylist">
+  	select * from mylist where user_id = #{userId}
+  </select>
+  
+  
+
   
   </mapper>
