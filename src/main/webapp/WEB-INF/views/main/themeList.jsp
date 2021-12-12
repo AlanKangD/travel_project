@@ -23,7 +23,8 @@
 								template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
 								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
 							</header>
-							<button onclick="location.href='${contextPath}/main/addPlace' ">+Add Place[관리자 눈에만 보여요]</button>
+							<a href="../index">뒤로가기 </a>
+							<button onclick="location.href='${contextPath}/main/addPlace' ">Add Place(관리자용)</button>
 						
 							<section class="tiles">
 							<c:forEach var="list" items="${list }">

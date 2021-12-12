@@ -17,23 +17,42 @@ text-align: center; padding-top:30px  }
 
 	function myList(){
 		$.ajax({
-			url : "getMyList",
+			url : "${pageContext.request.contextPath}/main/getMyList",
 			type : "get",
 			dataType : "json",
 			success : function(list){
 				console.log(list)
 				let html = "";
 				list.forEach(function(data){
-					console.log(data.image)
-					console.log(data.place)
-					html += "사진 : "+data.image+"<br> 장소 : "+data.place+"<br><br>"			
+					var mainImageFile = data.image
+					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+					html += " "+data.place
+					html += "<button onclick='deleteList("+data.listNo+")' >삭제</button><br> "
 				})
 				$("#replyList").html(html)
 			}, error : function(){
-				alert("서버 문제 발생 !");
 			}
 		})
 	}
+	
+	function deleteList(listNo){
+		console.log(listNo)
+		$.ajax({
+			url : "${pageContext.request.contextPath}/main/deleteList?listNo="+listNo,
+			type : "delete",
+			dataType : "json",
+			success : function(data){
+				if(data.result == true){
+					myList();
+				}else{
+					alert('삭제 실패!');
+				}
+			},error : function(){
+				alert("에러로 들어감")
+			}
+		})
+	}
+	
 
 </script>
 </head> 

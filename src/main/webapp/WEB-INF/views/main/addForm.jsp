@@ -39,6 +39,7 @@
 								<p>소개(내용2)<textarea rows="5" cols="10" name="contentTwo"></textarea></p>							
 								<button>register</button>
 							</form>
+							<br><a href="../main/themeList">뒤로가기 </a>
 						</div>			
 		<c:import url="../default/footer.jsp"></c:import>			
 	</body>

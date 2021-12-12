@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,7 @@ public class MainController implements SessionCommonName {
 	@GetMapping("download")
 	public void download(@RequestParam String mainImageFile, HttpServletResponse response)
 										throws Exception{
+		System.out.println("로그확인 : " + mainImageFile);
 		ms.download(mainImageFile, response);
 	}
 	
@@ -68,6 +70,11 @@ public class MainController implements SessionCommonName {
 	public List<MyListDTO> getMyList(HttpSession session) {
 		return ms.getMyList(session);
 	}
-
+	
+	@DeleteMapping(value = "deleteList", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String deleteList(@RequestParam int listNo) {
+		return ms.deleteMyList(listNo);
+	}
 	
 }

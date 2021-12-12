@@ -20,5 +20,8 @@ public interface MainService extends MainFileStorage {
 	public void register(MultipartHttpServletRequest mul);
 	public void download(String mainImageFile, HttpServletResponse response) throws Exception;
 	public void addMyList(MyListDTO dto);
+	
 	public List<MyListDTO> getMyList(HttpSession session);
+	public String deleteMyList(int listNo);
+	
 }

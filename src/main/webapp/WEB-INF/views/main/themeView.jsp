@@ -13,8 +13,7 @@
 <style>
 	#main {width: 80%; margin-left: 10%; margin-right: 10%;}
 	.flex{display: flex;}
-	.flexA{background-color: red;}
-	.flexB{background-color: skyblue; width: 50%; padding-left: 100px;}
+	.flexB{background-color: red; width: 50%; padding-left: 100px;}
 	
 </style>
 	</head>
@@ -27,10 +26,11 @@
 		<!-- Main -->
 			<div id="main">
 			<form action="${contextPath }/main/addMyList" method="post">
+				<br><a href="../main/themeList">뒤로가기 </a>
 				<div class="inner" style="text-align: center">
 					<h1><input type="hidden" name="place" value="${dto.placeName }">${dto.placeName }</h1>
-					<h5>테마 : ${dto.mainCategory }</h5>
-					<p  style="margin-left: 80%">
+					<h5>테마 : ${dto.mainCategory }</h5>				
+					<p  style="margin-left: 80%">				
 						<input type="hidden" name="mainId" value="${dto.mainId }">
 						<button type="submit" name="userId" value="${userId }" >일정 추가하기</button>
 					</p>

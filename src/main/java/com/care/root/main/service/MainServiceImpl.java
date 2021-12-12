@@ -99,9 +99,16 @@ public class MainServiceImpl implements MainService {
 		return mapper.getMyList(id);
 	
 	}
-	
-	
 
+	@Override
+	public String deleteMyList(int listNo) {
+		int result = mapper.deleteMyList(listNo);
+		if(result == 1) {	
+			return "{\"result\" : true}";
+	} else {
+		return "{\"result\" : false}";	}
+	}
+
+	
 }
-
 

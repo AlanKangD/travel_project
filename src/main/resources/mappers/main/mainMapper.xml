@@ -24,6 +24,11 @@
 		  <result property="image" column="image"/>
     </resultMap>
     
+    
+    <delete id="deleteMyList">
+    	delete from mylist where list_no = #{listNo}
+    </delete>
+    
     <insert id="addMyList">
     	insert into mylist(list_no, user_id, place, image) values(mylist_seq.nextval, #{userId}, #{place},#{image})
     </insert>      

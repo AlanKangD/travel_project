@@ -11,6 +11,7 @@ public interface MainMapper {
 	public void register(MainDTO dto);
 	public MainDTO themeView(int mainId);
 	public void addMyList(MyListDTO myDto);
-	public List<MyListDTO> getMyList(String userId);
 
+	public List<MyListDTO> getMyList(String userId);
+	public int deleteMyList(int listNo);
 }
