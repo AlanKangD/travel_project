@@ -1,10 +1,11 @@
 package com.care.root.main.dto;
 
 public class MyListDTO {
-	private int listNo;
-	private String userId;
+	private int listNo;  //primary key
+	private String id;  // userid  나중에 fk로 
 	private String place;
 	private String image;
+	
 	
 	public int getListNo() {
 		return listNo;
@@ -12,11 +13,11 @@ public class MyListDTO {
 	public void setListNo(int listNo) {
 		this.listNo = listNo;
 	}
-	public String getUserId() {
-		return userId;
+	public String getId() {
+		return id;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getPlace() {
 		return place;
@@ -31,5 +32,6 @@ public class MyListDTO {
 		this.image = image;
 	}
 	
+
 	
 }

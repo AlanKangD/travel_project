@@ -25,8 +25,8 @@
 									<span class="image">
 										<img src="images/pic01.jpg" alt="" />
 									</span>
-										<a href="${contextPath }/main/themeList">
-										<h2>임시 테마1</h2>
+										<a href="${contextPath }/main/themeList?theme=힐링" >
+										<h2>힐링</h2>
 										<div class="content">
 											<p>카테고리에도 컨텐트 컬럼 하나 필요함 . 이자리에 </p>
 										</div>

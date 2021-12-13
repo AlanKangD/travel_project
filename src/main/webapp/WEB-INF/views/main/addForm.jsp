@@ -27,16 +27,15 @@
 								<div class="pp">
 									<div class="selectA">카테고리</div>
 									<div class="selectB">
-										<select  name="mainCategory">
-											<option value="1">관광명소</option>
-											<option value="2">맛집</option>
-										</select>		
+										<p>카테고리 : ${theme }</p> <input type="hidden" name="mainCategory" value="${theme }">
 										</div>
 								</div>
 								<p>이미지 첨부<input type="file" name="mainImageFile" ></p>							
 								<p>장소 이름  <input type="text" name="placeName"></p>
 								<p>소개(내용1)<textarea rows="5" cols="10" name="contentOne"></textarea></p>
 								<p>소개(내용2)<textarea rows="5" cols="10" name="contentTwo"></textarea></p>							
+								<p>주소 : <input name="address"></p>                     
+                   			    <p>위도 : <input name="latitude"> 경도 : <input name="longitude"></p>
 								<button>register</button>
 							</form>
 							<br><a href="../main/themeList">뒤로가기 </a>

@@ -2,41 +2,30 @@ package com.care.root.main.dto;
 
 public class MainDTO {
 	
-	private int mainId; // not null
-	private String mainCategory;	//not null / 1=관광명소 2=맛집
-	private String userId; 
-	private String placeName; //not null
+	private String placeName;
+	private String mainCategory;	//not null / 1=관광명소 2=맛집 
 	private String contentOne; //not null
 	private String contentTwo; //not null
 	private String mainImageFile; //not null
-	private int take;
+	private int likeHit;   // like로 수정 요망 
 	private int upHit;	
+	private String latitude;   // 위도  
+	private String longitude;   //경도   ,  
+	private String address  ;
+	//나중에 주소 address도 추가하기 (컬럼) 
 	
 	
-	
-	public String getUserId() {
-		return userId;
+	public String getPlaceName() {
+		return placeName;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public int getMainId() {
-		return mainId;
-	}
-	public void setMainId(int mainId) {
-		this.mainId = mainId;
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
 	}
 	public String getMainCategory() {
 		return mainCategory;
 	}
 	public void setMainCategory(String mainCategory) {
 		this.mainCategory = mainCategory;
-	}
-	public String getPlaceName() {
-		return placeName;
-	}
-	public void setPlaceName(String placeName) {
-		this.placeName = placeName;
 	}
 	public String getContentOne() {
 		return contentOne;
@@ -56,11 +45,11 @@ public class MainDTO {
 	public void setMainImageFile(String mainImageFile) {
 		this.mainImageFile = mainImageFile;
 	}
-	public int getTake() {
-		return take;
+	public int getLikeHit() {
+		return likeHit;
 	}
-	public void setTake(int take) {
-		this.take = take;
+	public void setLikeHit(int likeHit) {
+		this.likeHit = likeHit;
 	}
 	public int getUpHit() {
 		return upHit;
@@ -68,5 +57,24 @@ public class MainDTO {
 	public void setUpHit(int upHit) {
 		this.upHit = upHit;
 	}
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	public String getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 
 }

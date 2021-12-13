@@ -24,15 +24,15 @@
 								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
 							</header>
 							<a href="../index">뒤로가기 </a>
-							<button onclick="location.href='${contextPath}/main/addPlace' ">Add Place(관리자용)</button>
+							<button onclick="location.href='${contextPath}/main/addPlace?theme=${theme }' ">Add Place(관리자용)</button>
 						
 							<section class="tiles">
 							<c:forEach var="list" items="${list }">
 								<article style="width:250px; height:250px;" class="style1">
 										<span class="image">
-											<img src="${contextPath }/images/pic01.jpg" alt="" />
+											<img src= "${contextPath}/main/download?mainImageFile=${list.mainImageFile}" width="250px;" height="250px;">
 										</span>
-											<a href="${contextPath }/main/themeView?mainId=${list.mainId}">
+											<a href="${contextPath }/main/themeView?placeName=${list.placeName}">
 											<h2>${list.placeName }</h2>
 											<div class="content">
 												<p>${list.contentOne }</p>

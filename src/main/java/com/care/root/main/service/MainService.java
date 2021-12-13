@@ -15,12 +15,13 @@ import com.care.root.main.imageFile.MainFileStorage;
 
 public interface MainService extends MainFileStorage {
 	
-	public List<MainDTO> themeList(Model model);
-	public void themeView(int mainId, Model model);	
-	public void register(MultipartHttpServletRequest mul);
+	public List<MainDTO> themeList(Model model, String theme);
+	public void themeView(String placeName, Model model);	
+	public void register(MultipartHttpServletRequest mul,HttpServletResponse response,
+            HttpServletRequest request);
 	public void download(String mainImageFile, HttpServletResponse response) throws Exception;
-	public void addMyList(MyListDTO dto);
-	
+
+	public String addMyList(MyListDTO dto);
 	public List<MyListDTO> getMyList(HttpSession session);
 	public String deleteMyList(int listNo);
 	
