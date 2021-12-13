@@ -8,45 +8,103 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-* { margin: 0; }
-.wrap { width: 1000px; margin: auto; }
-.header { width: 1000px; background-color: white; }
-.navdiv{width:100%; background-color: olive; }
-nav{ background-color: olive;width: 1000px; }
-nav ul { list-style: none; display: flex; justify-content: flex-end; }
-nav ul li { margin: 0 3px; padding: 10px 10px; }
-nav ul li a { text-decoration: none; color: white; }
-nav ul li a:hover {
-    color: orange; padding-bottom: 3px; /* a태그 밑줄과 글씨 간격*/
-    border-bottom: 1px solid orange; transition: all 0.25s;
+
+.wrapp { width: 100%; height:100px; margin: auto; background-color: yellow;
+text-align: center; padding-top:30px  }
 }
-.title {    /*오른, 아래, 번짐*/
-    text-shadow: 10px 10px 15px black; font-size: 70pt;
-    text-align: center; margin-top: 0px; padding-bottom: 20px;
-    color:burlywood; font-family:Gabriola;
-}
-.content{ margin-top: 50px; }
-</style> </head> <body>
-<div class="wrap">
-    <div class="header"> <h1 class="title">CARE LAB</h1> </div>
-</div>
-<div class="navdiv">
-<div class="wrap">
-<nav>
-    <ul>
-		<li><a href="${contextPath }/index">HOME</a></li>
-		<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
-		<c:choose>
+
+</style> 
+<script>
+
+	function myList(){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/main/getMyList",
+			type : "get",
+			dataType : "json",
+			success : function(list){
+				console.log(list)
+				let html = "";
+				list.forEach(function(data){
+					var mainImageFile = data.image
+					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+					html += " "+data.place
+					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
+				})
+				$("#replyList").html(html)
+			}, error : function(){
+			}
+		})
+	}
+	
+	function deleteList(listNo){
+		console.log(listNo)
+		$.ajax({
+			url : "${pageContext.request.contextPath}/main/deleteList?listNo="+listNo,
+			type : "delete",
+			dataType : "json",
+			success : function(data){
+				if(data.result == true){
+					myList();
+				}else{
+					alert('삭제 실패!');
+				}
+			},error : function(){
+				alert("에러로 들어감")
+			}
+		})
+	}
+	
+
+</script>
+</head> 
+<body >
+	<div class="wrapp">
+    <div> <h1>제주</h1> </div> 
+	<header id="header">
+		<nav>
+			<ul>
+				<li onclick="myList()"><a href="#menu">Menu</a></li>
+			</ul>
+		</nav>
+	</header>	
+	<nav id="menu">
+	<h3>유저아이디 : ${userId }</h3>
+		<h2>Menu</h2>
+		<ul>
+			<li><a href="${contextPath }/index">HOME</a></li>
+			<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+			<c:choose>
+				<c:when test="${userId == null && adminId == null }">
+					<li><a href="${contextPath }/member/loginForm">로그인</a></li>
+				</c:when>
+				<c:otherwise>
+				<li><a href="${contextPath }/member/logout">로그아웃</a></li>
+				</c:otherwise>
+			</c:choose>
+			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+			
+			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
-				<li><a href="${contextPath }/member/loginForm">로그인</a></li>
+				<li><br>
+					<h2>로그인을 한 후 나만의 리스트를 만들어보세요!</h2>
+				</li>	
 			</c:when>
 			<c:otherwise>
-			<li><a href="${contextPath }/member/logout">로그아웃</a></li>
+				<li><br>
+					<h2>[나의 여행 리스트 후보]</h2>
+					<div  id="replyList"></div>			
+				</li>	
 			</c:otherwise>
-		</c:choose>
-	<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
-	</ul>
-</nav>
-</div>
-</div>
-</body> </html>
+			</c:choose>
+		</ul>
+	</nav>	
+	
+</div>	
+	
+	<script src="${contextPath }/assets/js/jquery.min.js"></script>
+	<script src="${contextPath }/assets/js/skel.min.js"></script>
+	<script src="${contextPath }/assets/js/util.js"></script>
+	<script src="${contextPath }/assets/js/main.js"></script>
+
+</body> 
+</html>

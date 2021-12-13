@@ -6,28 +6,52 @@
   <mapper namespace="com.care.root.mybatis.main.MainMapper">
   
   <resultMap  id="main" type="com.care.root.main.dto.MainDTO">
-	   <id property="mainId" column="main_id"/>
 	   <result property="mainCategory" column="main_category"/>
-	   <result property="userId" column="user_id"/>
 	   <result property="placeName" column="place_name"/>
 	   <result property="contentOne" column="content_one"/>
 	   <result property="contentTwo" column="content_two"/>
 	   <result property="mainImageFile" column="main_image_file"/>
-	   <result property="take" column="take"/>
+	   <result property="likeHit" column="likeHit"/>
 	   <result property="upHit" column="upHit"/>
+	   <result property="latitude" column="latitude"/>
+	   <result property="longitude" column="longitude"/>
+	   <result property="address" column="address"/>
     </resultMap>
     
+    <resultMap  id="mylist" type="com.care.root.main.dto.MyListDTO">
+	      <id property="listNo" column="list_no"/>
+		  <result property="id" column="id"/>
+		  <result property="place" column="place"/>
+		  <result property="image" column="image"/>
+    </resultMap>
+    
+    
+    <delete id="deleteMyList">
+    	delete from mylist where list_no = #{listNo}
+    </delete>
+    
+    <insert id="addMyList">
+    	insert into mylist(list_no, id, place, image) values(mylist_seq.nextval, #{id}, #{place},#{image})
+    </insert>      
+    
     <select id="themeList" resultMap="main">
-    	select main_id, place_name, content_one from main
+    	select * from main where main_category = #{mainCategory}
     </select>
     
     <select id="themeView" resultMap="main">
-    	select * from main where main_id = #{mainId}
+    	select * from main where place_name = #{placeName}
     </select>
   
   <insert id="register">
-  	insert into main(main_id, main_category, place_name, content_one, content_two, main_image_file)
-  	values(main_seq.nextval,#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile})
+  	insert into main(main_category, place_name, content_one, content_two, main_image_file, latitude, longitude, address)
+  	values(#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile}, #{latitude},#{longitude},#{address})
   </insert>
+  
+  <select id="getMyList" resultMap="mylist">
+  	select * from mylist where id = #{id}
+  </select>
+  
+  
+
   
   </mapper>

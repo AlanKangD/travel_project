@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 </head>
 <body>
 <c:import url="../default/header.jsp"/>

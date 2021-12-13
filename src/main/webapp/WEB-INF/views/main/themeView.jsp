@@ -8,106 +8,97 @@
 		<title>Generic - Phantom by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
+		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />		
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
+	
+<style>
+	#main {width: 80%; margin-left: 10%; margin-right: 10%;}
+	.flex{display: flex;}
+	.flexB{background-color: red; width: 50%; padding-left: 100px;}
+	
+</style>
+<script>
+function addMyList() {
+	   let form = {};
+	   let arr = $("#listForm").serializeArray()
+	   console.log(arr)
+	   for (i = 0; i < arr.length; i++) {
+	         form[arr[i].name] = arr[i].value;
+	      }
+	   console.log(form)
+	   $.ajax({
+	      url : "addMyList",
+	      type : "POST",
+	      dataType : "json",
+	      data : JSON.stringify(form),
+		  contentType : "application/json;charset=utf-8",
+	      success : function(data) {
+	         console.log(data)
+	         console.log(data.result);
+	         if(data.result == true){
+	            alert("찜하기 완료!")
+	         }else{
+	            alert("이미 찜한 관광지입니다!")      
+	         }
+	      },
+	      error : function() {
+	         alert("서버문제 발생!")
+	      }
+	   })  
+	}
+
+</script>
+
+
 	</head>
 	<body>
+	<c:import url="../default/header.jsp"></c:import>
 	
-	<div id="map" style="width:500px;height:400px;"></div>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.469651, 126.493169),
-			level: 3
-		};
 
-		var map = new kakao.maps.Map(container, options);
-	</script>
-	
-	
-		<!-- Wrapper -->
-			<div id="wrapper">
+<!-- Wrapper -->
 
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
-
-							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="${contextPath }/images/logo.svg" alt="" /></span><span class="title">Phantom</span>
-								</a>
-
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
-
-						</div>
-					</header>
-
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
-							<li><a href="generic.html">Tempus etiam</a></li>
-							<li><a href="generic.html">Consequat dolor</a></li>
-							<li><a href="elements.html">Elements</a></li>
-						</ul>
-					</nav>
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner" style="text-align: center">
-							<h1>${dto.placeName }</h1>
-							<h5>테마 : ${dto.mainCategory }</h5>
-							<span class="image main">
-							<img src="${contextPath }/main/download?mainImageFile=${dto.mainImageFile}" />
-							</span>
-							<p>${dto.contentOne }</p>
-							<p>${dto.contentTwo }</p>
-							<p></p>
-							<p><button>일정 추가하기</button></p>
-						</div>
-					
+		<!-- Main -->
+			<div id="main">	
+			<form id="listForm">
+				<input type="hidden" name="place" value="${dto.placeName }">
+				<input type="hidden" name="image" value="${dto.mainImageFile }">
+				<input type="hidden" name="id" value="${userId}">
+			</form>
+				<br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>
+				<div class="inner" style="text-align: center">
+					<h1>${dto.placeName }</h1>
+					<h5>테마 : ${dto.mainCategory }</h5>				
+					<p  style="margin-left: 80%">				
+						<button onclick="addMyList()">일정 추가하기</button>
+					</p>
+					<span class="image main">
+					<img style="height:500px;" src="${contextPath }/main/download?mainImageFile=${dto.mainImageFile}" />
+					</span>
+					<p>${dto.contentOne }</p>
+					<p>${dto.contentTwo }</p>							
+				</div>					
+				<div class='flex'>	
+					<div class="flexA" id="map" style="width:500px;height:400px;"></div>
+					<script>
+	                        var mapContainer = document.getElementById('map');
+	                        var mapOption = {
+	                           center: new kakao.maps.LatLng(${dto.latitude}, ${dto.longitude}),
+	                           level: 3
+	                        };
+	                        var map = new kakao.maps.Map(mapContainer, mapOption);
+	                        var markerPosition  = new kakao.maps.LatLng(${dto.latitude}, ${dto.longitude});
+	                        var marker = new kakao.maps.Marker({
+	                            position: markerPosition
+	                        });
+	                        marker.setMap(map);
+	                     </script>
+					<div class="flexB">
+						<h3><br>주변 맛집을 추천해주세요!</h3> 
 					</div>
-					
-					
-					
-
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">							
-							<section>
-								<h2>Follow</h2>
-								<ul class="icons">
-									<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
-
-			</div>
-
-		<!-- Scripts --> 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
+				</div>	
+				
+				
+			</div>				
+		<c:import url="../default/footer.jsp"></c:import>			
 	</body>
 </html>
