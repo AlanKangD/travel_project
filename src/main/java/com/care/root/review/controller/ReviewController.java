@@ -59,14 +59,13 @@ public class ReviewController {
 	@PostMapping("r_writeSave")
 	public void r_writeSave(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
-			HttpServletRequest request) throws Exception {
-		
-		String message = rs.r_writeSave(mul, request);
+			HttpServletRequest request,
+			@RequestParam("photo_count") int photo_count) throws Exception {
+		String message = rs.r_writeSave(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
 		out = response.getWriter();
 		out.println(message);
-		
 	    }
 	
 	@PostMapping("r_modify")

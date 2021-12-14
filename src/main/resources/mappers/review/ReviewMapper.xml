@@ -32,18 +32,18 @@
 	</resultMap>
 		
 	<insert id="r_writeSave">
-		insert into review(review_no, id, review_title, review_content, review_file_name)  
-		values(review_seq.nextval, #{id}, #{review_title}, #{review_content}, #{review_file_name})
+		insert into review(review_no, id, review_title, review_content)  
+		values(review_seq.nextval, #{id}, #{review_title}, #{review_content})
 	</insert>
 	
-	<!-- <insert id="photo_save">
-		insert into r_photo(r_write_group, id, origin_file_name, stored_file_name)
-		values(review_seq.nextval, #{id}, #{original_file_name}, #{stored_file_name})
-	</insert> -->
+	<insert id="photo_save">
+		insert into r_photo(id, r_write_group, origin_file_name, stored_file_name) 
+		values(#{id}, (select review_no from review where id=#{id} and review_title = #{review_title}), #{original_file_name}, #{stored_file_name})
+	</insert>
 	
 	<update id="r_modify">
 		update review set review_title=#{review_title}, review_content=#{review_content}, 
-		review_file_name=#{review_file_name} where review_no=#{review_no} 
+		review_file_name=#{review_file_name} where review_no=#{review_no}
 	</update>
 	
 	<select id="boardList" resultMap="review">

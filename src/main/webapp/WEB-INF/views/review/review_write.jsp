@@ -10,120 +10,50 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-	var photo_count = 0;
-	var preview_list = [];
-	var review_file_list = "";
+	var photo_count = 1; // 파일 수 
+	var photo_num = 1; // 사진 번호
 	
-    
-	
-	/* $(document).ready(function(){
-		$("#photo_delete").on("click",function(e){
-			e.preventDefault();
-			preview_delete(document.getElment)
-			photo_delete($(this))
-		});
+	function load_preview_0(input){
 		
-		$("input[type=file]").change(function () {
-			var fileInput = document.getElementById("review_file_name_0");
-			
-			var files = fileInput.files;
-			
-            var file;
-            
-            console.log(files);
-            for (var i = 0; i < files.length; i++) {
-                file = files[i];
-                alert(file.name);
-                console.log(files);
-            }
-        });
-		
-	}); */
-
-	
-	function readURL(input) {
 		var file = input.files[0] //파일에 대한 정보
-	    console.log(file.name)
-	    if (file != '') {
-         var reader = new FileReader();
-         reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
-         reader.onload = function (e) { // 파일 로드한 값을 표현한다
-          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
-           $('#preview').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
-          }
-      }
-	    
-	/* if(preview_list.length <= 5){
-		if (file != '') {
-			var reader = new FileReader();
-			reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
-			reader.onload = function (e) {// 파일 로드한 값을 표현한다
-				//e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
-				var preview_path = e.target.result;
-				//<input type='file' name='review_file_name_"+(photo_count)+"' id='review_file_name_"+(photo_count)+"' onchange='readURL(this)'/>
-				var str_preview = 
-					"<span style='margin:2px;'><img style='align:right;' alt='선택된 이미지가 없습니다.' src='"+(preview_path)+"' id='preview_"+(photo_count++)+"' width='160' height='90'></span>"
-				var str_file =
-				    "<p><b id='review_file_name_"+(photo_count)+"' name='review_file_name_"+(photo_count)+"' value=''>" + file.name +"</b><a  href='#this' id='delete_btn_"+(photo_count)+"' onclick=' $(review_file_name_"+(photo_count)+").remove(); $(delete_btn_"+(photo_count)+").remove(); $(preview_"+ (photo_count)+").remove();' class='btn'>삭제하기</a></p>";	
-				$("#photo_div").append(str_file);
-				$("#preview_div").append(str_preview);
-				push_list(file.name)
-				//console.log(preview_list) //배열에 잘 추가되고 있음
-				
-				review_file_list += (file.name + "/")
-				
-				document.getElementById("review_file_list").value = review_file_list	
-					
-				console.log(review_file_list)
-				console.log(review_file_list[0])
-				
-			}
-		}
 		
-	}else{
-			alert("사진을 최대로 등록하셨습니다.")
+	      if (file != '') {
+	         var reader = new FileReader();
+	         reader.readAsDataURL(file);
+	         reader.onload = function (e) { // 파일 로드한 값을 표현한다
+	          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
+	           $('#preview_0').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
+	         }
+	      }
 	}
 	
-    function push_list(file_name){
-		preview_list.push(file_name);
-		//review_file_list.push(file_name);
-	} */
-    
-    
-}	    	
-
-	/* function preview_add(input){
-		var file = input.files[0]
-		var str_file1 =
-	    	  "<p><input type='file' name='review_file_name_"+(photo_count)+"' onchange='preview_add(input)'/><a href='#this' id='photo_delete' class='btn'>삭제하기</a></p>";
-		var str_preview1 = 
-			"<span><img style='align:right;' alt='선택된 이미지가 없습니다.' src='#' id='preview_"+(photo_count++)+"' width='160' height='90'></span>"
-		if(photo_count < 11){
-			if (file != '') {
-				var reader = new FileReader();
-				reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
-				reader.onload = function (e) { // 파일 로드한 값을 표현한다
-					//e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
-					$("#preview_div").append(str_preview1);
-					$("#photo_div").append(str_file1);
-				} 
-			}
+	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 기능
+		if(photo_count == 10){
+			alter("사진은 최대 10장까지 첨부할 수 있습니다.")
 		}else{
-			alert("사진을 최대로 등록하셨습니다.")
+			var str_photo = "<p><input type='file' name='review_file_name_"+(photo_num)+"' id='review_file_name_"+(photo_num)+"' onchange='load_preview(this); '/>"
+				+ "<a href='#this' onClick='$(this).parent().remove(); photo_count--; $(span_"+photo_num+").remove(); ' class='btn'>삭제하기</a></p>"
+			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'><img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
+			$("#photo_div").append(str_photo); //div id=photo_div 에 str_photo 문자열을 추가한다.
+			$("#preview_div").append(str_preview); //div id=preivew_div 에 str_preview 문자열을 추가한다.
+			photo_num++;
+			photo_count++;
+			$("#photo_count").val(photo_count);
 		}
-	} */
-	      /* for(; photo_count < 11 ; photo_count++){
-	    	  if(file != ''){
-	    		  var reader = new FileReader();
-	    		  reader.readAsDataURL(file);
-	    		  reader.onload = function(e){
-	    			  $("#photo_div").append(str);
-	    			  $('#preview_"(photo_count)"').att('src',e.target.result);
-	    		  }
-	    	  }
-	      } */
-
+		
+	}
 	
+	function load_preview(input){//추가한 사진의 프리뷰를 보여주는 
+		var file1 = input.files[0] //파일에 대한 정보
+		
+		if(file1 != ''){//파일 유무 확인
+			var reader = new FileReader();
+			reader.readAsDataURL(file1);
+			reader.onload = function(e){//reader.onload 파일이 로드되었다면 event를 실행한다
+				$("#preview_"+(photo_num -1)).attr('src', e.target.result);//id = preview_ photo_count인 프리뷰의 src를 e.target.result로 지정한다.
+			}
+		}
+	}
 </script>
 </head>
 <body>review_write.jsp<br>
@@ -140,19 +70,25 @@
 				<hr>
 				
 				<div id="preview_div">
-      				<img id="preview" src="#" width=320 height=180 alt="선택된 이미지가 없습니다" />	
+      				<img id="preview_0" name="preview_0" src="#" width=320 height=180 alt="대표이미지가 없습니다." />
 				</div>
+				
 				<div id="photo_div">
-					<p>
-					<input type="file" name="review_file_name" onchange="readURL(this)"><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
+					<p><!-- onchange="readURL(this)"  -->
+						<b>대표이미지</b>
+						<input type="file" id="review_file_name_0" name="review_file_name_0" onchange="load_preview_0(this);"/>
+						<span style="font-size:15px; color: gray;">※사진은 최대 10개까지 등록이 가능합니다.</span><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
 					</p>
 				</div>
+				
 				<hr>
 				
 				<div align="right">
 					<p>
-					<input type="submit" value="저장" >
-					<input type="button" value="목록보기" onClick="location.href='${contextPath}/review/review_boardList'">
+					<input type="number" id="photo_count" name="photo_count" readonly>
+					<input type="button" value="사진추가" onClick="add_file();">
+					<input type="submit" value="저장" />
+					<input type="button" value="목록보기" onClick="location.href='${contextPath}/review/review_boardList'"/>
 					</p>
 				</div>
 			</form>
