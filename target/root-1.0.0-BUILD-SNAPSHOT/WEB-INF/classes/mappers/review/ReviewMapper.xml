@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.care.root.mybatis.review.ReviewMapper">
+	
+		<!-- <resultMap id="board" type="com.care.root.review.dto.ReviewDTO">
+			<id property="review_no" column="review_no"/>
+			<result property="review_title" column="review_title"/>
+			<result property="review_content" column="review_content"/>
+			<result property="id" column="id"/>
+			<result property="review_file_name" column="review_file_name"/>
+			<result property="review_date" column="review_date"/>
+			<result property="review_hit_num" column="review_like"/>
+			<result property="review_like" column="review_hit_num"/>
+		</resultMap> -->
+	<resultMap id="review" type="com.care.root.review.dto.ReviewDTO">
+		<!--
+			property = DTO
+			column = DB
+		-->
+		<id property="review_no" column="review_no" />
+		<result property="id" column="id" />
+		<result property="review_title" column="review_title" />
+		<result property="review_content" column="review_content" />
+		<result property="review_hit_num" column="review_hit_num" />
+		<result property="review_like" column="review_like" />
+		<result property="review_date" column="review_date" />
+		<result property="review_file_name" column="review_file_name" />
+	</resultMap>
+	
+	<resultMap type="com.care.root.review.dto.ReviewPhotoDTO" id="photo_view">
+		<result property="photo_view" column="stored_file_name"/>
+		<result property="write_group" column="r_write_group"/>
+	</resultMap>
+	
+	<insert id="r_writeSave">
+		insert into review(review_no, id, review_title, review_content)  
+		values(review_seq.nextval, #{id}, #{review_title}, #{review_content})
+	</insert>
+	
+	<insert id="photo_save">
+		insert into r_photo(id, r_write_group, origin_file_name, stored_file_name) 
+		values(#{id}, (select review_no from review where id=#{id} and review_title = #{review_title}), #{original_file_name}, #{stored_file_name})
+	</insert>
+	
+	<update id="r_modify">
+		update review set review_title=#{review_title}, review_content=#{review_content}, 
+		review_file_name=#{review_file_name} where review_no=#{review_no}
+	</update>
+	
+	<select id="boardList" resultMap="review">
+		select B.* from(select rownum rn, A.* from
+		(select * from review order by review_no desc)A)B where rn between #{s} and #{e}
+	</select>
+	
+	<select id="selectReviewCount" resultType="Integer">
+		select count(*) from review
+	</select>
+	
+	<select id="content" resultMap="review">
+		select * from review where review_no = #{review_no}
+	</select>
+	
+	<select id="photo_view" resultMap="">
+	</select>
+	
+	<update id="upHit">
+		update review set review_hit_num = review_hit_num + 1 where review_no = #{review_no}
+	</update>
+	
+	<insert id="replyAdd">
+		insert into r_reply(id,r_reply_content,r_write_group,r_reply_no,r_reply_tag) 
+		values(#{id},#{r_reply_content},#{r_write_group},r_reply_no.nextval,#{r_reply_tag})
+	</insert>
+	
+	<resultMap id="reply" type="com.care.root.review.dto.ReviewRepDTO">
+		<id property="r_reply_no" column="r_reply_no" />
+		<result property="id" column="id"/>
+		<result property="r_reply_content" column="r_reply_content"/>
+		<result property="r_reply_date" column="r_reply_date"/>
+		<result property="r_write_group" column="r_write_group"/>
+	</resultMap>
+	
+	<select id="getRepList" resultMap="reply">
+		select * from r_reply where r_write_group=#{r_write_group} order by r_reply_date asc
+	</select>
+	
+	<update id="updateReply">
+		update r_reply set r_reply_content=#{r_reply_content} where r_reply_no=#{r_reply_no}
+	</update>
+	
+	<delete id="deleteReply">
+		delete from r_reply where r_reply_no=#{r_reply_no}
+	</delete>
+	
+	<select id="insertTag" resultMap="reply">
+		select id from r_reply where r_reply_no=#{r_reply_no}
+	</select>
+	
+	<update id="updateReplyCount" parameterType="int">
+		update review r set r.r_reply_count = (select count(r_reply_no) from r_reply where r_write_group=#{r_write_group}) where r.review_no=#{r_write_group}
+	</update>
+	
+	<!-- 좋아요 관련 -->
+	<resultMap id="like" type="com.care.root.review.dto.ReviewLikeDTO" >
+		<id property="like_no" column="like_no"/>
+		<result property="review_no" column="review_no"/>
+		<result property="id" column="id"/>
+		<result property="like_check" column="like_check"/>
+		<result property="like_date" column="like_date"/>
+	</resultMap>
+	
+	<!-- 게시글 추천수 -->
+	<update id="updateLike" parameterType="int">
+		update review set review_like = review_like + 1 where review_no=#{review_no}
+	</update>
+	<!-- 게시글 추천수 취소 -->
+	<update id="updateLikeCancel" parameterType="int">
+		update review set review_like = review_like - 1 where review_no=#{review_no}
+	</update>
+	<!-- 게시글 추천 시 Like 테이블에 insert -->
+	<insert id="insertLike">
+		insert into r_like(like_no,review_no,id) values((SELECT NVL(MAX(like_no),0)+1 from r_like),#{review_no},#{id})
+	</insert>
+	<!-- 게시글 추천 취소 시 delete -->
+	<delete id="deleteLike">
+		delete from r_like where review_no = #{review_no} and id = #{id}
+	</delete>
+	<!-- 게시글 추천 시 Check를 1로 만들어서 중복 방지 -->
+	<update id="updateLikeCheck">
+		update r_like set like_check = 1 where review_no=#{review_no} and id=#{id}
+	</update>
+	<!-- 게시글 추천 취소 다시 0 -->
+	<update id="updateLikeCheckCancel">
+		update r_like set like_check = 0 where review_no=#{review_no} and id=#{id}
+	</update>
+	<!-- 게시글 추천 중복 방지 select 문 -->
+	<select id="likeCheck" resultType="int">
+		select count(*) from r_like where review_no=#{review_no} and id=#{id}
+	</select>
+	
+</mapper>
+  	

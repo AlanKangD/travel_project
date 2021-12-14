@@ -1,8 +1,11 @@
 package com.care.root.review.dto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ReviewDTO {
@@ -14,7 +17,14 @@ public class ReviewDTO {
 	private int review_like;
 	private Timestamp review_date;
 	private String review_file_name;
+	private int r_reply_count;
 	
+	public int getR_reply_count() {
+		return r_reply_count;
+	}
+	public void setR_reply_count(int r_reply_count) {
+		this.r_reply_count = r_reply_count;
+	}
 	public String getReview_file_name() {
 		return review_file_name;
 	}

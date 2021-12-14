@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 </head>
-<body>review_boardList.jsp입니다
+<body>
 	<c:import url="../default/header.jsp" />
 	
 	<div class="wrap" align="center">
@@ -21,21 +21,34 @@
 				<th>작성시간</th>
 				<th>조회수</th>
 				<th>좋아요</th>
-				<th>댓글수</th>
 			</tr>
 			<c:forEach var="list" items="${ boardList }">
 				<tr>
 					<td>${ list.review_no }</td>
-					<td><a href="${contextPath}/review/review_content?review_no=${list.review_no}">${ list.review_title }</a></td>
+					<td><a href="${contextPath}/review/review_content?review_no=${list.review_no}">${ list.review_title }
+					<c:if test="${list.r_reply_count != 0}">
+						<small><b>[&nbsp;<c:out value="${list.r_reply_count}"/>&nbsp;]</b></small>
+					</c:if>
+					</a></td>
 					<td>${ list.id }</td>
 					<td>${ list.review_date }</td>
 					<td>${ list.review_hit_num }</td>
 					<td>${ list.review_like }</td>
-					<td>미구현</td>
 				</tr>
 			</c:forEach>
 		</table>	
 		<hr>
+		<table border="1">
+		<tr>
+			<td colspan="7">
+			<div align="center">
+				<c:forEach var="num" begin="1" end="${ repeat }">
+					<a href="review_content?num=${num}">[${num}]</a>
+				</c:forEach>
+			</div>
+			</td>
+		</tr>
+		</table>
 		<input type="button" value="리뷰 작성" onclick="location.href='${contextPath}/review/review_write'">	
 	</div>
 	
