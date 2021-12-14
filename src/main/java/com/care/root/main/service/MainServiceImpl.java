@@ -166,7 +166,8 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public String deleteView(String placeName) {
-		int result = mapper.deleteView(placeName);		
+		int result = mapper.deleteView(placeName);	
+		System.out.println("result :" +result);
 		if(result == 1) {
 			return "{\"result\" : true} ";
 		}else {

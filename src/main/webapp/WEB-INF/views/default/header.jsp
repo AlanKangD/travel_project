@@ -33,7 +33,7 @@ text-align: center; padding-top:30px  }
 
 	function myList(){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/main/getMyList",
+			url : "${contextPath}/main/getMyList",
 			type : "get",
 			dataType : "json",
 			success : function(list){
@@ -41,7 +41,7 @@ text-align: center; padding-top:30px  }
 				let html = "";
 				list.forEach(function(data){
 					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+					html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
 					html += " "+data.place
 					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
 				})
@@ -54,7 +54,7 @@ text-align: center; padding-top:30px  }
 	function deleteList(listNo){
 		console.log(listNo)
 		$.ajax({
-			url : "${pageContext.request.contextPath}/main/deleteList?listNo="+listNo,
+			url : "${contextPath}/main/deleteList?listNo="+listNo,
 			type : "delete",
 			dataType : "json",
 			success : function(data){
