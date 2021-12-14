@@ -36,4 +36,12 @@
 		update member set pw=#{pw}, addr1=#{addr1}, addr2=#{addr2}, addr3=#{addr3}, email=#{email},phone_number=#{phoneNumber},session_id=#{sessionId}
 			where id=#{id} 
 	</update>
+	<select id="idChk" resultType="Integer">
+		select count(*) from member
+		where id=#{id}
+	</select>
 </mapper>
+
+
+
+

@@ -12,5 +12,6 @@ public interface MemberService {
 	public void memberDelete(String id); //회원 삭제 기능 
 	public int loginChk(String id, String pw); //로그인 체크 기능
 	public void memberModify(MemberDTO dto); //회원 수정 기능
+	public int idChk(String id); //회원가입시 아이디 중복 체크
 }
 

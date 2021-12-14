@@ -7,6 +7,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function loginpopup(url,name){
+	var popHeight=290;
+	var popWidth=230;
+	var winHeight=document.body.clientHeight;
+	var winWidth=document.body.clientWidth;
+	var winX=window.screenLeft;
+	var winY=window.screenTop;
+	
+	var popX=winX+(winWidth-popWidth)/2;
+	var popY=winY+(winHeight-popHeight)/2;
+	
+	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+}
+</script>
 <style type="text/css">
 
 .wrapp { width: 100%; height:100px; margin: auto; background-color: yellow;
@@ -75,7 +90,7 @@ text-align: center; padding-top:30px  }
 			<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
 			<c:choose>
 				<c:when test="${userId == null && adminId == null }">
-					<li><a href="${contextPath }/member/loginForm">로그인</a></li>
+					<li><a href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');">로그인</a></li>
 				</c:when>
 				<c:otherwise>
 				<li><a href="${contextPath }/member/logout">로그아웃</a></li>
@@ -108,3 +123,4 @@ text-align: center; padding-top:30px  }
 
 </body> 
 </html>
+
