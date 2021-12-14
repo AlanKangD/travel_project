@@ -52,8 +52,8 @@ function addMyList() {
 	   })  
 	}
 	
-	function deleteView(placeName){
-		console.log(placeName)
+	function deleteView(placeName, mainCategory){
+		console.log(placeName, mainCategory);
 		$.ajax({
 			url : "deleteView?placeName="+placeName,
 			type : "delete",
@@ -62,7 +62,7 @@ function addMyList() {
 				console.log(data.result)
 				if(data.result == true){
 					alert("삭제 성공");
-					location.href="${pageContext.request.contextPath}/index";
+					location.href="${contextPath}/main/themeList?theme="+mainCategory;
 				}else{
 					alert("에이젝스 data result == false");
 				}
@@ -105,7 +105,7 @@ function addMyList() {
                 </script>
              </c:if>
 			
-			<button onclick="deleteView('${dto.placeName}')">삭제</button>		
+			<button onclick="deleteView('${dto.placeName}' , '${dto.mainCategory }')">삭제</button>		
 			<br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>		
 
 			<form action="${contextPath }/main/modifyView" method="post" enctype="multipart/form-data">
