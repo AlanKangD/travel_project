@@ -10,10 +10,10 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-	var photo_count = 1; // 파일 수 
-	var photo_num = 1; // 사진 번호
+	var photo_count = 1; // 사진 파일 수 
+	var photo_num = 1; // input과 preview의 이름을 정하기 위한 수
 	
-	function load_preview_0(input){
+	function load_preview_0(input){//대표이미지 프리뷰 로드하는 함수
 		
 		var file = input.files[0] //파일에 대한 정보
 		
@@ -27,7 +27,7 @@
 	      }
 	}
 	
-	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 기능
+	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 함수
 		if(photo_count == 10){
 			alter("사진은 최대 10장까지 첨부할 수 있습니다.")
 		}else{
@@ -36,14 +36,14 @@
 			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'><img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
 			$("#photo_div").append(str_photo); //div id=photo_div 에 str_photo 문자열을 추가한다.
 			$("#preview_div").append(str_preview); //div id=preivew_div 에 str_preview 문자열을 추가한다.
-			photo_num++;
-			photo_count++;
+			photo_num++; //input과 preview의 id와 이름을 부여하기 위한 번호
+			photo_count++; //add_file 함수 실행시 사진 수 를 증가시킨다.
 			$("#photo_count").val(photo_count);
 		}
 		
 	}
 	
-	function load_preview(input){//추가한 사진의 프리뷰를 보여주는 
+	function load_preview(input){//추가한 preview span에 이미지를 추가하는 함수
 		var file1 = input.files[0] //파일에 대한 정보
 		
 		if(file1 != ''){//파일 유무 확인
@@ -85,7 +85,7 @@
 				
 				<div align="right">
 					<p>
-					<input type="number" id="photo_count" name="photo_count" readonly>
+					이미지 파일 <input type="number" id="photo_count"  name="photo_count" readonly> 장
 					<input type="button" value="사진추가" onClick="add_file();">
 					<input type="submit" value="저장" />
 					<input type="button" value="목록보기" onClick="location.href='${contextPath}/review/review_boardList'"/>

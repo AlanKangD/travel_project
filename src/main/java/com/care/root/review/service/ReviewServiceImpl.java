@@ -57,22 +57,6 @@ public class ReviewServiceImpl implements ReviewService{
 			result_photo.add(i, mapper.photo_save(photo_dto));
 		}
 		
-		//MultipartFile file = mul.getFile("review_file_name");
-		//System.out.println("file : "+file);
-		
-		
-		//list를 받아와서 
-		
-//		 for(int i = 0 ; i < file_name_list.length ; i++) {
-//			 MultipartFile file = mul.getFile("review_file_list['" + i +"']"); 
-//			 ReviewPhotoDTO photo_dto = new ReviewPhotoDTO();
-//			 
-//			 photo_dto.setId(mul.getParameter("id"));
-//			 photo_dto.setOriginal_file_name(file_name_list[i]);
-//			 photo_dto.setStored_file_name(rfs.save_stored_file());
-//			 
-//			 mapper.photo_save(photo_dto);
-//		 }
 		String msg, url;
 		for(int j = 0; j< photo_count; j++) {
 			if(result_photo.get(j) == 0) {
@@ -127,6 +111,7 @@ public class ReviewServiceImpl implements ReviewService{
 	public void content(int review_no, Model model) {
 		upHit(review_no);
 		model.addAttribute("contentData", mapper.content(review_no));
+		model.addAttribute("photo_view", mapper.photo_view(review_no));
 	}
 	public void upHit(int review_no) {
 		mapper.upHit(review_no);

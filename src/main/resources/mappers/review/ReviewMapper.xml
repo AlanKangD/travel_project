@@ -30,7 +30,12 @@
 		<result property="review_date" column="review_date" />
 		<result property="review_file_name" column="review_file_name" />
 	</resultMap>
-		
+	
+	<resultMap type="com.care.root.review.dto.ReviewPhotoDTO" id="photo_view">
+		<result property="photo_view" column="stored_file_name"/>
+		<result property="write_group" column="r_write_group"/>
+	</resultMap>
+	
 	<insert id="r_writeSave">
 		insert into review(review_no, id, review_title, review_content)  
 		values(review_seq.nextval, #{id}, #{review_title}, #{review_content})
@@ -52,6 +57,9 @@
 	
 	<select id="content" resultMap="review">
 		select * from review where review_no = #{review_no}
+	</select>
+	
+	<select id="photo_view" resultMap="">
 	</select>
 	
 	<update id="upHit">

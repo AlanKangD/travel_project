@@ -14,4 +14,5 @@ public interface ReviewMapper {
 	public int r_modify(ReviewDTO dto);
 	public void upHit(int review_no);
 	public ReviewDTO content(int review_no);
+	public ReviewPhotoDTO photo_view(int review_no);
 }
