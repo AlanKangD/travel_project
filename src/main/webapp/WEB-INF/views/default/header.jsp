@@ -36,6 +36,7 @@ nav ul li a:hover {
     <ul>
 <li><a href="${contextPath }/index">HOME</a></li>
 <li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+
 <c:choose>
 	<c:when test="${userId == null && adminId == null }">
 		<li><a href="${contextPath }/member/loginForm">로그인</a></li>
@@ -44,6 +45,7 @@ nav ul li a:hover {
 		<li><a href="${contextPath }/member/logout">로그아웃</a></li>
 	</c:otherwise>
 </c:choose>
+<li><a href="${contextPath }/review/review_boardList">여행 게시판</a></li>
 <li><a href="${contextPath }/qna/allList">QnA게시판</a></li>
     </ul>
 </nav>

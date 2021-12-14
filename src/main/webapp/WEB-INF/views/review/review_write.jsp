@@ -39,7 +39,7 @@
 						<th>내 용 : </th> <td><textarea style="resize:none;" rows="15" cols="60" placeholder="내용을 입력해 주세요." ></textarea></td>
 					</tr>
 				</table> --%>
-				<b>작성자 : </b>	<input type="text" name="id" value="soomin" readonly>
+				<b>작성자 : </b>	<input type="text" name="id" value="${ userId }" readonly>
 				<hr>
 				<b>제 목 : </b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
 				<hr>
