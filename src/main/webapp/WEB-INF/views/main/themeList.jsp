@@ -28,7 +28,7 @@
 						
 							<section class="tiles">
 							<c:forEach var="list" items="${list }">
-								<article style="width:250px; height:250px;" class="style1">
+								<article style="width:250px; height:250px;">
 										<span class="image">
 											<img src= "${contextPath}/main/download?mainImageFile=${list.mainImageFile}" width="250px;" height="250px;">
 										</span>

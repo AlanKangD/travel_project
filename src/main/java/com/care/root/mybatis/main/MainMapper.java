@@ -10,6 +10,8 @@ public interface MainMapper {
 	public List<MainDTO> themeList(String mainCategory);
 	public int register(MainDTO dto);
 	public MainDTO themeView(String placeName);
+	public int deleteView(String placeName);
+	public int modifyView(MainDTO dto);
 	
 	
 	public int addMyList(MyListDTO myDto);

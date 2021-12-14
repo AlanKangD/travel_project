@@ -51,6 +51,14 @@
   	select * from mylist where id = #{id}
   </select>
   
+  <delete id="deleteView">
+  	delete from main where place_name = #{placeName}
+  </delete>
+  
+  <update id="modifyView">
+  	update main set main_image_file = #{mainImageFile}, content_one = #{contentOne},
+  	content_two = #{contentTwo} where place_name = #{placeName}
+  </update>
   
 
   

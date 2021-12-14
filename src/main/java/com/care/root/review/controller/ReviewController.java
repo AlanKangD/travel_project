@@ -3,9 +3,15 @@ package com.care.root.review.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +20,14 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.care.root.mybatis.review.ReviewMapper;
+import com.care.root.review.dto.ReviewLikeDTO;
 import com.care.root.review.service.ReviewFileService;
 import com.care.root.review.service.ReviewService;
 
@@ -38,34 +48,40 @@ public class ReviewController {
 		return "review/review_modify";
 	}
 	@GetMapping("review_boardList")
-	public String review_boardList(Model model) {
-		rs.boardList(model);
+	public String review_boardList(Model model,
+			@RequestParam(required = false, defaultValue = "1") int num) {
+		rs.boardList(model, num);
 		return "review/review_boardList";
 	}
 	@GetMapping("review_content")
-	public String content(@RequestParam("review_no") int review_no, Model model) {
+	public String content(@RequestParam("review_no") int review_no, Model model, 
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		System.out.println("content실행");
+		
 		rs.content(review_no, model);
 		return "review/review_content";
 	}
 	
 	
+	
 	//review관련 기능 구현
-	@PostMapping("writeSave")
-	public void writeSave(MultipartHttpServletRequest mul,
+	@PostMapping("r_writeSave")
+	public void r_writeSave(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
-			HttpServletRequest request) throws Exception {
-		String message = rs.writeSave(mul, request);
+			HttpServletRequest request,
+			@RequestParam("photo_count") int photo_count) throws Exception {
+		String message = rs.r_writeSave(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
 		out = response.getWriter();
 		out.println(message);
-	}
-	@PostMapping("modify")
-	public void modify(MultipartHttpServletRequest mul,
+	    }
+	
+	@PostMapping("r_modify")
+	public void r_modify(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
 			HttpServletRequest request) throws Exception {
-		String message = rs.modify(mul, request);
+		String message = rs.r_modify(mul, request);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
 		out = response.getWriter();
@@ -80,5 +96,22 @@ public class ReviewController {
 	    FileInputStream in = new FileInputStream(file);
 	    FileCopyUtils.copy(in, response.getOutputStream());
 	    in.close();
+	}
+	@ResponseBody
+	@RequestMapping(value="updateLike", method=RequestMethod.POST)
+	public int updateLike(int review_no, String id) {
+		int likeCheck = rs.likeCheck(review_no, id);
+		System.out.println(likeCheck);
+		if(likeCheck == 0) {
+			// 좋아요 처음 누름
+			rs.insertLike(review_no, id);				// like 테이블 삽입
+			rs.updateLike(review_no);					// 게시판 테이블 +1
+			rs.updateLikeCheck(review_no, id);			// like 테이블 구분자 1
+		} else if(likeCheck == 1) {
+			rs.updateLikeCheckCancel(review_no, id);	// like 테이블 구분자 0
+			rs.updateLikeCancel(review_no);				// 게시판 테이블 -1
+			rs.deleteLike(review_no, id);				// like 테이블 삭제
+		}
+		return likeCheck;
 	}
 }

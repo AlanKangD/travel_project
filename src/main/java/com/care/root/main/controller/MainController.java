@@ -1,5 +1,7 @@
 package com.care.root.main.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.care.root.common.sessionName.SessionCommonName;
+import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
 import com.care.root.main.service.MainService;
 
@@ -32,7 +34,6 @@ public class MainController implements SessionCommonName {
 	
 	@GetMapping("themeList")
 	public String themeList(@RequestParam String theme, Model model) {
-		System.out.println(" 테마 들어오는지 :" );
 		ms.themeList(model, theme);
 		model.addAttribute("theme", theme);
 		return "main/themeList";
@@ -40,7 +41,6 @@ public class MainController implements SessionCommonName {
 	
 	@GetMapping("addPlace")
 	public String addFormView(@RequestParam String theme, Model model) {
-		System.out.println("값확인 : " + theme);
 		model.addAttribute("theme", theme);
 		return "main/addForm";
 	}
@@ -60,15 +60,32 @@ public class MainController implements SessionCommonName {
 	@GetMapping("download")
 	public void download(@RequestParam String mainImageFile, HttpServletResponse response)
 										throws Exception{
-		System.out.println("로그확인 : " + mainImageFile);
 		ms.download(mainImageFile, response);
+	}
+	
+	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
+	public String modifyView(MultipartHttpServletRequest mul) {
+		ms.modifyView(mul);
+		String theme = mul.getParameter("mainCategory");
+		try {
+			theme = URLEncoder.encode(theme, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return "redirect:themeList?theme="+theme;
+	}
+	
+	
+	@DeleteMapping(value ="deleteView",  produces = "application/json;charset=utf-8" )
+	@ResponseBody
+	public String deleteView(@RequestParam String placeName) {		
+		return ms.deleteView(placeName);
 	}
 	
 	
 	@PostMapping(value="addMyList", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	   public String addMyList(@RequestBody MyListDTO dto) {
-		System.out.println("컨트롤러 addmylist 아이디 파람 : " + dto.getId());
 	      return ms.addMyList(dto);
 	   }
 	
@@ -83,5 +100,7 @@ public class MainController implements SessionCommonName {
 	public String deleteList(@RequestParam int listNo) {
 		return ms.deleteMyList(listNo);
 	}
+	
+	
 	
 }
