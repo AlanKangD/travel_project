@@ -5,7 +5,14 @@ public class ReviewPhotoDTO {
 	private String original_file_name;
 	private String stored_file_name;
 	private int review_no;
+	private String review_title;
 	
+	public String getReview_title() {
+		return review_title;
+	}
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
+	}
 	public String getId() {
 		return id;
 	}
