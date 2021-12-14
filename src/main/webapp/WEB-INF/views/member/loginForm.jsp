@@ -6,11 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<style type="text/css">
+text{
+font-family: 'Gothic A1', sans-serif;
+}
+</style>
 </head>
 <body>
-<c:import url="../default/header.jsp"/>
-	<div align="right">
+	<div align="center">
 		<c:choose>
 			<c:when test="${adminId != null}">
 				관리자님 환영합니다!
@@ -29,7 +32,7 @@
 		</form>
 		</c:if>
 	</div>
-<c:import url="../default/footer.jsp"/>
+
 
 </body>
 </html>

@@ -41,13 +41,35 @@
 			}
 		}).open();
 	}
+	function idChk(){
+		$.ajax({
+			url:"member/idChk",
+			type:"GET",
+			datatype:"json",
+			data:{"id":$("#id").val()},
+			success:function(data){
+				if(data.result == 1){
+					$("#idChk").css('color','red')
+					$("#idChk").text("중복된 아이디 입니다")
+				}else if(data.result == 0){
+					$("#idChk").attr("value","Y");
+					$('#idChk').css('color','blue')
+					$('#idChk').text("사용 가능한 아이디 입니다")
+				}
+			},error:function(){
+				alert("아이디를 입력하세요")
+			}			
+		})
+	}
 </script>
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
 <div align="center">
 	<form id=fo action="${contextPath }/member/registerWrite" method="post">
-		아이디 : <input type="text" name="id" placeholder="(필수)가입할 아이디 입력"><br> 
+		아이디 : <input type="text" name="id" id="id" placeholder="(필수)가입할 아이디 입력"><br> 
+		<input type="button" onclick="idChk()" value="아이디중복체크">
+		<span id="idChk"></span><br>
 		비밀번호 : <input type="text" name="pw" placeholder="(필수)가입할 비밀번호 입력"><br> 
 		이메일 : <input type="text" name="email" placeholder="(필수)가입할 이메일 입력"><br> 
 		전화번호 : <input type="text" name="phoneNumber" value="010--"><br> 
