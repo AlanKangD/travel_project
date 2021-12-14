@@ -28,7 +28,7 @@ public interface MainService extends MainFileStorage {
 	public String deleteMyList(int listNo);
 	
 	public String addReply(ReplyDTO dto);
-	public List<ReplyDTO> getReply(String placeName);
+	public List<ReplyDTO> getReply(String placeName, int pageNum);
 	public String deleteReply(int repNo);
 	
 }

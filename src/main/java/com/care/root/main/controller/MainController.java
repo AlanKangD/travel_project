@@ -112,8 +112,9 @@ public class MainController implements SessionCommonName {
 	
 	@GetMapping(value ="getReply", produces="application/json;charset=utf-8")
 	@ResponseBody
-	public List<ReplyDTO> getReply(@RequestParam String placeName) {
-		return ms.getReply(placeName);
+	public List<ReplyDTO> getReply(@RequestParam String placeName, @RequestParam int pageNum) {
+		System.out.println("페이지넘버 : " + pageNum);
+		return ms.getReply(placeName, pageNum);
 	}
 	
 	@DeleteMapping(value = "deleteReply", produces="application/json;charset=utf-8")

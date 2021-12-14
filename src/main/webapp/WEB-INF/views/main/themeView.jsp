@@ -19,6 +19,9 @@
 	.flexBa{background-color: aqua; text-align: center;}
 </style>
 <script>
+var pageNum = 1;
+console.log('전역변수 페이지넘버 : ' + pageNum);
+
 function addMyList() {
 	   
 	   let form = {};
@@ -102,11 +105,10 @@ function addMyList() {
 			}			
 		})
 	}
-	
 	function getReply(){
 		console.log("getReply들어옴 : ${dto.placeName}")
 		$.ajax({
-			url : "getReply?placeName=${dto.placeName}",
+			url : "getReply?placeName=${dto.placeName}&pageNum="+pageNum,
 			type : "get",
 			dataType : "json",
 			success : function(list){
@@ -121,13 +123,35 @@ function addMyList() {
 						html += data.id+" / "+data.saveDate+"<br>"+data.repContent	+"<hr>"	
 					}
 			})
+			html += "<button onclick='getPageMinus()'>&lt;</button>"
+			html += "<button onclick='getPagePlus()'>&gt;</button>"
 			$("#reply").html(html)
 		}, error : function(){
 			alert("getReply 서버 문제 발생 ");
 			}			
 		})		
 	}
-
+	
+	function getPagePlus(){
+		pageNum = pageNum+1  //게시글 수 에서 더이상 가져올 게 없을 때 처리 만들기 
+		console.log('겟페이지에서 페이지넘버 : ' + pageNum)
+		getReply();
+				
+	}
+	function getPageMinus(){		
+		if(pageNum <= 1){
+			pageNum = 1
+		} else{
+			pageNum = pageNum-1		
+		}
+		console.log('겟페이지마이너스 : ' + pageNum)
+		getReply();
+	}
+	
+	
+	
+	
+	
 	function deleteReply(repNo){
 		console.log(repNo)
 		$.ajax({

@@ -73,10 +73,18 @@
   	insert into main_reply(rep_no, place_name, rep_content, id)
   	 values(main_reply_seq.nextval, #{placeName}, #{repContent}, #{id})
   </insert>
-  
+  <!-- 
   <select id="getReply" resultMap="mainReply">
   	select * from main_reply where place_name =  #{placeName} order by rep_no desc
   </select>
+   -->
+  <select id="getReply" resultMap="mainReply">
+  	select B.* from(select rownum rn, A.* from
+  	(select * from main_reply where place_name = #{placeName} order by rep_no desc)A)B
+  	where rn between #{start} and #{end}
+  </select>
+  
+  
   
   <delete id="deleteReply">
   	delete from main_reply where rep_no = #{repNo}
