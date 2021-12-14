@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
+import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.imageFile.MainFileStorage;
 
 public interface MainService extends MainFileStorage {
@@ -25,5 +26,9 @@ public interface MainService extends MainFileStorage {
 	public String addMyList(MyListDTO dto);
 	public List<MyListDTO> getMyList(HttpSession session);
 	public String deleteMyList(int listNo);
+	
+	public String addReply(ReplyDTO dto);
+	public List<ReplyDTO> getReply(String placeName);
+	public String deleteReply(int repNo);
 	
 }

@@ -25,6 +25,15 @@
 		  <result property="image" column="image"/>
     </resultMap>
     
+    <resultMap  id="mainReply" type="com.care.root.main.dto.ReplyDTO">
+    	<id property="repNo" column="rep_no"/>
+    	<result property="repContent" column="rep_content"/>
+    	<result property="placeName" column="place_name"/>
+    	<result property="id" column="id"/>
+    	<result property="likeHit" column="likeHit"/>
+    	<result property="saveDate" column="savedate"/>
+    </resultMap>
+    
     
     <delete id="deleteMyList">
     	delete from mylist where list_no = #{listNo}
@@ -63,6 +72,19 @@
   	update main set main_image_file = #{mainImageFile}, content_one = #{contentOne},
   	content_two = #{contentTwo} where place_name = #{placeName}
   </update>
+  
+  <insert id="addReply">
+  	insert into main_reply(rep_no, place_name, rep_content, id)
+  	 values(main_reply_seq.nextval, #{placeName}, #{repContent}, #{id})
+  </insert>
+  
+  <select id="getReply" resultMap="mainReply">
+  	select * from main_reply where place_name =  #{placeName} order by rep_no desc
+  </select>
+  
+  <delete id="deleteReply">
+  	delete from main_reply where rep_no = #{repNo}
+  </delete>
   
 
   
