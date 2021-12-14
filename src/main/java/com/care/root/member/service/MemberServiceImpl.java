@@ -56,6 +56,20 @@ public class MemberServiceImpl implements MemberService{
 		mapper.memberModify(dto);
 		
 	}
+
+	@Override
+	public int idChk(String id) {
+		System.out.println(id);
+		int result=mapper.idChk(id);
+		System.out.println("result : "+result);
+		if(result==0) {
+			return 0;  //아이디중복X     
+		}else {
+			return 1;  //아이디 중복
+		}
+	}
+
+	
 	
 
 }

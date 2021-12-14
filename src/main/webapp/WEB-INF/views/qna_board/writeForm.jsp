@@ -7,7 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+#main {width: 80%; margin-left: 5%; margin-right: 5%;}
+
+#tdid {background-color: red;}
+#tdid input{background-color: blue;}
+
+</style>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 <script type="text/javascript">
 	function secret(){
 	    var checked = document.querySelector("input[name='qna_secret']:checked")
@@ -45,6 +54,7 @@
 </head>
 <body>
 <c:import url="../default/header.jsp" />
+<div id="main">
 <h1>문의하고싶은 내용을 작성하세요.</h1>
 
 <form id="fo" action="${contextPath }/qna/writeSave" method="post">
@@ -56,7 +66,16 @@
 		
 		<tr>
 			<th>작성자</th> 
-			<td><input type="text" name="id" id="id"></td>
+			<td>
+				<c:choose>
+					<c:when test="${userId != null}">
+						<input type="hidden" name="id" id="id" value="${userId }">${userId }
+					</c:when>
+					<c:otherwise>
+						<input type="hidden" name="id" id="id" value="admin">관리자
+					</c:otherwise>
+				</c:choose>
+			</td>
 		</tr>
 
 		<tr>	
@@ -66,7 +85,7 @@
 		
 		<tr>	
 			<th>비밀글</th> 
-			<td>
+			<td id="tdid">
 				<input type="radio" name="qna_secret" value="open"onclick="secret()" checked >공개글
 				<input type="radio" name="qna_secret" value="secret"onclick="secret()">비밀글
 			</td>
@@ -80,19 +99,19 @@
 		<tr>
 			<th>개인정보 수집 및 <br>이용 동의</th> 
 			<td>
-<textarea rows="10" cols="70" name="qna_content" readonly>■ 개인정보의 수집·이용 목적
-서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적
+			<textarea rows="10" cols="70" name="qna_content" readonly>■ 개인정보의 수집·이용 목적
+			서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적
+			
+			■ 수집하려는 개인정보의 항목
+			이름, 주소, 연락처, 이메일 등
+			
+			■ 개인정보의 보유 및 이용 기간
+			회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외없이 해당정보를 파기합니다. 
+			</textarea><br>
 
-■ 수집하려는 개인정보의 항목
-이름, 주소, 연락처, 이메일 등
-
-■ 개인정보의 보유 및 이용 기간
-회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외없이 해당정보를 파기합니다. 
-</textarea><br>
-
-				개인정보 수집 및 이용에 동의하십니까?
-				<input type="radio" name="agreement" value="agree" >동의함
-				<input type="radio" name="agreement" value="nonAgree" checked >동의안함
+			개인정보 수집 및 이용에 동의하십니까?
+			<input type="radio" name="agreement" value="agree" >동의함
+			<input type="radio" name="agreement" value="nonAgree" checked >동의안함
 
 			</td>
 		</tr>
@@ -109,6 +128,7 @@
 		</tr>
 	</table>
 </form>
+</div>
 <c:import url="../default/footer.jsp" />
 </body>
 </html>
