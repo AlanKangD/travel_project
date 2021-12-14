@@ -7,12 +7,12 @@ public class MainDTO {
 	private String contentOne; //not null
 	private String contentTwo; //not null
 	private String mainImageFile; //not null
-	private int likeHit;   // like로 수정 요망 
+	private int likeHit;   
 	private int upHit;	
 	private String latitude;   // 위도  
 	private String longitude;   //경도   ,  
 	private String address  ;
-	//나중에 주소 address도 추가하기 (컬럼) 
+	
 	
 	
 	public String getPlaceName() {
