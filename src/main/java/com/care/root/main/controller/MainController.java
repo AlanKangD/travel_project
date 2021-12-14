@@ -34,7 +34,6 @@ public class MainController implements SessionCommonName {
 	
 	@GetMapping("themeList")
 	public String themeList(@RequestParam String theme, Model model) {
-		System.out.println("테마리스트 테마 확인 : " + theme);
 		ms.themeList(model, theme);
 		model.addAttribute("theme", theme);
 		return "main/themeList";
@@ -49,13 +48,11 @@ public class MainController implements SessionCommonName {
 	@PostMapping("register")
 	   public void register(MultipartHttpServletRequest mul,HttpServletResponse response,
 	                                    HttpServletRequest request) throws Exception {
-		System.out.println("테마확인 : " + mul.getParameter("mainCategory"));
 	      ms.register(mul, response, request);
 	   }
 	
 	@GetMapping("themeView")
 	public String themeView(String placeName, Model model) {
-		System.out.println("modify에서 잘 넘어갓나2 :" +placeName);
 		ms.themeView(placeName, model);		
 		return "main/themeView";
 	}
@@ -67,32 +64,21 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
-	public String modifyView(MultipartHttpServletRequest mul, RedirectAttributes ra, Model model) {
+	public String modifyView(MultipartHttpServletRequest mul) {
 		ms.modifyView(mul);
-		System.out.println("modifyView1 : " + mul.getParameter("placeName"));
-		String placeName = mul.getParameter("placeName");
 		String theme = mul.getParameter("mainCategory");
 		try {
 			theme = URLEncoder.encode(theme, "utf-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ra.addFlashAttribute("placeName", placeName);
-		System.out.println(ra.getAttribute("placeName"));
-		model.addAttribute("placeName", placeName);
-		System.out.println("테마: " + mul.getParameter("mainCategory"));
-		
-		
-	//	return "redirect:themeView";
-		return "redirect:themeList?theme="+theme; //한글 문제 
+		return "redirect:themeList?theme="+theme;
 	}
 	
 	
 	@DeleteMapping(value ="deleteView",  produces = "application/json;charset=utf-8" )
 	@ResponseBody
 	public String deleteView(@RequestParam String placeName) {		
-		System.out.println("deleteView로그 확인 : " + placeName);
 		return ms.deleteView(placeName);
 	}
 	

@@ -124,7 +124,6 @@ public class MainServiceImpl implements MainService {
 
 	@Override
     public String addMyList(MyListDTO dto) {         
-    System.out.println("addMylist로그확인 : " + dto.getId());
     System.out.println(dto.getImage());
     System.out.println(dto.getPlace());
     int result = 0;
@@ -142,7 +141,6 @@ public class MainServiceImpl implements MainService {
       result = mapper.addMyList(dto);
       System.out.println("result : " + result);
        if(result == 1){ 
-          System.out.println("result = 1 확인");
           return "{\"result\" : true}";
        }else {
           return "{\"result\" : false3}";
