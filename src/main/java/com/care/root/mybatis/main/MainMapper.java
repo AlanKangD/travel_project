@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
+import com.care.root.main.dto.ReplyDTO;
 
 public interface MainMapper {
 	
@@ -17,4 +18,8 @@ public interface MainMapper {
 	public int addMyList(MyListDTO myDto);
 	public List<MyListDTO> getMyList(String userId);
 	public int deleteMyList(int listNo);
+	
+	public int addReply(ReplyDTO dto);
+	public List<ReplyDTO> getReply(String placeName);
+	public int deleteReply(int repNo);
 }

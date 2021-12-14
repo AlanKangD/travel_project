@@ -10,12 +10,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />		
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	
 <style>
 	#main {width: 80%; margin-left: 10%; margin-right: 10%;}
 	.flex{display: flex;}
-	.flexB{background-color: red; width: 50%; padding-left: 100px;}
-	
+	.flexB{width: 50%; }
+	.flexBa{background-color: aqua; text-align: center;}
 </style>
 <script>
 function addMyList() {
@@ -71,7 +72,81 @@ function addMyList() {
 			}
 		})		
 	}
+
+	function addReply(){
+		let form = {}
+		let arr = $("#addReply").serializeArray()
+		console.log(arr)
+
+		for(i=0;  i<arr.length; i++){
+			form[arr[i].name] = arr[i].value;
+		}
+		console.log(form)
+			$.ajax({
+			url : "addReply",
+			type : "post",
+			dataType : "json",
+			data : JSON.stringify(form),
+			contentType : "application/json; charset=utf-8",
+			success : function(data){
+				console.log(data)
+				if(data.result == true){
+					alert("댓글 등록 완료 ")
+					$("#repContent").val("")
+					getReply();
+				}else{
+					alert("답변 등록 실패")
+				}
+			}, error : function(){
+				alert("addReply 서버 문제 발생");
+			}			
+		})
+	}
 	
+	function getReply(){
+		console.log("getReply들어옴 : ${dto.placeName}")
+		$.ajax({
+			url : "getReply?placeName=${dto.placeName}",
+			type : "get",
+			dataType : "json",
+			success : function(list){
+				console.log(list)
+				let html ="";
+				list.forEach(function(data){
+					console.log('아이디 : '+data.id)					
+					if(data.id == '${userId}' || '${adminId}' != ""){
+						html += data.id+" / "+data.saveDate+"<br>"+data.repContent	
+						html += "<button style='background-color: aqua' type='button' onclick='deleteReply("+data.repNo+")'>삭제</button><hr>"
+					} else{
+						html += data.id+" / "+data.saveDate+"<br>"+data.repContent	+"<hr>"	
+					}
+			})
+			$("#reply").html(html)
+		}, error : function(){
+			alert("getReply 서버 문제 발생 ");
+			}			
+		})		
+	}
+
+	function deleteReply(repNo){
+		console.log(repNo)
+		$.ajax({
+			url : "deleteReply?repNo="+repNo,
+			type : "delete",
+			dataType : "json",
+			success : function(data){
+				console.log(data)
+				if(data.result == true){
+					alert("삭제완료")
+					getReply();
+				}else{
+					alert("data.result == false 삭제 실패")
+				}
+			}, error : function(){
+				alert("deleteReply서버 문제 발생");
+			}
+		})		
+	}
 	
 	
 	
@@ -79,7 +154,7 @@ function addMyList() {
 
 
 	</head>
-	<body>
+	<body onload="getReply()">
 	<c:import url="../default/header.jsp"></c:import>
 	
 
@@ -149,7 +224,19 @@ function addMyList() {
 	                     </script>
 	                    
 					<div class="flexB">
-						<h3><br>주변 맛집을 추천해주세요!</h3> 
+						<div  class="flexBa">
+							주변 맛집을 추천해주세요!
+						</div>						
+						<div style="background-color: yellow">
+							작성자 : ${userId }
+							<form id="addReply">
+								<input type="hidden" name="id" value="${userId }">	
+								<input type="hidden" name="placeName" value="${dto.placeName }">	
+								<input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="(맛집을 추천해주세요!)">																				
+								<button type="button" onclick="addReply()">등록</button>
+							</form>
+							<div id = "reply"></div>
+						</div>
 					</div>
 				</div>	
 				<label>주소 :  ${dto.address }</label>

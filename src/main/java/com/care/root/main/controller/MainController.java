@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
+import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.service.MainService;
 
 @RequestMapping("main")
@@ -101,6 +102,24 @@ public class MainController implements SessionCommonName {
 		return ms.deleteMyList(listNo);
 	}
 	
+	// 댓글 
 	
+	@PostMapping(value ="addReply", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addReply(@RequestBody ReplyDTO dto) {
+		return ms.addReply(dto);
+	}
+	
+	@GetMapping(value ="getReply", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public List<ReplyDTO> getReply(@RequestParam String placeName) {
+		return ms.getReply(placeName);
+	}
+	
+	@DeleteMapping(value = "deleteReply", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String deleteReply(@RequestParam int repNo) {
+		return ms.deleteReply(repNo);
+	}
 	
 }

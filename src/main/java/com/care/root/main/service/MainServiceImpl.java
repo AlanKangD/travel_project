@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
+import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.imageFile.MainFileStorage;
 import com.care.root.mybatis.main.MainMapper;
 
@@ -110,6 +111,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void themeView(String placeName, Model model) {
+		System.out.println("themeView 서비스 로그 확인 : " +placeName );
 		model.addAttribute("dto", mapper.themeView(placeName));
 	}
 
@@ -184,6 +186,31 @@ public class MainServiceImpl implements MainService {
 		dto.setContentTwo(mul.getParameter("contentTwo"));
 		mapper.modifyView(dto);		
 		
+	}
+
+	@Override
+	public String addReply(ReplyDTO dto) {
+		int result = mapper.addReply(dto);
+		if(result == 1) {
+			return "{\"result\" : true}";
+		}else {
+			return "{\"result\" : false}";
+		}
+	}
+
+	@Override
+	public List<ReplyDTO> getReply(String placeName) {		
+		return mapper.getReply(placeName);
+	}
+
+	@Override
+	public String deleteReply(int repNo) {
+		int result = mapper.deleteReply(repNo);
+		if(result == 1) {
+			return "{\"result\" : true}";
+		}else {
+			return "{\"result\" : false}";
+		}
 	}
 
 }
