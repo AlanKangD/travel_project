@@ -16,5 +16,6 @@ public interface MainMapper {
 	
 	public int addMyList(MyListDTO myDto);
 	public List<MyListDTO> getMyList(String userId);
+	public List<MyListDTO> getAllMyList();
 	public int deleteMyList(int listNo);
 }

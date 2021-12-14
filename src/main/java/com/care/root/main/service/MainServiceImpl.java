@@ -54,10 +54,22 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<MainDTO> themeList(Model model, String theme) {
-
-		model.addAttribute("list", mapper.themeList(theme));
-		return null;
+	public void themeList(Model model, String theme) {
+		int like = 0;
+		List<MyListDTO> myList = mapper.getAllMyList();
+		List<MainDTO> list = mapper.themeList(theme);
+		
+		for(MainDTO dto : list) {
+			for(MyListDTO myListDTO : myList) {
+				if(dto.getPlaceName().equals(myListDTO.getPlace())) {
+					like += 1;
+				}
+			}
+			dto.setLikeHit(like);
+			like = 0;
+		}
+		
+		model.addAttribute("list", list);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import com.care.root.main.imageFile.MainFileStorage;
 
 public interface MainService extends MainFileStorage {
 	
-	public List<MainDTO> themeList(Model model, String theme);
+	public void themeList(Model model, String theme);
 	public void themeView(String placeName, Model model);	
 	public void register(MultipartHttpServletRequest mul,HttpServletResponse response, HttpServletRequest request);
 	public void download(String mainImageFile, HttpServletResponse response) throws Exception;

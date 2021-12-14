@@ -51,6 +51,10 @@
   	select * from mylist where id = #{id}
   </select>
   
+  <select id="getAllMyList" resultMap="mylist">
+  	select * from mylist
+  </select>
+  
   <delete id="deleteView">
   	delete from main where place_name = #{placeName}
   </delete>
