@@ -60,6 +60,10 @@
   	select * from mylist where id = #{id}
   </select>
   
+  <select id="getAllMyList" resultMap="mylist">
+     select * from mylist
+  </select>
+  
   <delete id="deleteView">
   	delete from main where place_name = #{placeName}
   </delete>
@@ -74,11 +78,16 @@
   	 values(main_reply_seq.nextval, #{placeName}, #{repContent}, #{id})
   </insert>
 
-  <select id="getReply" resultMap="mainReply">
-  	select B.* from(select rownum rn, A.* from
-  	(select * from main_reply where place_name = #{placeName} order by rep_no desc)A)B
-  	where rn between #{start} and #{end}
+<select id="getReply" resultMap="mainReply">
+     select B.* from(select rownum rn, A.* from(select * from main_reply 
+     where place_name = #{placeName} order by rep_no desc)A)B 
+     where rn between #{s} and #{e}
   </select>
+  
+  <select id="getDataCount" resultType="Integer">
+      select count(*) from main_reply where place_name = #{placeName}
+   </select>
+  
   
   <delete id="deleteReply">
   	delete from main_reply where rep_no = #{repNo}

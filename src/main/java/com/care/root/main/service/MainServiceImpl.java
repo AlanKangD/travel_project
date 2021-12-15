@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,14 +24,20 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
+import com.care.root.main.dto.RepLikeDTO;
 import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.imageFile.MainFileStorage;
 import com.care.root.mybatis.main.MainMapper;
+import com.care.root.mybatis.main.MainRepMapper;
 
 @Service
 public class MainServiceImpl implements MainService {
 	@Autowired
 	MainMapper mapper;
+	
+	@Autowired
+	MainRepMapper rmapper;
+	
 
 	@Override // 이미지 경로 및 이름 설정
 	public MainDTO fileProcess(MultipartHttpServletRequest mul) {
@@ -53,14 +61,32 @@ public class MainServiceImpl implements MainService {
 		}
 		return dto;
 	}
-
+/*
 	@Override
 	public List<MainDTO> themeList(Model model, String theme) {
 
 		model.addAttribute("list", mapper.themeList(theme));
 		return null;
 	}
-
+*/
+	@Override
+	   public void themeList(Model model, String theme) {
+	      int like = 0;
+	      List<MyListDTO> myList = mapper.getAllMyList();
+	      List<MainDTO> list = mapper.themeList(theme);
+	      
+	      for(MainDTO dto : list) {
+	         for(MyListDTO myListDTO : myList) {
+	            if(dto.getPlaceName().equals(myListDTO.getPlace())) {
+	               like += 1;
+	            }
+	         }
+	         dto.setLikeHit(like);
+	         like = 0;
+	      }	      
+	      model.addAttribute("list", list);
+	   }
+	
 	@Override
 	public void register(MultipartHttpServletRequest mul, HttpServletResponse response, HttpServletRequest request) {
 		MainDTO dto = fileProcess(mul);
@@ -197,15 +223,40 @@ public class MainServiceImpl implements MainService {
 			return "{\"result\" : false}";
 		}
 	}
-
-	@Override
-	public List<ReplyDTO> getReply(String placeName, int pageNum) {
-		//  한 페이지당 댓글 수 5개 		
-		int end = pageNum * 5 ;  // 10, 15 , 20
-		int start = end + 1  - 5;  //6, 11 , 16
-		return mapper.getReply(placeName, start, end);
-	}
 	
+	@Override
+	   public Map<String, Object> getReply(String placeName, int num) {		
+	      int pageLetter = 5;
+	      int dataCount = mapper.getDataCount(placeName);
+	      int repeat = dataCount / pageLetter;
+	      if(dataCount % pageLetter != 0) {
+	         repeat += 1;
+	      }
+	      int end = num * pageLetter;
+	      int start = end + 1 - pageLetter;
+	      
+	      int pagingNum = 5; // 페이징 넘버링 개수(1 ~ 5 / 6 ~ 10)
+	      int beginPage = 0;
+	      int endPage = 0;
+	      
+	      int pageingCount = (num-1) / pagingNum;
+	      beginPage = pageingCount * pagingNum + 1 ;
+	      endPage = beginPage + 4;    // 10개로한다면 여기 +5해줘야한다
+	      
+	      if(repeat < endPage) {
+	         endPage = repeat;
+	      }
+	      
+	      Map<String, Object> result = new HashMap<String, Object>();
+	      result.put("list", mapper.getReply(placeName,start,end));
+	      result.put("repeat", repeat);
+	      result.put("beginPage", beginPage);
+	      result.put("endPage", endPage);
+	      
+	      System.out.println(result.get("list"));
+	      
+	      return result;
+	   }
 
 	@Override
 	public String deleteReply(int repNo) {
@@ -215,6 +266,42 @@ public class MainServiceImpl implements MainService {
 		}else {
 			return "{\"result\" : false}";
 		}
+	}
+	@Override
+	public String updateLike(int repNo, String id) {
+		RepLikeDTO dto = likeCheck(repNo, id);
+		if(dto == null) {
+			RepLikeDTO d = new RepLikeDTO();
+			System.out.println("setid값 : " + id);
+			d.setId(id);
+			d.setRepNo(repNo);
+			d.setLikeCheck(1);
+			int result = rmapper.likeHit(d);
+			System.out.println("likehit결과 : " + result);
+			return "{\"result\" : true} ";   //등록 완료 
+		}else {  // 있으면 
+			if(dto.getLikeCheck() == 0) {   // 좋아요 안눌렀으면 
+				System.out.println("dto값 체크1 " + dto.getLikeCheck());
+				int num = 1;
+				rmapper.updateLike(num, dto.getLikeNo());         
+				return "{\"result\" : true} ";
+			}else {
+				System.out.println("dto값 체크2 " + dto.getLikeNo());
+				int num = 0;
+				rmapper.updateLike(num, dto.getLikeNo());    // 이미 눌려있으면 
+				return "{\"result\" : false} ";
+			}			
+		}
+	}
+	
+	private RepLikeDTO likeCheck(int repNo, String id) {
+		RepLikeDTO dto;
+		try {
+			dto = rmapper.likeCheck(repNo, id);  // 로우가 있을 경우 
+		} catch (Exception e) {
+			dto = null;   // 없는 경우 insert먼저 해줘야 함 			 
+		}
+		return dto;
 	}
 
 }

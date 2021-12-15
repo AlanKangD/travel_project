@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+   <mapper namespace="com.care.root.mybatis.main.MainRepMapper">
+   
+   <resultMap  id="repLike" type="com.care.root.main.dto.RepLikeDTO">
+   		<id property="likeNo" column="like_no" />
+   		<result property="repNo" column="rep_no"/>
+   		<result property="id" column="id"/>
+   		<result property="likeCheck" column="likecheck"/>   
+   </resultMap>
+   
+   	<select id="likeCheck" resultMap="repLike">
+   		select * from main_rep_like where id = #{id} and rep_no = #{repNo}
+   	</select>
+   	
+   	<insert id="likeHit">
+   		insert into main_rep_like values(main_rep_like_seq.nextval, #{repNo}, #{id}, #{likeCheck})
+   	</insert>
+   
+   <update id="updateLike">
+   		update main_rep_like set likecheck = #{num} where like_no = #{likeNo}
+   </update>
+   
+   </mapper>
