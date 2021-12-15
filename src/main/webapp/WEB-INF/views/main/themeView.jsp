@@ -14,9 +14,9 @@
 	
 <style>
 	#main {width: 80%; margin-left: 10%; margin-right: 10%;}
-	.flex{display: flex;}
+	.flex{display: flex; height:700px}
 	.flexB{width: 50%; }
-	.flexBa{background-color: aqua; text-align: center;}
+	.flexBa{background-color: aqua;font-size:x-large; ;text-align: center; height:50px; padding-top: 7px}
 </style>
 <script>
 var pageNum = 1;
@@ -121,10 +121,19 @@ function addMyList() {
 						html += "<button style='background-color: aqua' type='button' onclick='deleteReply("+data.repNo+")'>삭제</button><hr>"
 					} else{
 						html += data.id+" / "+data.saveDate+"<br>"+data.repContent	+"<hr>"	
-					}
+					}	
 			})
-			html += "<button onclick='getPageMinus()'>&lt;</button>"
-			html += "<button onclick='getPagePlus()'>&gt;</button>"
+			if(pageNum == 1){
+				html += "<button disabled>&lt;</button>"
+			} else{
+				html += "<button onclick='getPageMinus()'>&lt;</button>"
+			}
+			if(list == ""){
+				html += "<button disabled>&gt;</button>"
+			}else{
+				html += "<button onclick='getPagePlus()'>&gt;</button>"
+			}		
+			
 			$("#reply").html(html)
 		}, error : function(){
 			alert("getReply 서버 문제 발생 ");
@@ -133,17 +142,13 @@ function addMyList() {
 	}
 	
 	function getPagePlus(){
-		pageNum = pageNum+1  //게시글 수 에서 더이상 가져올 게 없을 때 처리 만들기 
+		pageNum = pageNum+1 
 		console.log('겟페이지에서 페이지넘버 : ' + pageNum)
 		getReply();
 				
 	}
 	function getPageMinus(){		
-		if(pageNum <= 1){
-			pageNum = 1
-		} else{
-			pageNum = pageNum-1		
-		}
+		pageNum = pageNum-1		
 		console.log('겟페이지마이너스 : ' + pageNum)
 		getReply();
 	}
@@ -232,7 +237,7 @@ function addMyList() {
 				</form>
 						
 				<div class='flex'>	
-					<div class="flexA" id="map" style="width:50%;height:400px;"></div>					 
+					<div class="flexA" id="map" style="width:50%;height:700px;"></div>					 
 					<script>
 	                        var mapContainer = document.getElementById('map');
 	                        var mapOption = {
@@ -247,11 +252,12 @@ function addMyList() {
 	                        marker.setMap(map);
 	                     </script>
 	                    
-					<div class="flexB">
+					<div class="flexB">					
 						<div  class="flexBa">
 							주변 맛집을 추천해주세요!
 						</div>						
 						<div style="background-color: yellow">
+							<c:if test="${userId != null || adminId != null }">
 							작성자 : ${userId }
 							<form id="addReply">
 								<input type="hidden" name="id" value="${userId }">	
@@ -259,6 +265,8 @@ function addMyList() {
 								<input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="(맛집을 추천해주세요!)">																				
 								<button type="button" onclick="addReply()">등록</button>
 							</form>
+							</c:if>
+							
 							<div id = "reply"></div>
 						</div>
 					</div>

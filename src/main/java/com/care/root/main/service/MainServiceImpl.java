@@ -200,18 +200,12 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public List<ReplyDTO> getReply(String placeName, int pageNum) {
-		System.out.println("컨트롤러에 페이지 잘 넘어오나 : " + pageNum);
-		int start = 1;
-		int end = 1;
-		if(pageNum == 1) {
-			start = 1;
-			end = 5;
-		}else {
-			start = (pageNum * 5 )+1 ;  //11 , 16
-			end = start+4;  //15 , 20
-		}
+		//  한 페이지당 댓글 수 5개 		
+		int end = pageNum * 5 ;  // 10, 15 , 20
+		int start = end + 1  - 5;  //6, 11 , 16
 		return mapper.getReply(placeName, start, end);
 	}
+	
 
 	@Override
 	public String deleteReply(int repNo) {
