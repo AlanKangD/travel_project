@@ -84,6 +84,7 @@ public class MemberController implements SessionCommonName{
 		}
 		
 		
+		
 		return "member/loginForm";
 	}
 	@GetMapping("logout")
