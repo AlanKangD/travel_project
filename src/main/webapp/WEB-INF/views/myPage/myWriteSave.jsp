@@ -29,7 +29,10 @@
 		</tr>
 	<c:forEach var="qna" items="${qnaData}">
 		<tr>
-			<th>${qna.id }</th> <th>${qna.qnaTitle }</th>
+			<th>${qna.id }</th> 
+			<th>
+				<a href="${contextPath}/qna/contentView?qnaNo=${qna.qnaNo}">${qna.qnaTitle }</a>
+			</th>
 		</tr>
 	</c:forEach>
 	</table>

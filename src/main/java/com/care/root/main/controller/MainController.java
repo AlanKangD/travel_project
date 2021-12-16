@@ -91,7 +91,7 @@ public class MainController implements SessionCommonName {
 	   }
 	
 	@GetMapping(value = "getMyList", produces = "application/json;charset=utf-8")
-	@ResponseBody
+	@ResponseBody // 찜하기 사진 내용 가져오기 기능 contoller ->  jsp의 header.jsp ajax myList로 작동
 	public List<MyListDTO> getMyList(HttpSession session) {
 		return ms.getMyList(session);
 	}

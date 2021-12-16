@@ -59,7 +59,7 @@ public class MyPageContorller {
 	}
 	
 	@GetMapping("calendar")
-	public String calendar() {
+	public String calendar(@RequestParam String id) {
 		
 		return "myPage/calendar";
 	}

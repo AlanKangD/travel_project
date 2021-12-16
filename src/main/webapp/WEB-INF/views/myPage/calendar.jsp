@@ -99,6 +99,26 @@
 			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
 			<div class='fc-event-main'>일정 5</div>
 		</div>
+		<div
+			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main'>일정 6</div>
+		</div>
+		<div
+			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main'>일정 7</div>
+		</div>
+		<div
+			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main'>일정 8</div>
+		</div>
+		<div
+			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main'>일정 9</div>
+		</div>
+		<div
+			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main'>일정 10</div>
+		</div>
 
 		<p>
 			<input type='checkbox' id='drop-remove' /> 
