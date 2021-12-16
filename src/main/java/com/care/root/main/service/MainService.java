@@ -28,9 +28,10 @@ public interface MainService extends MainFileStorage {
 	
 	public String deleteMyList(int listNo);
 	
+	public String likeCheck(int repNo,String id);
+	
 	public String addReply(ReplyDTO dto);
 	public Map<String, Object> getReply(String placeName, int num);
 	public String deleteReply(int repNo);
-	public String updateLike(int repNo, String id);
 	
 }

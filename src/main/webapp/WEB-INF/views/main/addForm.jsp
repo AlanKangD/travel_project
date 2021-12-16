@@ -17,6 +17,20 @@
   .selectB { background-color: red; width:150px;}
   
 </style>
+<script type="text/javascript">
+function readURL(input) {
+      var file = input.files[0] //파일에 대한 정보
+      console.log(file)
+      if (file != '') {
+         var reader = new FileReader();
+         reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
+         reader.onload = function (e) { // 파일 로드한 값을 표현한다
+          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
+           $('#preview').attr('src', e.target.result);
+          }
+      }
+  }
+</script>
 </head>
 <body>
 <c:import url="../default/header.jsp"></c:import>
@@ -27,10 +41,14 @@
 								<div class="pp">
 									<div class="selectA">카테고리</div>
 									<div class="selectB">
-										<p>카테고리 : ${theme }</p> <input type="hidden" name="mainCategory" value="${theme }">
+										<p> ${theme }</p> <input type="hidden" name="mainCategory" value="${theme }">
 										</div>
 								</div>
-								<p>이미지 첨부<input type="file" name="mainImageFile" ></p>							
+								<input type="hidden" name="originImageFile">
+								<p><label><br>이미지 첨부</label>
+									<input type="file" name="mainImageFile" onchange="readURL(this)"  ><br>
+									 <img id="preview" style="height:400px;" />
+								</p>							
 								<p>장소 이름  <input type="text" name="placeName"></p>
 								<p>소개(내용1)<textarea rows="5" cols="10" name="contentOne"></textarea></p>
 								<p>소개(내용2)<textarea rows="5" cols="10" name="contentTwo"></textarea></p>							
@@ -38,7 +56,7 @@
                    			    <p>위도 : <input name="latitude"> 경도 : <input name="longitude"></p>
 								<button>register</button>
 							</form>
-							<br><a href="../main/themeList">뒤로가기 </a>
+							<br><a href="../main/themeList?theme=${theme }">뒤로가기 </a>
 						</div>			
 		<c:import url="../default/footer.jsp"></c:import>			
 	</body>

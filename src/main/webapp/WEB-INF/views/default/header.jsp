@@ -27,7 +27,7 @@ function loginpopup(url,name){
 .wrapp { width: 100%; height:100px; margin: auto; background-color: yellow;
 text-align: center; padding-top:30px  }
 }
-<<<<<<< HEAD
+
 
 </style> 
 <script>

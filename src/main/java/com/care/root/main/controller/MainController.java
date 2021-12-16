@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,7 +70,7 @@ public class MainController implements SessionCommonName {
 	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
 	public String modifyView(MultipartHttpServletRequest mul) {
 		ms.modifyView(mul);
-		String theme = mul.getParameter("mainCategory");
+		String theme = mul.getParameter("mainCategory");	
 		try {
 			theme = URLEncoder.encode(theme, "utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -124,12 +125,10 @@ public class MainController implements SessionCommonName {
 		return ms.deleteReply(repNo);
 	}
 	
-	@PostMapping(value="updateLike", produces="application/json;charset=utf-8")
-	@ResponseBody
-	public String updateLike(@RequestParam int repNo, @RequestParam String id) {
-		System.out.println("유저아이디 : " + id);
-		System.out.println("repNo : " + repNo);
-		return ms.updateLike(repNo, id);
-	}
+	@PostMapping(value="likeCheck", produces="application/json;charset=utf-8")
+	   @ResponseBody
+	   public String likeCheck(@RequestParam int repNo,@RequestParam String id) {
+	      return ms.likeCheck(repNo,id);
+	   }
 	
 }
