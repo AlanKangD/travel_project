@@ -6,6 +6,6 @@ import com.care.root.main.dto.MainDTO;
 
 
 public interface MainFileStorage {
-	public static final String IMAGE_REPO = "/Users/raina/Desktop/TeamProject/image_repository";
+	public static final String IMAGE_REPO = "C:/Users/samsung/Desktop/Spring/image_test";
 	public MainDTO fileProcess(MultipartHttpServletRequest mul);
 }
