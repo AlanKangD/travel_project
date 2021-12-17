@@ -19,7 +19,7 @@ public interface MainService extends MainFileStorage {
 	public	void themeList(Model model, String theme);
 	public void themeView(String placeName, Model model);	
 	public void register(MultipartHttpServletRequest mul,HttpServletResponse response, HttpServletRequest request);
-	public void download(String mainImageFile, HttpServletResponse response) throws Exception;
+	public void download(String imageFile, HttpServletResponse response) throws Exception;
 	public String deleteView(String placeName);
 	public void modifyView(MultipartHttpServletRequest mul);
 

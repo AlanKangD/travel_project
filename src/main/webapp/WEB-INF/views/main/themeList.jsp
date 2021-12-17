@@ -31,7 +31,7 @@
                      <c:forEach var="list" items="${list }">
                         <article style="width:250px; height:250px;">
                               <span class="image">
-                                 <img src= "${contextPath}/main/download?mainImageFile=${list.mainImageFile}" width="250px;" height="250px;">
+                                 <img src= "${contextPath}/main/download?imageFile=${list.mainImageFile}" width="250px;" height="250px;">
                               </span>
                                  <a href="${contextPath }/main/themeView?placeName=${list.placeName}">
                                  <h2>${list.placeName }</h2>

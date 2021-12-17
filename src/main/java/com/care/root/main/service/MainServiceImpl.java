@@ -35,11 +35,10 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	MainMapper mapper;	
 	
-	@Override // 이미지 경로 및 이름 설정
+	@Override // 메인 이미지 경로 및 이름 설정
 	public MainDTO fileProcess(MultipartHttpServletRequest mul) {
-		MainDTO dto = new MainDTO();
+		MainDTO dto = subFileProcess(mul);
 		MultipartFile file = mul.getFile("mainImageFile");
-		System.out.println("파일프로세스 : " + mul.getParameter("originImageFile"));
 		if(file.getSize() != 0) {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
 			Calendar calendar = Calendar.getInstance();
@@ -60,11 +59,46 @@ public class MainServiceImpl implements MainService {
 			try {
 				dto.setMainImageFile(mul.getParameter("originImageFile")); // 사진 필수라고 알림창띄워주기 
 			} catch (Exception e) { // 게시물 첫 등록이란 소리  
-				dto.setMainImageFile("nan");  // 아주 튕기게 만들어야 함 
+				dto.setMainImageFile("nan");  
 			}
 		}
 		return dto;
 	}
+	private MainDTO subFileProcess(MultipartHttpServletRequest mul) {
+		MainDTO dto = new MainDTO();
+		for(int i=1; i < 4; i++) {
+			MultipartFile file = mul.getFile("imageFile"+i);
+			if(file.getSize() != 0) {
+				SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
+				Calendar calendar = Calendar.getInstance();
+				String fileName = sf.format(calendar.getTime());
+				fileName += file.getOriginalFilename();
+				File saveFile = new File(IMAGE_REPO+"/"+fileName);						
+				if(i == 1) {
+					dto.setImageFile1(fileName);
+				}else if(i == 2) {
+					dto.setImageFile2(fileName);
+				}else {
+					dto.setImageFile3(fileName);
+				}				
+				try {
+					file.transferTo(saveFile);  //해당 위치에 파일 저장 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else {
+				if(i == 1) {
+					dto.setImageFile1("nan");
+				}else if(i == 2) {
+					dto.setImageFile2("nan");
+				}else {
+					dto.setImageFile3("nan");
+				}
+			}			
+		}
+		return dto;
+	}
+	
 	
 	@Override
 	public void modifyView(MultipartHttpServletRequest mul) {
@@ -76,14 +110,14 @@ public class MainServiceImpl implements MainService {
 	}
 	
 	@Override
-	public void download(String mainImageFile, HttpServletResponse response) throws Exception {
-		response.addHeader("Content-disposition", "attachment; fileName=" + mainImageFile);
-		File file = new File(MainFileStorage.IMAGE_REPO + "/" + mainImageFile);
+	public void download(String imageFile, HttpServletResponse response) throws Exception {
+		response.addHeader("Content-disposition", "attachment; fileName=" + imageFile);
+		File file = new File(MainFileStorage.IMAGE_REPO + "/" + imageFile);
 		FileInputStream fis = new FileInputStream(file);
 		FileCopyUtils.copy(fis, response.getOutputStream());
 		fis.close();
 	}
-
+	
 	@Override
 	   public void themeList(Model model, String theme) {
 	      int like = 0;
@@ -105,7 +139,8 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void register(MultipartHttpServletRequest mul, HttpServletResponse response, HttpServletRequest request) {
 		MainDTO dto = fileProcess(mul);
-
+			System.out.println("register로 돌아오는가 ");
+			System.out.println("register에서 " + dto.getImageFile1());
 		dto.setMainCategory(mul.getParameter("mainCategory"));
 		dto.setPlaceName(mul.getParameter("placeName"));
 		dto.setContentOne(mul.getParameter("contentOne"));
@@ -215,17 +250,6 @@ public class MainServiceImpl implements MainService {
 		}
 		
 	}
-
-//	@Override
-//	public void modifyView(MultipartHttpServletRequest mul) {
-//		MainDTO dto = fileProcess(mul);
-//		
-//		dto.setPlaceName(mul.getParameter("placeName"));
-//		dto.setContentOne(mul.getParameter("contentOne"));
-//		dto.setContentTwo(mul.getParameter("contentTwo"));
-//		mapper.modifyView(dto);		
-//		
-//	}
 
 	@Override
 	public String addReply(ReplyDTO dto) {

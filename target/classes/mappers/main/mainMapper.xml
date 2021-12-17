@@ -11,6 +11,9 @@
 	   <result property="contentOne" column="content_one"/>
 	   <result property="contentTwo" column="content_two"/>
 	   <result property="mainImageFile" column="main_image_file"/>
+	   <result property="imageFile1" column="image_file1"/>
+	   <result property="imageFile2" column="image_file2"/>
+	   <result property="imageFile3" column="image_file3"/>
 	   <result property="likeHit" column="likeHit"/>
 	   <result property="upHit" column="upHit"/>
 	   <result property="latitude" column="latitude"/>
@@ -57,8 +60,8 @@
     </select>
   
   <insert id="register">
-  	insert into main(main_category, place_name, content_one, content_two, main_image_file, latitude, longitude, address)
-  	values(#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile}, #{latitude},#{longitude},#{address})
+  	insert into main(main_category, place_name, content_one, content_two, main_image_file, image_file1, image_file2, image_file3, latitude, longitude, address)
+  	values(#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile}, #{imageFile1}, #{imageFile2}, #{imageFile3}, #{latitude},#{longitude},#{address})
   </insert>
   
   <select id="getMyList" resultMap="mylist">

@@ -18,6 +18,10 @@
    .flex{display: flex;}
    .flexB{width: 50%; }
    .flexBa{background-color: aqua; text-align: center;}
+   .imageFlex{margin-right: 10px;}
+   .bb{ background-color: yellow;  margin-top: 43%}
+   .aa{ background-color: yellow;  margin-top: 43%}
+   
 </style>
 <script>
 function addMyList() {
@@ -104,8 +108,9 @@ function addMyList() {
       })
    }
    
-   function getReply(num){
-      console.log("getReply들어옴 : ${dto.placeName}")
+   function getReply(num){	  
+	//	myVar = setInterval(setImageNext, 3000)
+	   
       if(num == undefined){
          num = 1;
       }
@@ -229,6 +234,46 @@ function readURL(input) {
           }
       }
   }
+  
+	  
+	function stop(){
+	    clearInterval(myVar);
+	 }
+	 
+	 
+	var i = 1;
+	function setImageNext(){	  
+		  if(i == 1 && '${dto.imageFile1}' != "" ){
+			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile1}"
+				i++;		  
+		  }else if(i == 2 && '${dto.imageFile2}' != ""){
+			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile2}"
+				  i++;
+		  }else if(i ==3 && '${dto.imageFile3}' != ""){
+			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile3}"
+		  		i = 1;
+		  }else{
+			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.mainImageFile}"
+		  }
+		  		  
+	}
+  function setImageBefore(){
+	  if(i == 1 && '${dto.imageFile1}' != ""){
+		 document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile1}"
+		 i = 3;
+	  }else if(i ==3 && '${dto.imageFile3}' != ""){
+		  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile3}"
+		  i--;
+	  }else if(i == 2 && '${dto.imageFile2}' != ""){
+		  document.getElementById("img").src="${contextPath }/main/download?imageFile=${dto.imageFile2}"	  
+		 i --;	  
+	  }else{
+		  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.mainImageFile}"
+	  }	  
+  }  
+  function start(){
+      myVar = setInterval(setImageNext, 3000);
+   }
 
 </script>
 </head>
@@ -258,20 +303,30 @@ function readURL(input) {
                 </script>
              </c:if>
          
-         <button onclick="deleteView('${dto.placeName}' , '${dto.mainCategory }')">삭제</button>      
+         <c:if test="${adminId != null }">
+  	       <button onclick="deleteView('${dto.placeName}' , '${dto.mainCategory }')">삭제</button>     
+         </c:if>
+          
          <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
          <form action="${contextPath }/main/modifyView" method="post" enctype="multipart/form-data">
             <div class="inner" style="text-align: center">
                <h1><input type="hidden" name="placeName" value="${dto.placeName }">${dto.placeName }</h1>
                <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">테마 : ${dto.mainCategory }</h5>                        
-               <span class="image main">               
-              	<input type="hidden" name="originImageFile" value="${dto.mainImageFile }">  
-               <img id="preview" style="height:500px;" src="${contextPath }/main/download?mainImageFile=${dto.mainImageFile}" />
-               <c:if test="${adminId != null }">
-                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
-               </c:if>
-               </span>               
+               <span class="image main">                             		
+	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	
+	               <div class="mainbtn" style="display:flex;">                
+		               <div class="aa"><button onmouseout="start()" onmouseover="stop()" type="button" onclick="setImageBefore()"> &lt; </button>  </div>     
+		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
+		               <div class="bb"><button onmouseout="start()" onmouseover="stop()" type="button" onclick="setImageNext()"> &gt; </button> </div>
+	               </div>                    
+	               		  
+	               <c:if test="${adminId != null }">
+	                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
+	               </c:if>
+               </span>  
+         
+               <br>             
                <c:choose>
                   <c:when test="${adminId != null }">
                      <input type="text" name="contentOne" value="${dto.contentOne }">
@@ -300,8 +355,8 @@ function readURL(input) {
                                position: markerPosition
                            });
                            marker.setMap(map);
-                        </script>
-                       
+                  </script>
+                  
                <div class="flexB">
                   <div  class="flexBa">
                      주변 맛집을 추천해주세요!
@@ -321,7 +376,6 @@ function readURL(input) {
                </div>
             </div>   
             <label>주소 :  ${dto.address }</label> <button class="openMap">지도 펼치기</button>
-            
             
          </div>            
       <c:import url="../default/footer.jsp"></c:import>         

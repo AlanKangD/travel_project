@@ -15,17 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.care.root.common.sessionName.SessionCommonName;
-import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
 import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.service.MainService;
@@ -51,8 +47,8 @@ public class MainController implements SessionCommonName {
 	
 	@PostMapping("register")
 	   public void register(MultipartHttpServletRequest mul,HttpServletResponse response,
-	                                    HttpServletRequest request) throws Exception {
-	      ms.register(mul, response, request);
+	                                    HttpServletRequest request) throws Exception {		
+		      ms.register(mul, response, request);
 	   }
 	
 	@GetMapping("themeView")
@@ -62,9 +58,9 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@GetMapping("download")
-	public void download(@RequestParam String mainImageFile, HttpServletResponse response)
+	public void download(@RequestParam String imageFile, HttpServletResponse response)
 										throws Exception{
-		ms.download(mainImageFile, response);
+		ms.download(imageFile, response);
 	}
 	
 	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
