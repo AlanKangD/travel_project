@@ -45,6 +45,7 @@ public class ReviewController {
 	@GetMapping("review_modify")
 	public String review_modify(@RequestParam("review_no") int review_no, Model model) {
 		rs.getData(review_no, model);
+		rs.content_photo(review_no, model);
 		return "review/review_modify";
 	}
 	@GetMapping("review_boardList")
@@ -59,6 +60,9 @@ public class ReviewController {
 		System.out.println("content실행");
 		
 		rs.content(review_no, model);
+		
+		rs.content_photo(review_no, model);
+		
 		return "review/review_content";
 	}
 	
@@ -77,22 +81,24 @@ public class ReviewController {
 		out.println(message);
 	    }
 	
+	
 	@PostMapping("r_modify")
 	public void r_modify(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
-			HttpServletRequest request) throws Exception {
-		String message = rs.r_modify(mul, request);
+			HttpServletRequest request,
+			@RequestParam("photo_count") int photo_count) throws Exception {
+		String message = rs.r_modify(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
 		out = response.getWriter();
 		out.print(message);
 	}
 	@GetMapping("download")
-	public void download(@RequestParam("review_file_name") String review_file_name,
+	public void download(@RequestParam("stored_file_name") String stored_file_name,
 	         HttpServletResponse response) throws Exception {
 	    response.addHeader(
-	   "Content-disposition","attachment;fileName="+ review_file_name);
-	    File file = new File(ReviewFileService.IMAGE_REPO+"/"+ review_file_name);
+	   "Content-disposition","attachment;fileName="+ stored_file_name);// 파일 다운로드 받을 수 있도록
+	    File file = new File(ReviewFileService.IMAGE_REPO+"/"+ stored_file_name);
 	    FileInputStream in = new FileInputStream(file);
 	    FileCopyUtils.copy(in, response.getOutputStream());
 	    in.close();
