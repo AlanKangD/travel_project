@@ -17,11 +17,12 @@ public interface ReviewMapper {
 	public int r_writeSave(ReviewDTO dto);
 	public int photo_save(ReviewPhotoDTO photo_dto);
 	public int r_modify(ReviewDTO dto);
-	public ReviewPhotoDTO photo_view(int review_no);
+	public int photo_modify(ReviewPhotoDTO dto);
+	public int photo_delete(ReviewPhotoDTO dto);
+	public ArrayList<ReviewPhotoDTO> photo_view(int review_no);
 	public int writeSave(ReviewDTO dto);
 	public ArrayList<ReviewDTO> boardList(@Param("s") int start, @Param("e") int end);
 	public int selectReviewCount();
-	public int modify(ReviewDTO dto);
 	public void upHit(int review_no);
 	public ReviewDTO content(int review_no);
 	public void replyAdd(ReviewRepDTO dto);

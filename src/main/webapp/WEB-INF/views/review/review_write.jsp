@@ -60,7 +60,7 @@
 	<jsp:include page="../default/header.jsp"></jsp:include>
 		<div id="wrap" style="width:600px; margin: 0 auto;">
 			<h1 style="text-align:center;">review write form</h1><br>
-			<form method="post" action="${contextPath }/review/writeSave" enctype="multipart/form-data">
+			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
 				<b>작성자 : </b>	<input type="text" name="id" value="${ userId }" readonly>
 				<hr>
 				<b>제 목 : </b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">

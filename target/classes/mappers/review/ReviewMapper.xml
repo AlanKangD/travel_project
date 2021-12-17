@@ -28,23 +28,35 @@
 		<result property="review_hit_num" column="review_hit_num" />
 		<result property="review_like" column="review_like" />
 		<result property="review_date" column="review_date" />
-		<result property="review_file_name" column="review_file_name" />
+	</resultMap>
+	<!-- content.jsp에 불러올 이미지 resultMap -->
+	<resultMap type="com.care.root.review.dto.ReviewPhotoDTO" id="photo_view">
+		<result property="stored_file_name" column="stored_file_name"/>
+		<result property="original_file_name" column="origin_file_name"/>
 	</resultMap>
 	
+	<!-- 리뷰 작성자, 제목, 내용 저장 -->
 	<insert id="r_writeSave">
 		insert into review(review_no, id, review_title, review_content)  
-		values(review_seq.nextval, #{id}, #{review_title}, #{review_content})
+		values(review_seq_seq.nextval, #{id}, #{review_title}, #{review_content})
 	</insert>
-	
+	<!-- 리뷰 사진 저장 -->
 	<insert id="photo_save">
-		insert into r_photo(id, r_write_group, origin_file_name, stored_file_name) 
-		values(#{id}, (select review_no from review where id=#{id} and review_title = #{review_title}), #{original_file_name}, #{stored_file_name})
+		insert into r_photo(photo_num, id, r_write_group, origin_file_name, stored_file_name) 
+		values(photo_num.nextval, #{id}, (select review_no from review where id=#{id} and review_title = #{review_title}), #{original_file_name}, #{stored_file_name})
 	</insert>
 	
 	<update id="r_modify">
-		update review set review_title=#{review_title}, review_content=#{review_content}, 
-		review_file_name=#{review_file_name} where review_no=#{review_no}
+		update review set review_title=#{review_title}, review_content=#{review_content} where review_no=#{review_no}
 	</update>
+	
+	<update id="photo_modify">
+		update r_photo set origin_file_name = #{original_file_name}, stored_file_name = #{stored_file_name} where r_write_group = #{review_no}
+	</update>
+	
+	<delete id="photo_delete">
+		delete from r_photo where origin_file_name = #{original_file_name}
+	</delete>
 	
 	<select id="boardList" resultMap="review">
 		select B.* from(select rownum rn, A.* from
@@ -55,8 +67,13 @@
 		select count(*) from review
 	</select>
 	
+	<!-- content.jsp 내용 부분 불러오기-->
 	<select id="content" resultMap="review">
 		select * from review where review_no = #{review_no}
+	</select>
+	<!-- content.jsp 이미지 불러오기 -->
+	<select id="photo_view" resultMap="photo_view">
+		select stored_file_name, origin_file_name from r_photo where r_write_group = #{review_no} order by photo_num asc
 	</select>
 	
 	
