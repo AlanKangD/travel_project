@@ -264,15 +264,6 @@
 							<img width="200px" height="150px" src="${contextPath }/review/download?stored_file_name=${photo_view.stored_file_name}">
 						</c:if>
 					</c:forEach>
-					
-					<%-- <c:if test="${ contentData.review_file_name != 'nan' }">
-						<img width="200px" height="150px" id="preview"
-							src="${contextPath}/review/download?review_file_name=${contentData.review_file_name}">
-					</c:if>
-					<c:if test="${contentData.review_file_name == 'nan' }">
-						<img style="align: right;" alt="선택된 이미지가 없습니다." src=""
-							id="preview" width="200" height="150">
-					</c:if> --%>
 				</td>
 				<td>
 					<br>

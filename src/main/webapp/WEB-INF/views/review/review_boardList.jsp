@@ -41,7 +41,7 @@
 	   자신만의 여행후기를 기록해보세요!<p>
 	   총 ${dataCount}개의 글  ( Page ${num } / ${repeat} )
 	</div>
-	<div id="search_div">
+	<div id="search_div"><!-- 리뷰 검색 기능 -->
 		<form id="r_select_form" method="get" action="${contextPath }/review/review_boardList">
 			<select name="r_search_option">
 				<option value="all"<c:if test='${r_search_option == "all" }'>selected</c:if> >전체</option>
