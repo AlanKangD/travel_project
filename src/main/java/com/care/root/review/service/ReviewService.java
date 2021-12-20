@@ -19,7 +19,7 @@ public interface ReviewService {
 			HttpServletRequest request, int photo_count);
 	public String r_modify(MultipartHttpServletRequest mul,
 			HttpServletRequest request, int photo_count);
-	public void boardList(Model model, int num); 
+	public void boardList(Model model, int num, String r_search_option, String keyword); 
 	public void content(int review_no, Model model);
 	public void content_photo(int review_no, Model model);
 	public void upHit(int review_no);

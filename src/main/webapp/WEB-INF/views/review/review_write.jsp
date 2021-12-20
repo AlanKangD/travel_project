@@ -57,7 +57,7 @@
 </script>
 </head>
 <body>review_write.jsp<br>
-	<jsp:include page="../default/header.jsp"></jsp:include>
+	<c:import url="../default/header.jsp"></c:import>
 		<div id="wrap" style="width:600px; margin: 0 auto;">
 			<h1 style="text-align:center;">review write form</h1><br>
 			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
@@ -66,7 +66,7 @@
 				<b>제 목 : </b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
 				<hr>
 				<b>내 용 : </b><br> 
-				<textarea style="resize:none;" rows="20" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
+				<textarea style="resize:none;" rows="40" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
 				<hr>
 				
 				<div id="preview_div">

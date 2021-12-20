@@ -8,6 +8,20 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	function selectFunc() {
+		var keyword = document.getElementById('keyword').value;
+		console.log(keyword);
+		console.log(keyword.length);
+		
+		if(keyword.length < 2){
+			alert('검색시 2글자 이상 입력해주세요');
+		}else{
+			r_select_form.submit();
+		}
+	}
+</script>
 </head>
 <body>
    <c:import url="../default/header.jsp" />
@@ -22,11 +36,24 @@
       </c:otherwise>
    </c:choose>
 
-   <div>
-      <h1>여행 후기게시판</h1>
-      자신만의 여행후기를 기록해보세요!<p>
-      총 ${dataCount}개의 글  ( Page ${num } / ${repeat} )
-   </div>
+	<div>
+	   <h1>여행 후기게시판</h1>
+	   자신만의 여행후기를 기록해보세요!<p>
+	   총 ${dataCount}개의 글  ( Page ${num } / ${repeat} )
+	</div>
+	<div id="search_div">
+		<form id="r_select_form" method="get" action="${contextPath }/review/review_boardList">
+			<select name="r_search_option">
+				<option value="all"<c:if test='${r_search_option == "all" }'>selected</c:if> >전체</option>
+				<option value="tc"<c:if test='${r_search_option == "tc" }'>selected</c:if> >제목+내용</option>
+				<option value="title"<c:if test='${r_search_option == "title" }'>selected</c:if> >제목</option>
+				<option value="content"<c:if test='${r_search_option == "content" }'>selected</c:if> >내용</option>
+				<option value="id"<c:if test='${r_search_option == "id" }'>selected</c:if> >작성자</option>
+			</select>
+			<input name="keyword" id="keyword" value="${keyword }">
+			<button type="button" onclick="selectFunc()">검색</button>
+		</form>
+	</div>
    
       <table border="1">
          <tr>

@@ -98,6 +98,7 @@ text-align: center; padding-top:30px  }
 				</c:otherwise>
 			</c:choose>
 			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+			<li><a href="${contextPath }/review/review_boardList">리뷰게시판</a></li>	
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">

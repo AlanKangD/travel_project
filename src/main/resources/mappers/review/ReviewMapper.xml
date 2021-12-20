@@ -60,7 +60,45 @@
 	
 	<select id="boardList" resultMap="review">
 		select B.* from(select rownum rn, A.* from
-		(select * from review order by review_no desc)A)B where rn between #{s} and #{e}
+		<choose>
+			<when test='r_search_option == "all"'>
+				(select * from review
+				where review_title like '%' || #{keyword} || '%'
+				or id like '%' || #{keyword} || '%'
+				or review_content like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "tc"'>
+				(select * from review
+				where review_title like '%' || #{keyword} || '%'
+				or review_content '%' || #{keyword} || '%'
+				order by review_no desc)A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "title"'>
+				(select * from review
+				where review_title like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "content"'>
+				(select * from review
+				where review_content like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "id"'>
+				(select * from review
+				where id like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<otherwise>
+			(select * from review order by review_no desc)A)
+			B where rn between #{s} and #{e}	
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="selectReviewCount" resultType="Integer">

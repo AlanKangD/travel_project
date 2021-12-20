@@ -141,7 +141,7 @@ public class ReviewServiceImpl implements ReviewService{
 		return rfs.getMessage(request, msg, url);
 	}
 	
-	public void boardList(Model model, int num) {
+	public void boardList(Model model, int num, String r_search_option, String keyword) {
 	      int pageLetter = 5;
 	      int dataCount = mapper.selectReviewCount();
 	      int repeat = dataCount / pageLetter;
@@ -163,11 +163,13 @@ public class ReviewServiceImpl implements ReviewService{
 	         endPage = repeat;
 	      }
 	      
+	      model.addAttribute("keyword", keyword);
+	      model.addAttribute("search_option", r_search_option);
 	      model.addAttribute("dataCount",dataCount);
 	      model.addAttribute("beginPage",beginPage);
 	      model.addAttribute("endPage",endPage);
 	      model.addAttribute("repeat", repeat);
-	      model.addAttribute("boardList", mapper.boardList(start, end));
+	      model.addAttribute("boardList", mapper.boardList(start, end, r_search_option, keyword));
 	   }
 	
 	//content.jsp 내용 불러오기

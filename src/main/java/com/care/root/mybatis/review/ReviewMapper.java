@@ -21,7 +21,7 @@ public interface ReviewMapper {
 	public int photo_delete(ReviewPhotoDTO dto);
 	public ArrayList<ReviewPhotoDTO> photo_view(int review_no);
 	public int writeSave(ReviewDTO dto);
-	public ArrayList<ReviewDTO> boardList(@Param("s") int start, @Param("e") int end);
+	public ArrayList<ReviewDTO> boardList(@Param("s") int start, @Param("e") int end, @Param("r_search_option") String r_search_option, @Param("keyword") String keyword);
 	public int selectReviewCount();
 	public void upHit(int review_no);
 	public ReviewDTO content(int review_no);

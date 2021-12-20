@@ -50,8 +50,12 @@ public class ReviewController {
 	}
 	@GetMapping("review_boardList")
 	public String review_boardList(Model model,
-			@RequestParam(required = false, defaultValue = "1") int num) {
-		rs.boardList(model, num);
+			@RequestParam(required = false, defaultValue = "1") int num,
+			@RequestParam(required = false) String r_search_option,
+			@RequestParam(required = false) String keyword) {
+		System.out.println(r_search_option);
+		System.out.println(keyword);
+		rs.boardList(model, num, r_search_option, keyword);
 		return "review/review_boardList";
 	}
 	@GetMapping("review_content")
