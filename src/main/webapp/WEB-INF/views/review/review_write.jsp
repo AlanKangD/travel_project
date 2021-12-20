@@ -11,46 +11,41 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	var photo_count = 1; // 사진 파일 수 
-	var photo_num = 1; // input과 preview의 이름을 정하기 위한 수
+	var photo_num = 1; // input, preview의 id 부여하기 위한 수
 	
 	function load_preview_0(input){//대표이미지 프리뷰 로드하는 함수
-		
-		var file = input.files[0] //파일에 대한 정보
-		
+		var file = input.files[0]
 	      if (file != '') {
 	         var reader = new FileReader();
 	         reader.readAsDataURL(file);
-	         reader.onload = function (e) { // 파일 로드한 값을 표현한다
-	          //e : 이벤트 안에 result값이 파일의 정보를 가지고 있다.
-	           $('#preview_0').attr('src', e.target.result); //target은 실질적인 이미지의 경로이다
+	         reader.onload = function (e) {
+	           $('#preview_0').attr('src', e.target.result); 
 	         }
 	      }
 	}
-	
-	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 함수
+	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 기능
 		if(photo_count == 10){
 			alter("사진은 최대 10장까지 첨부할 수 있습니다.")
 		}else{
 			var str_photo = "<p><input type='file' name='review_file_name_"+(photo_num)+"' id='review_file_name_"+(photo_num)+"' onchange='load_preview(this); '/>"
 				+ "<a href='#this' onClick='$(this).parent().remove(); photo_count--; $(span_"+photo_num+").remove(); ' class='btn'>삭제하기</a></p>"
-			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'><img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
-			$("#photo_div").append(str_photo); //div id=photo_div 에 str_photo 문자열을 추가한다.
-			$("#preview_div").append(str_preview); //div id=preivew_div 에 str_preview 문자열을 추가한다.
-			photo_num++; //input과 preview의 id와 이름을 부여하기 위한 번호
-			photo_count++; //add_file 함수 실행시 사진 수 를 증가시킨다.
+			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'>"
+			+ "<img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
+			
+			$("#photo_div").append(str_photo);
+			$("#preview_div").append(str_preview); 
+			photo_num++; 
+			photo_count++; 
 			$("#photo_count").val(photo_count);
 		}
-		
 	}
-	
-	function load_preview(input){//추가한 preview span에 이미지를 추가하는 함수
+	function load_preview(input){//추가한 preview span에 이미지를 추가하는 기능
 		var file1 = input.files[0] //파일에 대한 정보
-		
-		if(file1 != ''){//파일 유무 확인
+		if(file1 != ''){
 			var reader = new FileReader();
 			reader.readAsDataURL(file1);
-			reader.onload = function(e){//reader.onload 파일이 로드되었다면 event를 실행한다
-				$("#preview_"+(photo_num -1)).attr('src', e.target.result);//id = preview_ photo_count인 프리뷰의 src를 e.target.result로 지정한다.
+			reader.onload = function(e){
+				$("#preview_"+(photo_num -1)).attr('src', e.target.result);
 			}
 		}
 	}
@@ -94,6 +89,5 @@
 			</form>
 		</div>
 	<jsp:include page="../default/footer.jsp"></jsp:include>
-
 </body>
 </html>

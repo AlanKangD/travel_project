@@ -12,20 +12,15 @@
 	var photo_count = ${photo_view.size()}; // 사진 파일 수 
 	var photo_num = ${photo_view.size()}; // input과 preview의 이름을 정하기 위한 수
 	
-	$(function(){//웹페이지 시작될때 실행
+	$(function(){
 		$("#photo_count").val(photo_count);
-		
 		$("#review_file").attr('name', ('review_file_') + photo_count);
 		$("#review_file").attr('id', ('review_file_') + photo_count);
 		photo_num++;
 		
 	})
-   
    	function add_list(input){
-		
-		
 		if(input != null){
-			
 			if(photo_count == 10){
 				alter("사진은 최대 10장까지 첨부할 수 있습니다.")
 			}else{
@@ -41,8 +36,8 @@
 			   	if(file != ''){//파일 유무 확인
 					var reader = new FileReader();
 					reader.readAsDataURL(file);
-					reader.onload = function(e){//reader.onload 파일이 로드되었다면 event를 실행한다
-						$("#review_file_name_"+(photo_num -2)).attr('src', e.target.result);//id = preview_ photo_count인 프리뷰의 src를 e.target.result로 지정한다.
+					reader.onload = function(e){/
+						$("#review_file_name_"+(photo_num -2)).attr('src', e.target.result);
 					}
 				}
 				$("#review_file_" + (photo_num -1)).attr('style', 'display:none;');
@@ -53,13 +48,7 @@
 				
 			}
 		}
-	   	
-	   }
-	
-	function delete_func(obj){
-		photo_count--; $('#photo_count').val(photo_count); $(obj).parent().remove();
 	}
-		
 </script>
 </head>
 <body>review_modify.jsp<br>
@@ -72,12 +61,10 @@
 				<c:forEach var="photo_view" items="${photo_view }" begin="0" varStatus="status"><!-- 기존파일과 비교용 -->
 					<input type="hidden" id="original_file_${status.index }" name="original_file_${status.index }" value="${photo_view.original_file_name}">
 				</c:forEach>
-				
 				<c:forEach var="photo_view" items="${photo_view }" begin="0" varStatus="status"><!-- 삭제했을때 수정되는 부분 -->
 					<input type="hidden" id="original_file_name_${status.index }" name="original_file_name_${status.index }" value="${photo_view.original_file_name}">
 				</c:forEach>
 				
-		  		<!-- 작성자 부분 나중에 수정해야함 -->
 		  		<b>작성자 : </b>	<input type="text" name="id" value="${contentData.id }" readonly><hr>
 			   	<b>제 목 : </b>  <input type="text" size="30" name="review_title" value="${contentData.review_title}"><hr>
 			  	<b>내 용 : </b>  <textarea style="resize:none;" rows="20" cols="80" name="review_content">${contentData.review_content}</textarea>
@@ -91,7 +78,7 @@
 								<img width="320px" height="180px" id="review_file_name_${status.index }" name="review_file_name_${status.index }" 
 									src="${contextPath }/review/download?stored_file_name=${photo_view.stored_file_name}"> 
 								<b>${photo_view.original_file_name }</b>  
-								<a href="#this" id="delete" onClick="$(original_file_name_${status.index}).remove(); photo_count--; $('#photo_count').val(photo_count); $(this).parent().remove();">삭제버튼</a><!-- (삭제버튼 누를 때 기존에 formdata에 저장된 같은 이름의 파일을 삭제해서 나중에 수정버튼을 눌렀을 때 서비스쪽으로 데이터들이 옮겨지게) -->
+								<a href="#this" id="delete" onClick="$(original_file_name_${status.index}).remove(); photo_count--; $('#photo_count').val(photo_count); $(this).parent().remove();">삭제버튼</a>
 								<br>
 							</p>
 						</c:if>
