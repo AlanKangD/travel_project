@@ -66,7 +66,7 @@ public class MainServiceImpl implements MainService {
 	}
 	private MainDTO subFileProcess(MultipartHttpServletRequest mul) {
 		MainDTO dto = new MainDTO();
-		for(int i=1; i < 4; i++) {
+		for(int i=1; i < 3; i++) {
 			MultipartFile file = mul.getFile("imageFile"+i);
 			if(file.getSize() != 0) {
 				SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
@@ -76,10 +76,8 @@ public class MainServiceImpl implements MainService {
 				File saveFile = new File(IMAGE_REPO+"/"+fileName);						
 				if(i == 1) {
 					dto.setImageFile1(fileName);
-				}else if(i == 2) {
-					dto.setImageFile2(fileName);
 				}else {
-					dto.setImageFile3(fileName);
+					dto.setImageFile2(fileName);
 				}				
 				try {
 					file.transferTo(saveFile);  //해당 위치에 파일 저장 
@@ -89,10 +87,8 @@ public class MainServiceImpl implements MainService {
 			}else {
 				if(i == 1) {
 					dto.setImageFile1("nan");
-				}else if(i == 2) {
-					dto.setImageFile2("nan");
 				}else {
-					dto.setImageFile3("nan");
+					dto.setImageFile2("nan");
 				}
 			}			
 		}

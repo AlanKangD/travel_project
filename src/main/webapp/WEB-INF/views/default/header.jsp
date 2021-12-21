@@ -42,7 +42,7 @@ text-align: center; padding-top:30px  }
 				let html = "";
 				list.forEach(function(data){
 					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+					html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?imageFile="+mainImageFile+" '><br>"	
 					html += " "+data.place
 					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
 				})

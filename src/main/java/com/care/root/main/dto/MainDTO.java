@@ -15,7 +15,6 @@ public class MainDTO {
 													
 	private String imageFile1;
 	private String imageFile2;
-	private String imageFile3;
 	
 	
 	
@@ -31,12 +30,7 @@ public class MainDTO {
 	public void setImageFile2(String imageFile2) {
 		this.imageFile2 = imageFile2;
 	}
-	public String getImageFile3() {
-		return imageFile3;
-	}
-	public void setImageFile3(String imageFile3) {
-		this.imageFile3 = imageFile3;
-	}
+	
 	public String getPlaceName() {
 		return placeName;
 	}

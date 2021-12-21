@@ -13,9 +13,9 @@
 <style type="text/css">
 	#main {width: 80%; margin-left: 10%; margin-right: 10%;}
   .pp {display:flex; background-color: aqua;}
-  .selectA{background-color: green; width:150px;}
-  .selectB { background-color: red; width:150px;}
-  .ImageFlex div{margin-right: 20px;}
+  .selectA{text-align: center; font-size:x-large; width: 200px; background-color: yellow; margin-left: 25%;}
+  .selectB{text-align: center; width:200px;background-color: red; font-size: x-large;}
+  #addImage1 img, #addImage2 img{width:200px; height:200px;}
 </style>
 <script type="text/javascript">
  
@@ -27,11 +27,9 @@ function readURL(input) {
     	  var i = 0;
       } else if(input.id =="imageFile1"){
     	  var i = 1;
-      } else if(input.id =="imageFile2"){
+      } else {
     	  var i = 2;
-      }else{
-    	  var i = 3;
-      }
+     	 }      
 	
 	var reader = new FileReader();
     reader.readAsDataURL(file); //파일의 정보를 토대로 파일을 읽고 
@@ -41,6 +39,8 @@ function readURL(input) {
 
       }
   }
+  
+    
    
 </script>
 </head>
@@ -51,43 +51,34 @@ function readURL(input) {
 							<h1>새로운 장소를 추가해주세요!</h1>
 							<form action="${contextPath }/main/register" method="post" enctype="multipart/form-data">												
 								<div class="pp">
-									<div class="selectA">카테고리</div>
-									<div class="selectB">
-										<p> ${theme }</p> <input type="hidden" name="mainCategory" value="${theme }">
-										</div>
+									<div class="selectA"><b>Category</b></div>
+									<div class="selectB">${theme } <input type="hidden" name="mainCategory" value="${theme }"></div>
 								</div>
+								
 								<input type="hidden" name="originImageFile">
-								<p><label><br>메인이미지 첨부</label>
+								<p><label><br>1. 메인이미지 첨부</label>
 									<input id="mainImageFile" type="file" name="mainImageFile" onchange="readURL(this)"><br>
 									 <img id="preview0" style="height:400px;" />
 								</p>					
 										
-								<p><label><br>추가 첨부(최대3장)</label>
-								
-								<div class="ImageFlex" style="display:flex">
-									<div>
-										<a >+추가</a>
+								<p><label><br>2. 슬라이드 이미지 첨부(2장 필수)</label>					
+								<div style="display:flex">									
+									<div id="addImage1">
 										<input type="file" id="imageFile1" name="imageFile1" onchange="readURL(this)" ><br>
-										 <img id="preview1" style="width:200px; height:200px" />
+										 <img id="preview1" />
 									</div>
-									<div>
-										<a>+추가</a>
+									<div id="addImage2">
 										<input type="file" id="imageFile2" name="imageFile2" onchange="readURL(this)" ><br>
-										 <img id="preview2" style="width:200px; height:200px" />
-									</div>
-									<div>
-										<a>+추가</a>
-										<input  type="file"  id="imageFile3" name="imageFile3" onchange="readURL(this)" ><br>
-										 <img id="preview3" style="width:200px; height:200px" />
-									</div>
+										 <img id="preview2" />
+									</div>									
 								</div>
 								
 								</p>											
-								<p>장소 이름  <input type="text" name="placeName"></p>
-								<p>소개(내용1)<textarea rows="5" cols="10" name="contentOne"></textarea></p>
-								<p>소개(내용2)<textarea rows="5" cols="10" name="contentTwo"></textarea></p>							
-								<p>주소 : <input name="address"></p>                     
-                   			    <p>위도 : <input name="latitude"> 경도 : <input name="longitude"></p>
+								<p>3. 장소 이름  <input type="text" name="placeName"></p>
+								<p>4. 제목 밑에 나올 한줄 요약<textarea rows="5" cols="10" name="contentOne"></textarea></p>
+								<p>5. 소개(내용)<textarea rows="5" cols="10" name="contentTwo"></textarea></p>							
+								<p>6. 주소 : <input name="address"></p>                     
+                   			    <p>7. 위도 : <input name="latitude"> 경도 : <input name="longitude"></p>
 								<button>register</button>
 							</form>
 							<br><a href="../main/themeList?theme=${theme }">뒤로가기 </a>
