@@ -1,12 +1,15 @@
 package com.care.root.myPage.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.care.root.main.dto.MyListDTO;
 import com.care.root.member.dto.MemberDTO;
+import com.care.root.myPage.dto.CalendarDTO;
 import com.care.root.mybatis.myPage.MyPageMapper;
 import com.care.root.qna.dto.QnADTO;
 import com.care.root.review.dto.ReviewDTO;
@@ -44,6 +47,21 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public void userDelete(String id) {
 		mapper.userDelete(id);		
+	}
+
+	@Override
+	public void calendarinsert(CalendarDTO dto) {
+		mapper.calendarinsert(dto);		
+	}
+
+	@Override
+	public void myTripList(String id, Model model) {
+		List<MyListDTO> list = mapper.myTripList(id);
+		for(MyListDTO test : list) {
+			System.out.println("찜한 목록 : " + test.getPlace());
+			
+		} // 디버깅
+		model.addAttribute("myList", list);
 	}
 
 

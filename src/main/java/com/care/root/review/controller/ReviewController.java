@@ -53,7 +53,7 @@ public class ReviewController {
 		rs.boardList(model, num);
 		return "review/review_boardList";
 	}
-	@GetMapping("review_content")
+	@GetMapping("review_content") 
 	public String content(@RequestParam("review_no") int review_no, Model model, 
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		System.out.println("content실행");

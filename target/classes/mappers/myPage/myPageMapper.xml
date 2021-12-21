@@ -35,6 +35,13 @@
 		<result property="sessionId" column="session_id" />
 		<result property="phoneNumber" column="phone_number" />
 	</resultMap>
+	
+	<resultMap  id="mylist" type="com.care.root.main.dto.MyListDTO">
+	      <id property="listNo" column="list_no"/>
+		  <result property="id" column="id"/>
+		  <result property="place" column="place"/>
+		  <result property="image" column="image"/>
+    </resultMap>
     
     <select id="getQnaData" resultMap="qna">
     	select * from qna_board where id=#{id}
@@ -53,5 +60,11 @@
 	 <delete id="userDelete">
 	 	delete from member where id=#{id} 
 	 </delete>
+	 <select id="myTripList" resultMap="mylist">
+	 	select place from myList where id=#{id}
+	 </select>
+	 <insert id="calendarinsert">
+		insert into calendar(calendr_no, id, title, start_date, end_date) values(calendar_no_SEQ.nextval,#{id},#{title},#{start},#{end})
+	</insert>
 </mapper>
 

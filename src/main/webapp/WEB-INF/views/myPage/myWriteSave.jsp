@@ -18,7 +18,10 @@
 		</tr>
 	<c:forEach var="review" items="${reviewData }">
 		<tr>
-			<th>${review.id }</th> <th>${review.review_title }</th>
+			<th>${review.id }</th> 
+			<th>
+				<a href="${contextPath}/review/review_content?review_no=${review.review_no }">${review.review_title }</a>
+			</th>
 		</tr>
 	</c:forEach>
 	</table>
