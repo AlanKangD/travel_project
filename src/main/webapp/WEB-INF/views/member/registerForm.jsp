@@ -61,6 +61,19 @@
 			}			
 		})
 	}
+	function login(){
+		var popHeight=290;
+		var popWidth=230;
+		var winHeight=document.body.clientHeight;
+		var winWidth=document.body.clientWidth;
+		var winX=window.screenLeft;
+		var winY=window.screenTop;
+		
+		var popX=winX+(winWidth-popWidth)/2;
+		var popY=winY+(winHeight-popHeight)/2;
+		window.resizeTo(290,230)
+		window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	}
 </script>
 </head>
 <body>
@@ -77,7 +90,7 @@
 		<input type="button" onclick="daumpost()" value="우편번호 찾기"><br>
 		<input type="text" id="addr2" name="addr2" readonly placeholder="주소" ><br>
 		<input type="text"id="addr3" name="addr3"  placeholder="상세주소"><br>
-		<input type="submit"  value="가입하기">
+		<input type="submit"  value="가입하기" onclick="login()">
 	</form>
 </div>
 	<c:import url="../default/footer.jsp" />

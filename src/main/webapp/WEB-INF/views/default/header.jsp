@@ -17,8 +17,7 @@ function loginpopup(url,name){
 	var winY=window.screenTop;
 	
 	var popX=winX+(winWidth-popWidth)/2;
-	var popY=winY+(winHeight-popHeight)/2;
-	
+	var popY=winY+(winHeight-popHeight)/4;
 	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 }
 </script>
