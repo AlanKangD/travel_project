@@ -26,7 +26,6 @@ function loginpopup(url,name){
 .wrapp { width: 100%; height:100px; margin: auto; background-color: yellow;
 text-align: center; padding-top:30px  }
 }
-<<<<<<< HEAD
 
 </style> 
 <script>
@@ -97,11 +96,8 @@ text-align: center; padding-top:30px  }
 				</c:otherwise>
 			</c:choose>
 			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
-<<<<<<< HEAD
 			<li><a href="${contextPath }/review/review_boardList">리뷰게시판</a></li>	
-=======
 			<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
->>>>>>> 9c9cea5c41fab011ec0e68322f5f3831dc44b5e6
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
