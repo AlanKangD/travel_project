@@ -11,15 +11,28 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	var photo_count = 1; // 사진 파일 수 
+<<<<<<< HEAD
 	var photo_num = 1; // input, preview의 id 부여하기 위한 수
 	
 	function load_preview_0(input){//대표이미지 프리뷰 로드하는 함수
 		var file = input.files[0]
+=======
+	var photo_num = 1; // input 변수 지정하기 위한 수
+	
+	function load_preview_0(input){//대표이미지 프리뷰 로드
+		
+		var file = input.files[0]
+		
+>>>>>>> master
 	      if (file != '') {
 	         var reader = new FileReader();
 	         reader.readAsDataURL(file);
 	         reader.onload = function (e) {
+<<<<<<< HEAD
 	           $('#preview_0').attr('src', e.target.result); 
+=======
+	           $('#preview_0').attr('src', e.target.result);
+>>>>>>> master
 	         }
 	      }
 	}
@@ -29,6 +42,7 @@
 		}else{
 			var str_photo = "<p><input type='file' name='review_file_name_"+(photo_num)+"' id='review_file_name_"+(photo_num)+"' onchange='load_preview(this); '/>"
 				+ "<a href='#this' onClick='$(this).parent().remove(); photo_count--; $(span_"+photo_num+").remove(); ' class='btn'>삭제하기</a></p>"
+<<<<<<< HEAD
 			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'>"
 			+ "<img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
 			
@@ -41,6 +55,20 @@
 	}
 	function load_preview(input){//추가한 preview span에 이미지를 추가하는 기능
 		var file1 = input.files[0] //파일에 대한 정보
+=======
+			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'><img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
+			$("#photo_div").append(str_photo);
+			$("#preview_div").append(str_preview);
+			photo_num++;
+			photo_count++;
+			$("#photo_count").val(photo_count);
+		}
+	}
+	
+	function load_preview(input){
+		var file1 = input.files[0]
+		
+>>>>>>> master
 		if(file1 != ''){
 			var reader = new FileReader();
 			reader.readAsDataURL(file1);
@@ -52,7 +80,7 @@
 </script>
 </head>
 <body>review_write.jsp<br>
-	<jsp:include page="../default/header.jsp"></jsp:include>
+	<c:import url="../default/header.jsp"></c:import>
 		<div id="wrap" style="width:600px; margin: 0 auto;">
 			<h1 style="text-align:center;">review write form</h1><br>
 			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
@@ -61,7 +89,7 @@
 				<b>제 목 : </b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
 				<hr>
 				<b>내 용 : </b><br> 
-				<textarea style="resize:none;" rows="20" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
+				<textarea style="resize:none;" rows="40" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
 				<hr>
 				
 				<div id="preview_div">
@@ -69,7 +97,7 @@
 				</div>
 				
 				<div id="photo_div">
-					<p><!-- onchange="readURL(this)"  -->
+					<p>
 						<b>대표이미지</b>
 						<input type="file" id="review_file_name_0" name="review_file_name_0" onchange="load_preview_0(this);"/>
 						<span style="font-size:15px; color: gray;">※사진은 최대 10개까지 등록이 가능합니다.</span><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->

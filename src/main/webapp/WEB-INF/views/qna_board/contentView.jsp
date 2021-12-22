@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	function modify(){
@@ -70,15 +76,20 @@
 				let html = "";
 				list.forEach(function(data){
 					let qrIdContent = data.qrId + data.qrContent
-					html += "<div><b>작성자 : 관리자</b><br>"
-	                html += "<b>작성일</b> : "+data.saveDate+"<br>"
-	                html += "<form action='${contextPath }/qna/repModify' method='post'>"
-	                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
-	                html += "<b>내용</b> : <textarea rows='10' cols='50' name='qrContent'>"+data.qrContent+"</textarea><br>"
-	                html += "<button type='submit'>수정</button>"
-	                html += "<button type='button' onclick='repDelete("+data.qrId+")'>삭제</button></div><hr>"
-	                html += "</form>"
-				})
+					html += "<div><b>답변자 : 관리자</b> | "
+	                html += "<b>답변일</b> : "+data.saveDate+"<br><br>"
+	                
+	                if('${adminId}' == ""){
+	                	html += "<textarea rows='10' cols='50' name='qrContent' readonly>"+data.qrContent+"</textarea><br>"
+	                }else{
+		                html += "<form action='${contextPath }/qna/repModify' method='post'>"
+		                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
+		                html += "<textarea rows='5' cols='80' name='qrContent'>"+data.qrContent+"</textarea><br>"
+		                html += "<button type='submit' class='btn btn-dark'>답변수정</button>"
+		                html += "<button type='button' onclick='repDelete("+data.qrId+")' class='btn btn-dark'>답변삭제</button></div><hr>"
+		                html += "</form>"
+	                }
+	             })
 				$("#getReply").html(html)
 			},erorr : function(){
 				alert("서버문제 발생");
@@ -94,7 +105,7 @@
 		console.log(qrId)
 		$.ajax({
 			url : "repDelete/"+qrId,
-			type : "get",
+			type : "post",
 			dataType : "json",
 			success : function(data){
 				console.log(data)
@@ -115,67 +126,66 @@
 </head>
 <body onload="getReply()">
 <c:import url="../default/header.jsp" />
-<%-- 
-<c:if test="${dto.qnaPwd != null}">
-	<c:if test="${pwd == null}">
-		<c:redirect url="/qna/pwdForm?qnaNo=${dto.qnaNo}"/>
-	</c:if>
-</c:if>
---%>
- 
+<div class="wrap">
+
 <form id="fo" action="${contextPath }/qna/modify" method="post">
  	<input type="hidden" name="qnaNo" value="${dto.qnaNo }">
-	<table>
-		<tr>
-			<th>제목</th> 
-			<td><input type="text" name="qnaTitle" id="title" value="${dto.qnaTitle }"></td>
-		</tr>
-		<tr>
-			<th>작성자</th> 
-			<td>${dto.id }</td>
-		</tr>
-		<tr>	
-			<th>조회수</th>
-			<td>${dto.qnaHit }</td>
-		</tr>	
-		<tr>	
-			<th>내용</th>
-			<td><textarea rows="10" cols="30" name="qnaContent"
-								 id="content">${dto.qnaContent }</textarea> </td>
-		</tr>	
+	
+	<h2>Q&A</h2>
+	<hr>
+	<c:choose>
+		<c:when test="${dto.id == userId}">
+			<h3><b><input type="text" name="qnaTitle" id="title" value="${dto.qnaTitle }"></b></h3>
+		</c:when>
+		<c:otherwise>
+			<h3><b>${dto.qnaTitle }</b></h3>
+		</c:otherwise>
+	</c:choose>
+	<br>
+	<b>작성자</b> : ${dto.id } &nbsp; <b>작성일</b> : ${dto.saveDate } &nbsp; <b>조회</b> : ${dto.qnaHit }<br>
+	<hr>
+	<c:choose>
+		<c:when test="${dto.id == userId}">
+			<textarea class="partC" rows="7" cols="80" name="qnaContent"
+									 id="content">${dto.qnaContent }</textarea> 
+		</c:when>
+		<c:otherwise>
+			<textarea class="partC" rows="7" cols="80" name="qnaContent" readonly
+									 id="content">${dto.qnaContent }</textarea> 
+		</c:otherwise>
+	</c:choose>
+	<p>
+	<p>
+	<p>
+		<c:if test="${adminId != null }">
+			<button type="button" class="btn btn-dark" onclick="replyShow()">답변하기</button>
+		</c:if>
+	<hr>
+</form>	
+	<div id="getReply"></div>
+	
+	<div align="right">
+	<c:if test="${dto.id == userId}">
+		<button type="button"  class="btn btn-dark" onclick="modify()">수정</button>	
+	</c:if>
+	<c:if test="${dto.id == userId or adminId != null}">
+		<button type="button"  class="btn btn-dark"  
+		onclick="location.href='${contextPath }/qna/delete?qnaNo=${dto.qnaNo}'">삭제</button>
+	</c:if>	
+	<button type="button" class="btn btn-dark" onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
+	</div>
+	
+	<div id="reply" style="display: none;">
+		<form id="replyFo">
+			<h3>답변을 작성하세요</h3>
+			<input type="hidden" name="qrWriteGroup" value="${dto.qnaNo }">
+			<input type="hidden"  name="id" value="admin">
+			<textarea rows="10" cols="50" name="qrContent" id="repContent"></textarea>
+			<button type="button" onclick="addReply()">답변 작성완료</button>
+		</form>
+	</div>	
 
-		<tr>	
-			<th>작성날짜</th>
-			<td>${dto.saveDate }</td>
-		</tr>	
-		
-		<tr>	
-			<td colspan="2"> <button type="button" 
-				onclick="location.href='${contextPath }/qna/allList'">목록</button>
-			
-				<button type="button" onclick="modify()">수정</button>	
-			
-				<button type="button" 
-				onclick="location.href='${contextPath }/qna/delete?qnaNo=${dto.qnaNo}'">삭제</button>
-			
-				<button type="button" onclick="replyShow()">답변달기</button>
-			</td>	
-		</tr>
-	</table>
-</form>
-
-<div id="getReply"></div>
-
-<div id="reply" style="display: none;">
-<form id="replyFo">
-	<h3>답변을 작성하세요</h3>
-	<input type="hidden" name="qrWriteGroup" value="${dto.qnaNo }">
-	<input type="hidden"  name="id" value="admin">
-	<textarea rows="10" cols="50" name="qrContent" id="repContent"></textarea>
-	<button type="button" onclick="addReply()">답변 작성완료</button>
-</form>
 </div>
-
 <c:import url="../default/footer.jsp" />
 </body>
 </html>

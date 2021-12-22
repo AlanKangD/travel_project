@@ -1,5 +1,6 @@
 package com.care.root.member.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.member.dto.MemberDTO;
@@ -99,5 +101,18 @@ public class MemberController implements SessionCommonName{
 		ms.memberModify(dto);
 		return "redirect:memberInfo";
 	}
-	
+	@GetMapping(value="member/idChk",produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String idChk(MemberDTO dto,@RequestParam(value="id",required =false,defaultValue="nan") String id){
+		int result=ms.idChk(id);
+		System.out.println("con result : "+result);
+		if(result==0) {
+			return "{\"result\":0}";
+		}
+		return "{\"result\":1}";
+	}
  }
+
+
+
+

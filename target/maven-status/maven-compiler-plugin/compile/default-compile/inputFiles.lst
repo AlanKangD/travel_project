@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\mybatis\review\ReviewMapper.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\review\dto\ReviewDTO.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\qna\dto\QnADTO.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\qna\service\QnAServiceImpl.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\common\intercepter\CommonIntercepter.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\mybatis\member\MemberMapper.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\qna\service\QnAService.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\review\service\ReiviewServiceImpl.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\HomeController.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\member\service\MemberService.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\common\sessionName\SessionCommonName.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\member\dto\MemberDTO.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\member\controller\MemberController.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\qna\controller\QnAController.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\mybatis\qna\QnAMapper.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\qna\dto\QnARepDTO.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\member\service\MemberServiceImpl.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\review\controller\ReviewController.java
+C:\final_project\project_workspace\travel_project\src\main\java\com\care\root\review\service\ReviewService.java
+=======
 E:\java\workspace_project\travel_project\src\main\java\com\care\root\qna\controller\QnAController.java
 E:\java\workspace_project\travel_project\src\main\java\com\care\root\review\controller\ReviewController.java
 E:\java\workspace_project\travel_project\src\main\java\com\care\root\member\dto\MemberDTO.java
@@ -23,3 +44,4 @@ E:\java\workspace_project\travel_project\src\main\java\com\care\root\review\dto\
 E:\java\workspace_project\travel_project\src\main\java\com\care\root\common\intercepter\CommonIntercepter.java
 E:\java\workspace_project\travel_project\src\main\java\com\care\root\mybatis\member\MemberMapper.java
 E:\java\workspace_project\travel_project\src\main\java\com\care\root\common\sessionName\SessionCommonName.java
+>>>>>>> soomin

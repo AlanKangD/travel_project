@@ -28,8 +28,6 @@ public class ReviewServiceImpl implements ReviewService{
 	public String r_writeSave(MultipartHttpServletRequest mul,
 			HttpServletRequest request, int photo_count) {
 		
-//		String file_name = mul.getParameter("review_file_list");
-//		String[] file_name_list = file_name.split("/");
 		int result_content_save = 0;
 		int result_photo_save = 1;
 		ArrayList<Integer> result_photo = new ArrayList<Integer>();
@@ -57,7 +55,7 @@ public class ReviewServiceImpl implements ReviewService{
 				photo_dto.setId(mul.getParameter("id"));
 				photo_dto.setReview_title("review_title");
 				photo_dto.setOriginal_file_name("nan");
-				photo_dto.setStored_file_name("nan");//
+				photo_dto.setStored_file_name("nan");
 			}
 			result_photo.add(i, mapper.photo_save(photo_dto));
 		}
@@ -105,7 +103,6 @@ public class ReviewServiceImpl implements ReviewService{
 				}
 			}
 		}
-		
 		for(int i = 0; i < 10 ; i++) {//새로운 파일 insert하는 곳
 			if(mul.getFile("review_file_" + i) != null) {
 				ReviewPhotoDTO photo_dto = new ReviewPhotoDTO();
@@ -141,9 +138,25 @@ public class ReviewServiceImpl implements ReviewService{
 		return rfs.getMessage(request, msg, url);
 	}
 	
-	public void boardList(Model model, int num) {
+	public String review_delete(int review_no, HttpServletRequest request) {
+		int result = mapper.review_delete(review_no);
+		String msg, url;
+		
+		if(result == 1) {
+			msg = "성공적으로 삭제 되었습니다";
+			url = "/review/review_boardList"; 
+		}else {
+			msg = "성공적으로 삭제 되었습니다";
+			url = "/review/review_content?review_no = ${review_no}";
+		}
+		String message = rfs.getMessage(request, msg, url);
+		
+		return message;
+	}
+	
+	public void boardList(Model model, int num, String r_search_option, String keyword) {
 	      int pageLetter = 5;
-	      int dataCount = mapper.selectReviewCount();
+	      int dataCount = mapper.selectReviewCount(r_search_option, keyword);
 	      int repeat = dataCount / pageLetter;
 	      if(dataCount % pageLetter != 0) {
 	         repeat += 1;
@@ -163,11 +176,13 @@ public class ReviewServiceImpl implements ReviewService{
 	         endPage = repeat;
 	      }
 	      
+	      model.addAttribute("keyword", keyword);
+	      model.addAttribute("search_option", r_search_option);
 	      model.addAttribute("dataCount",dataCount);
 	      model.addAttribute("beginPage",beginPage);
 	      model.addAttribute("endPage",endPage);
 	      model.addAttribute("repeat", repeat);
-	      model.addAttribute("boardList", mapper.boardList(start, end));
+	      model.addAttribute("boardList", mapper.boardList(start, end, r_search_option, keyword));
 	   }
 	
 	//content.jsp 내용 불러오기

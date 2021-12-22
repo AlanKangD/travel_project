@@ -15,6 +15,7 @@
 	</script>
 </c:if>
 <jsp:include page="../default/header.jsp" />
+<div class="wrap">
 <div align="center">
 <h1>비밀글 보기</h1><br><br>
 
@@ -24,11 +25,11 @@
 비밀번호 <input type="text" name="inputPwd"><br><br>
 <button type="submit">확인</button>
 </form>
-<button onclick="location.href='${contextPath}/qna/allList'">목록</button>
+<button type="button" 
+onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
 
-
-
-  	<jsp:include page="../default/footer.jsp" />
+</div>
+<jsp:include page="../default/footer.jsp" />
 </div>
 </body>
 </html>
