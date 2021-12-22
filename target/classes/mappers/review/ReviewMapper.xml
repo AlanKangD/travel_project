@@ -174,34 +174,37 @@
 		<result property="like_date" column="like_date"/>
 	</resultMap>
 	
-	<!-- 게시글 추천수 -->
-	<update id="updateLike" parameterType="int">
-		update review set review_like = review_like + 1 where review_no=#{review_no}
-	</update>
-	<!-- 게시글 추천수 취소 -->
-	<update id="updateLikeCancel" parameterType="int">
-		update review set review_like = review_like - 1 where review_no=#{review_no}
-	</update>
-	<!-- 게시글 추천 시 Like 테이블에 insert -->
-	<insert id="insertLike">
-		insert into r_like(like_no,review_no,id) values((SELECT NVL(MAX(like_no),0)+1 from r_like),#{review_no},#{id})
-	</insert>
-	<!-- 게시글 추천 취소 시 delete -->
-	<delete id="deleteLike">
-		delete from r_like where review_no = #{review_no} and id = #{id}
-	</delete>
-	<!-- 게시글 추천 시 Check를 1로 만들어서 중복 방지 -->
-	<update id="updateLikeCheck">
-		update r_like set like_check = 1 where review_no=#{review_no} and id=#{id}
-	</update>
-	<!-- 게시글 추천 취소 다시 0 -->
-	<update id="updateLikeCheckCancel">
-		update r_like set like_check = 0 where review_no=#{review_no} and id=#{id}
-	</update>
-	<!-- 게시글 추천 중복 방지 select 문 -->
+	<!-- 좋아요 눌렀는지 안 눌렀는지 확인 -->
 	<select id="likeCheck" resultType="int">
 		select count(*) from r_like where review_no=#{review_no} and id=#{id}
 	</select>
+	
+	<!-- 안 눌렀다면 r_like 테이블에 값 insert -->
+	<insert id="insertLike">
+		insert into r_like(like_no,review_no,id) values((SELECT NVL(MAX(like_no),0)+1 from r_like),#{review_no},#{id})
+	</insert>
+	<!-- like_check 값 1로 변경 -->
+	<update id="updateLikeCheck">
+		update r_like set like_check = 1 where review_no=#{review_no} and id=#{id}
+	</update>
+	<!-- 게시글 좋아요 수 +1 -->
+	<update id="updateLike" parameterType="int">
+		update review set review_like = review_like + 1 where review_no=#{review_no}
+	</update>
+	
+	<!-- 눌렀다면 r_like 테이블에서 값 delete -->
+	<delete id="deleteLike">
+		delete from r_like where review_no = #{review_no} and id = #{id}
+	</delete>
+	<!-- like_check 값 0으로 변경  -->
+	<update id="updateLikeCheckCancel">
+		update r_like set like_check = 0 where review_no=#{review_no} and id=#{id}
+	</update>
+	<!-- 게시글 좋아요 수 -1 -->
+	<update id="updateLikeCancel" parameterType="int">
+		update review set review_like = review_like - 1 where review_no=#{review_no}
+	</update>
+	
 	
 </mapper>
   	

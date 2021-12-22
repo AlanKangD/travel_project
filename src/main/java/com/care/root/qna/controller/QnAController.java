@@ -64,11 +64,13 @@ public class QnAController implements SessionCommonName{
 	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req,
 								   @RequestParam(required = false, defaultValue = "1") int num,
 								   @RequestParam(required = false) String searchOption,
-								   @RequestParam(required = false) String keyword) { 	   
+								   @RequestParam(required = false) String keyword,
+								   HttpSession session) { 	   
 		model.addAttribute("num",num);	
 		model.addAttribute("searchOption",searchOption);	
 		model.addAttribute("keyword",keyword);	
-		int result = qs.contentView(qnaNo, model);
+		String admin = (String)session.getAttribute(adminSession);
+		int result = qs.contentView(qnaNo, model, admin);
 			if(result == 1) {
 				return "qna_board/secretView";
 			 }
@@ -126,5 +128,4 @@ public class QnAController implements SessionCommonName{
 		System.out.println(qrContent);
 		qs.repModify(qrId,qrContent,response,request);
 	}
-	
 }

@@ -6,8 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
+<style type="text/css">
+</style>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>후기 작성</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	var photo_count = 1; // 사진 파일 수 
@@ -51,10 +54,11 @@
 	}
 </script>
 </head>
-<body>review_write.jsp<br>
-	<c:import url="../default/header.jsp"></c:import>
+<body>
+	<jsp:include page="../default/header.jsp"></jsp:include>
+
 		<div id="wrap" style="width:600px; margin: 0 auto;">
-			<h1 style="text-align:center;">review write form</h1><br>
+			<h1 style="text-align:center;">여행 후기</h1><br>
 			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
 				<b>작성자 : </b>	<input type="text" name="id" value="${ userId }" readonly>
 				<hr>
@@ -82,8 +86,8 @@
 					<p>
 					이미지 파일 <input type="number" id="photo_count"  name="photo_count" readonly> 장
 					<input type="button" value="사진추가" onClick="add_file();">
-					<input type="submit" value="저장" />
-					<input type="button" value="목록보기" onClick="location.href='${contextPath}/review/review_boardList'"/>
+					<input type="submit" value="등록" />
+					<input type="button" value="목록으로" onClick="location.href='${contextPath}/review/review_boardList'"/>
 					</p>
 				</div>
 			</form>

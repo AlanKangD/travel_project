@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
+import com.care.root.main.dto.MainRepLikeDTO;
 import com.care.root.main.dto.MyListDTO;
 import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.imageFile.MainFileStorage;
@@ -30,35 +34,83 @@ import com.care.root.mybatis.main.MainMapper;
 public class MainServiceImpl implements MainService {
 	@Autowired
 	MainMapper mapper;
-
-	@Override // 이미지 경로 및 이름 설정
+	@Override // 메인 이미지 경로 및 이름 설정
 	public MainDTO fileProcess(MultipartHttpServletRequest mul) {
-		MainDTO dto = new MainDTO();
+		MainDTO dto = subFileProcess(mul);
 		MultipartFile file = mul.getFile("mainImageFile");
-		if (file.getSize() != 0) {
+		if(file.getSize() != 0) {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
 			Calendar calendar = Calendar.getInstance();
 			String fileName = sf.format(calendar.getTime());
-			fileName += file.getOriginalFilename(); // 20211225173532-dog.jpg
-
-			File saveFile = new File(IMAGE_REPO + "/" + fileName); // 경로 + 파일명 => 위치
+			fileName += file.getOriginalFilename();
+			File saveFile = new File(IMAGE_REPO+"/"+fileName);
 			dto.setMainImageFile(fileName);
 			try {
-				file.transferTo(saveFile);
+				file.transferTo(saveFile);  //해당 위치에 파일 저장 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else {
-			dto.setMainImageFile("nan"); // 이미지선택 안했으면 알람창 띄워주기
+			if(mul.getParameter("originImageFile") != null) {   // 이미 등록되어있는 파일이 있으면, 삭제 
+				File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; // 저장한 레파지토리에서 삭제해줌 
+				deleteOrigin.delete(); 
+			}			
+		}else { 
+			try {
+				dto.setMainImageFile(mul.getParameter("originImageFile")); // 사진 필수라고 알림창띄워주기 
+			} catch (Exception e) { // 게시물 첫 등록이란 소리  
+				dto.setMainImageFile("nan");  
+			}
+		}
+		return dto;
+	}
+	private MainDTO subFileProcess(MultipartHttpServletRequest mul) {
+		MainDTO dto = new MainDTO();
+		for(int i=1; i < 3; i++) {
+			MultipartFile file = mul.getFile("imageFile"+i);
+			if(file.getSize() != 0) {
+				SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
+				Calendar calendar = Calendar.getInstance();
+				String fileName = sf.format(calendar.getTime());
+				fileName += file.getOriginalFilename();
+				File saveFile = new File(IMAGE_REPO+"/"+fileName);						
+				if(i == 1) {
+					dto.setImageFile1(fileName);
+				}else{
+					dto.setImageFile2(fileName);
+				}				
+				try {
+					file.transferTo(saveFile);  //해당 위치에 파일 저장 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else {
+				if(i == 1) {
+					dto.setImageFile1("nan");
+				}else{
+					dto.setImageFile2("nan");
+				}
+			}			
 		}
 		return dto;
 	}
 
 	@Override
-	public List<MainDTO> themeList(Model model, String theme) {
-
-		model.addAttribute("list", mapper.themeList(theme));
-		return null;
+	public void themeList(Model model, String theme) {
+		int like = 0;
+		List<MyListDTO> myList = mapper.getAllMyList();
+		List<MainDTO> list = mapper.themeList(theme);
+		
+		for(MainDTO dto : list) {
+			for(MyListDTO myListDTO : myList) {
+				if(dto.getPlaceName().equals(myListDTO.getPlace())) {
+					like += 1;
+				}
+			}
+			dto.setLikeHit(like);
+			like = 0;
+		}
+		
+		model.addAttribute("list", list);
 	}
 
 	@Override
@@ -153,6 +205,10 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<MyListDTO> getMyList(HttpSession session) {
 		String id = (String) session.getAttribute(SessionCommonName.userSession);
+		if(id == null) {
+			List list = new ArrayList();
+			return list;
+		}
 		return mapper.getMyList(id);
 	}
 
@@ -199,8 +255,41 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<ReplyDTO> getReply(String placeName) {		
-		return mapper.getReply(placeName);
+	   public Map<String, Object> getReply(String placeName, int num) {		
+	      int pageLetter = 5;	    
+	      int end = num * pageLetter;
+	      int start = end + 1 - pageLetter;
+	      
+	      Map<String, Object> result = pagingNum(placeName, num);	      	      	 
+	      result.put("list", mapper.getReply(placeName,start,end));	      
+	      
+	      return result;
+	   }
+	
+	private Map<String, Object> pagingNum(String placeName, int num) {
+		  int pageLetter = 5;
+	      int dataCount = mapper.getDataCount(placeName);
+	      int repeat = dataCount / pageLetter;
+	      if(dataCount % pageLetter != 0) {
+	         repeat += 1;
+	      }	      
+	      int pagingNum = 5; // 페이징 넘버링 개수(1 ~ 5 / 6 ~ 10)
+	      int beginPage = 0;
+	      int endPage = 0;
+	      
+	      int pagingCount = (num-1) / pagingNum;
+	      beginPage = pagingCount * pagingNum + 1 ;
+	      endPage = beginPage + 4;    // 10개로한다면 여기 +5해줘야한다
+	      
+	      if(repeat < endPage) {
+	         endPage = repeat;
+	      }
+	      Map<String, Object> result = new HashMap<String, Object>();
+	      result.put("dataCount", dataCount);
+	      result.put("beginPage", beginPage);
+	      result.put("endPage", endPage);
+		  
+	      return result;
 	}
 
 	@Override
@@ -211,6 +300,23 @@ public class MainServiceImpl implements MainService {
 		}else {
 			return "{\"result\" : false}";
 		}
+	}
+
+	@Override
+	public String likeCheck(int repNo, String id) {
+		List<MainRepLikeDTO> list = mapper.getLikeList();
+		if(list.size() != 0) {
+			for(MainRepLikeDTO dto : list) {
+				if(dto.getId().equals(id) && dto.getRepNo() == repNo) { // 추천하기를 눌렀다면 취소
+					mapper.cancelLike(repNo, id);
+					mapper.likeSet(repNo, 1);
+					return "{\"result\" : false}";
+				}
+			}
+		}
+		mapper.updateLike(repNo, id);	// 추천하기를 눌렀다면 추가
+		mapper.likeSet(repNo, 0);
+		return "{\"result\" : true}";
 	}
 
 }

@@ -2,10 +2,46 @@
     pageEncoding="utf-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-    
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
+<style type="text/css">
+.review_list_title {
+	padding-left: 50px;
+	width: 800px;
+	height: 120px;
+	margin: 0px;
+	padding: 0px;
+}
+.review_title {
+	padding-left: 50px;
+	width: 100%;
+	height: 75px;
+	float: left;
+}
+.review_title_sub {
+	padding-left: 50px;
+	width: 100%;
+	height: 45px;
+	float: left;
+}
+.review_write_button_div {
+	float: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.review_write_button {
+	filter: drop-shadow(4px 4px 4px #666);
+	position: fixed;
+	left: 100px;
+	top: 550px;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
+</style>
 <meta charset="utf-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
