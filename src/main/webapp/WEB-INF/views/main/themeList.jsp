@@ -38,7 +38,7 @@
 												<p>${list.contentOne }</p>
 											</div>
 										</a>
-										관심콘텐츠 ♡  ${list.likeHit }
+										관심콘텐츠 ❤️  ${list.likeHit }
 									</article>
 							</c:forEach>																					
 							</section>

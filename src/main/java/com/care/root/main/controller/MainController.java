@@ -2,7 +2,9 @@ package com.care.root.main.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -59,9 +62,9 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@GetMapping("download")
-	public void download(@RequestParam String mainImageFile, HttpServletResponse response)
+	public void download(@RequestParam String imageFile, HttpServletResponse response)
 										throws Exception{
-		ms.download(mainImageFile, response);
+		ms.download(imageFile, response);
 	}
 	
 	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
@@ -112,14 +115,20 @@ public class MainController implements SessionCommonName {
 	
 	@GetMapping(value ="getReply", produces="application/json;charset=utf-8")
 	@ResponseBody
-	public List<ReplyDTO> getReply(@RequestParam String placeName) {
-		return ms.getReply(placeName);
+	public Map<String, Object> getReply(@RequestParam String placeName,@RequestParam int num) {
+		return ms.getReply(placeName, num);
 	}
 	
 	@DeleteMapping(value = "deleteReply", produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String deleteReply(@RequestParam int repNo) {
 		return ms.deleteReply(repNo);
+	}
+	
+	@PostMapping(value="likeCheck", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String likeCheck(@RequestParam int repNo,@RequestParam String id) {
+		return ms.likeCheck(repNo,id);
 	}
 	
 }

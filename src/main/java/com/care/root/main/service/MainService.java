@@ -1,6 +1,7 @@
 package com.care.root.main.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +29,7 @@ public interface MainService extends MainFileStorage {
 	public String deleteMyList(int listNo);
 	
 	public String addReply(ReplyDTO dto);
-	public List<ReplyDTO> getReply(String placeName);
+	public Map<String, Object> getReply(String placeName, int num);
 	public String deleteReply(int repNo);
-	
+	public String likeCheck(int repNo,String id);
 }

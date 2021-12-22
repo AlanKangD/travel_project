@@ -11,10 +11,6 @@ public class ReplyDTO {
 	private int likeHit;
 	private String saveDate;
 	
-	
-	
-	
-	
 	public String getPlaceName() {
 		return placeName;
 	}
