@@ -59,6 +59,7 @@
           },
           locale: 'ko',
           events: [
+        	  /*
         	    { // this object will be "parsed" into an Event Object
         	      title: 'The Title', // 제목
         	      start: '2021-12-01', // 시작일자
@@ -74,6 +75,7 @@
         	        start: '2021-12-05', // 시작일자
         	        end: '2021-12-06' // 종료일자
         	      }
+        	  */
 
         	  ]
 
@@ -123,6 +125,7 @@
 		 },
 		 traditional: true,
 		 success : function(data) {
+			 console.log(data);
 			alert("저장 완료!!")
 		 },
 		 errer : function() {

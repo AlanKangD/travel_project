@@ -1,5 +1,7 @@
 package com.care.root.myPage.service;
 
+import java.util.List;
+
 import org.springframework.ui.Model;
 
 import com.care.root.member.dto.MemberDTO;
@@ -12,5 +14,5 @@ public interface MyPageService {
 	public void userDelete(String id); //회원 삭제 기능
 	public void calendarinsert(CalendarDTO dto); //캘린더 일정 데이터베이스 저장 기능
 	public void myTripList(String id, Model model); //나의 찜목록 가져오기 기능
-	public void chkMyCal(String id); // 캘린더 저장 가능한지 확인
+	public List<CalendarDTO> getCalendarList(String id); // 해당 아이디의 모든 캘린더 정보를 가져오는 기능
 }
