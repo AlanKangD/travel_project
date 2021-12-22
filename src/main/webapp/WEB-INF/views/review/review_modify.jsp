@@ -19,10 +19,6 @@
 		photo_num++;
 	})
    	function add_list(input){
-<<<<<<< HEAD
-=======
-		
->>>>>>> master
 		if(input != null){
 			if(photo_count == 10){
 				alter("사진은 최대 10장까지 첨부할 수 있습니다.")
@@ -39,11 +35,7 @@
 			   	if(file != ''){
 					var reader = new FileReader();
 					reader.readAsDataURL(file);
-<<<<<<< HEAD
-					reader.onload = function(e){/
-=======
 					reader.onload = function(e){
->>>>>>> master
 						$("#review_file_name_"+(photo_num -2)).attr('src', e.target.result);
 					}
 				}
