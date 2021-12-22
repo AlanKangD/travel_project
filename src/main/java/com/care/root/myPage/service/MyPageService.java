@@ -12,6 +12,8 @@ public interface MyPageService {
 	public void getInfo(String id, Model model); //회원의 정보 보기
 	public void usermodify(MemberDTO dto); //회원 수정 기능
 	public void userDelete(String id); //회원 삭제 기능
+	
+	
 	public void calendarinsert(CalendarDTO dto); //캘린더 일정 데이터베이스 저장 기능
 	public void myTripList(String id, Model model); //나의 찜목록 가져오기 기능
 	public List<CalendarDTO> getCalendarList(String id); // 해당 아이디의 모든 캘린더 정보를 가져오는 기능

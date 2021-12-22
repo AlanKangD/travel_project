@@ -114,4 +114,13 @@ public class MyPageContorller {
 		
 	}
 	
+	@GetMapping(value="getMyCal", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<CalendarDTO> getMyCal(@RequestParam("id") String id) {
+		List<CalendarDTO> list =  mps.getCalendarList(id);
+		System.out.println("getMyCal : " + id);
+		
+		return list;
+	}
+	
 }

@@ -59,6 +59,28 @@
           },
           locale: 'ko',
           events: [
+        	  $.ajax({
+        		  url : "getMyCal?id=${userId}",
+        		  type : "GET",
+        		  dataType : "json",
+        		  data : {},
+        		  success : function(data) {
+        			  console.log(data);
+        			  for(var i=0; i<data.lenght; i++) {
+        				  calendar.addevent ({
+        					  title : data.title,
+        					  start: data.start,
+        					  end: data.end
+        				  })
+        			  }
+        			  //calendar.addevent ({})
+        		  }, 
+        		  errer : function(){
+        			  
+        		  }
+        		  
+        	  })
+        	  
         	  /*
         	    { // this object will be "parsed" into an Event Object
         	      title: 'The Title', // 제목
@@ -89,33 +111,11 @@
 	 //calendar.getEvents() 모든 데이터를 가져오는 함수 입니다.
    	//calendar.getEventById( id ) 해당 아이디의 id값만 추출하는 함수입니다. 
    	var allEvent = calendar.getEvents(); //array
-	 //console.log(allEvent); 
 	 //console 창에서 allDay : ture 이면 하루종일의 일정을 뜻하며 하루에서 따로 지정한 값이면 
 	 // allDay : false 입니다.
 	 //instance 의 정보에서 start와 end정보를 알아야합니다.
 	 console.log(allEvent);
-	 
-	
-	 var events = new Array();
-	
-	 for(var i=0; i<allEvent.length; i++) 
-	 { //이 반복문은 필요없음 삭제해도 무방합니다. 
-		 
-		 var obj = new Object();
-		 
-		 obj.title = allEvent[i]._def.title; //이벤트 명칭
-		 obj.allDay = allEvent[i]._def.allDay; //하루 종일의 이벤트인지 알려주는 boolean 값
-		 obj.start = allEvent[i]._instance.range.start; //시작 날짜 및 시간
-		 obj.end = allEvent[i]._instance.range.end; //마침 날짜 및 시간
-		 
-		 events.push(obj); // events 배열 변수에 obj의 값을 전달합니다
-	 }
-	 //첫번째 시도  form[allEvent[i]._def] = allEvent[i].def.title;
-	// 두번째 시도 배열을 풀지 않고 전체의 데이터를 넘겨주는 것 와.. 성공 여기서 넘어간다
-	 var jsondata = JSON.stringify(events);
-	 console.log(jsondata);
-	 
-	 //이차 배열 JSONOBject , JSONArray
+
 	 $.ajax({
 		 url : "saveData?id=${userId}",
 		 type : "POST",
@@ -136,18 +136,7 @@
 	 
 		
     }
-   
-    
-   /*
-	$(document).ready(function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          locale: 'ko'
-        });
-        calendar.render();
-      });
-   */ 
+
 
 </script>
 </head>
