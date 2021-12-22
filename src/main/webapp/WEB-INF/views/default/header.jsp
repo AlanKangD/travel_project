@@ -26,7 +26,6 @@ function loginpopup(url,name){
 .wrapp { width: 100%; height:100px; margin: auto; background-color: yellow;
 text-align: center; padding-top:30px  }
 }
-
 </style> 
 <script>
 
@@ -37,15 +36,17 @@ text-align: center; padding-top:30px  }
 			dataType : "json",
 			success : function(list){
 				console.log(list)
-				let html = "";
-				list.forEach(function(data){
-					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
-					html += " "+data.place
-					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
-				})
-				$("#replyList").html(html)
-			}, error : function(){
+				if(list != ""){		
+					let html = "";
+					list.forEach(function(data){
+						var mainImageFile = data.image
+						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+						html += " "+data.place
+						html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
+					})
+					$("#replyList").html(html)
+				}
+				}, error : function(){
 			}
 		})
 	}

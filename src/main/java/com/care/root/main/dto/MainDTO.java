@@ -7,14 +7,25 @@ public class MainDTO {
 	private String contentOne; //not null
 	private String contentTwo; //not null
 	private String mainImageFile; //not null
-	private int likeHit;   
-	private int upHit;	
+	private int likeHit; 
 	private String latitude;   // 위도  
 	private String longitude;   //경도   ,  
-	private String address  ;
+	private String address;
+	private String imageFile1;
+	private String imageFile2;
 	
-	
-	
+	public String getImageFile1() {
+		return imageFile1;
+	}
+	public void setImageFile1(String imageFile1) {
+		this.imageFile1 = imageFile1;
+	}
+	public String getImageFile2() {
+		return imageFile2;
+	}
+	public void setImageFile2(String imageFile2) {
+		this.imageFile2 = imageFile2;
+	}
 	public String getPlaceName() {
 		return placeName;
 	}
@@ -51,12 +62,6 @@ public class MainDTO {
 	public void setLikeHit(int likeHit) {
 		this.likeHit = likeHit;
 	}
-	public int getUpHit() {
-		return upHit;
-	}
-	public void setUpHit(int upHit) {
-		this.upHit = upHit;
-	}
 	public String getLatitude() {
 		return latitude;
 	}
@@ -76,5 +81,4 @@ public class MainDTO {
 		this.address = address;
 	}
 	
-
 }

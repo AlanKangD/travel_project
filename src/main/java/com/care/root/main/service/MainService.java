@@ -1,6 +1,7 @@
 package com.care.root.main.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import com.care.root.main.imageFile.MainFileStorage;
 
 public interface MainService extends MainFileStorage {
 	
-	public List<MainDTO> themeList(Model model, String theme);
+	public void themeList(Model model, String theme);
 	public void themeView(String placeName, Model model);	
 	public void register(MultipartHttpServletRequest mul,HttpServletResponse response, HttpServletRequest request);
 	public void download(String mainImageFile, HttpServletResponse response) throws Exception;
@@ -28,7 +29,7 @@ public interface MainService extends MainFileStorage {
 	public String deleteMyList(int listNo);
 	
 	public String addReply(ReplyDTO dto);
-	public List<ReplyDTO> getReply(String placeName);
+	public Map<String, Object> getReply(String placeName, int num);
 	public String deleteReply(int repNo);
-	
+	public String likeCheck(int repNo,String id);
 }
