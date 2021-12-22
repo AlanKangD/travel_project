@@ -357,7 +357,7 @@
 		
 		<table border="1">	
 			<tr>
-				<!--  
+				 
 				<td>
 					<c:forEach var="photo_view" items="${photo_view }">
 						<c:if test="${photo_view.original_file_name != null && photo_view.original_file_name != nan}">
@@ -366,17 +366,11 @@
 					</c:forEach>
 				</td>
 				<td>
-<<<<<<< HEAD
-				-->
+
 				<td>
-					<input type="button" value="수정" onclick="location.href='${contextPath}/review/review_modify?review_no=${contentData.review_no }'">
-					<input type="button" value="목록" onclick="location.href='${contextPath}/review/review_boardList'">
-=======
-					<br>
 					<input type="button" value="삭제" onclick="delete_check();">
 					<input type="button" value="modify" onclick="location.href='${contextPath}/review/review_modify?review_no=${contentData.review_no }'">
 					<input type="button" value="목록으로" onclick="location.href='${contextPath}/review/review_boardList'">
->>>>>>> 6e5821183581dcad68c3d0fa477fca163e981a3a
 				</td>
 			</tr>
 		</table>

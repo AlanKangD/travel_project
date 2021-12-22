@@ -43,77 +43,6 @@
 
 </style>
 <meta charset="utf-8">
-<<<<<<< HEAD
-<title>후기 게시판</title>
-</head>
-<body>
-	<c:import url="../default/header.jsp" />
-	<br>
-	<div class="review_list_title">
-		<div class="review_title">
-			<h1 style="text-align: left">후기 게시판</h1>
-		</div>
-		<div class="review_title_sub">
-			<p style="text-align: left;">회원님이 떠났던 여행지는 어땠나요 ?<br>
-				자세한 여행 후기를 다른 회원님들에게도 공유해주세요 !<br>			
-			</p>
-		</div>
-	</div>
-	
-	<div class="wrap" align="center" style="
-	padding-right: 50px; padding-left: 50px; padding-top: 0px;">
-	<br>
-		<div class="review_write_button_div">
-			<img src="${contextPath}/resources/img/review_write.png" class="review_write_button" onclick="location.href='${contextPath}/review/review_write'">
-<%-- 			<button class="review_write_button" onclick="location.href='${contextPath}/review/review_write'">작성</button>
- --%>		</div>
-		<table border="1">
-			<tr>
-				<th style="padding-top: 15px;">번호</th>
-				<th>좋아요</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
-			</tr>
-			<c:forEach var="list" items="${ boardList }">
-				<tr>
-					<td>${ list.review_no }</td>
-					
-					<td>
-						<c:choose>
-							<c:when test="${ list.review_like == 0 }">
-								<img src="${contextPath}/resources/img/like_off.png" height="25" width="25"> 0
-							</c:when>
-							<c:otherwise>
-								<img src="${contextPath}/resources/img/like_on.png" height="25" width="25"> ${list.review_like}
-							</c:otherwise>
-						</c:choose>
-					</td>
-					
-					<td><a href="${contextPath}/review/review_content?review_no=${list.review_no}">${ list.review_title }
-					<c:if test="${list.r_reply_count != 0}">
-						<small><b>[&nbsp;<c:out value="${list.r_reply_count}"/>&nbsp;]</b></small>
-					</c:if>
-					</a></td>
-					<td>${ list.id }</td>
-					<td>${ list.review_date }</td>
-					<td>${ list.review_hit_num }</td>
-				</tr>
-			</c:forEach>
-		</table>	
-		<table border="1">
-		<tr>
-			<td colspan="7">
-				<div align="center">
-					<c:forEach var="num" begin="1" end="${ repeat }">
-						<a href="review_content?num=${num}">[${num}]</a>
-					</c:forEach>
-				</div>
-			</td>
-		</tr>
-		</table>
-=======
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -147,7 +76,6 @@
 	   <h1>여행 후기게시판</h1>
 	   자신만의 여행후기를 기록해보세요!<p>
 	   총 ${dataCount}개의 글  ( Page ${num } / ${repeat} )
->>>>>>> 6e5821183581dcad68c3d0fa477fca163e981a3a
 	</div>
 	<div id="search_div"><!-- 리뷰 검색 기능 -->
 		<form id="r_select_form" method="get" action="${contextPath }/review/review_boardList">

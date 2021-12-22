@@ -54,24 +54,12 @@
 	}
 </script>
 </head>
-<<<<<<< HEAD
 <body>
 	<jsp:include page="../default/header.jsp"></jsp:include>
-=======
-<body>review_write.jsp<br>
-	<c:import url="../default/header.jsp"></c:import>
->>>>>>> 6e5821183581dcad68c3d0fa477fca163e981a3a
+
 		<div id="wrap" style="width:600px; margin: 0 auto;">
 			<h1 style="text-align:center;">여행 후기</h1><br>
 			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
-<<<<<<< HEAD
-				<b>작성자</b>	<input type="text" name="id" value="${ userId }" readonly style="width: 50%;">
-				<br>
-				<b>제목</b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
-				<br>
-				<b>내용</b><br> 
-				<textarea style="resize:none;" rows="20" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
-=======
 				<b>작성자 : </b>	<input type="text" name="id" value="${ userId }" readonly>
 				<hr>
 				<b>제 목 : </b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
@@ -79,7 +67,6 @@
 				<b>내 용 : </b><br> 
 				<textarea style="resize:none;" rows="40" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
 				<hr>
->>>>>>> 6e5821183581dcad68c3d0fa477fca163e981a3a
 				
 				<div id="preview_div">
       				<img id="preview_0" name="preview_0" src="#" width=320 height=180 alt="대표이미지가 없습니다." />
