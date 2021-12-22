@@ -12,14 +12,13 @@
 	var photo_count = ${photo_view.size()}; // 사진 파일 수 
 	var photo_num = ${photo_view.size()}; // input과 preview id 지정을 위한 수
 	
-	$(function(){//웹페이지 시작될때 실행
+	$(function(){
 		$("#photo_count").val(photo_count);
 		$("#review_file").attr('name', ('review_file_') + photo_count);
 		$("#review_file").attr('id', ('review_file_') + photo_count);
 		photo_num++;
 	})
    	function add_list(input){
-		
 		if(input != null){
 			if(photo_count == 10){
 				alter("사진은 최대 10장까지 첨부할 수 있습니다.")
@@ -63,7 +62,6 @@
 				<c:forEach var="photo_view" items="${photo_view }" begin="0" varStatus="status"><!-- 기존파일과 비교용 -->
 					<input type="hidden" id="original_file_${status.index }" name="original_file_${status.index }" value="${photo_view.original_file_name}">
 				</c:forEach>
-				
 				<c:forEach var="photo_view" items="${photo_view }" begin="0" varStatus="status"><!-- 삭제했을때 수정되는 부분 -->
 					<input type="hidden" id="original_file_name_${status.index }" name="original_file_name_${status.index }" value="${photo_view.original_file_name}">
 				</c:forEach>
@@ -81,7 +79,7 @@
 								<img width="320px" height="180px" id="review_file_name_${status.index }" name="review_file_name_${status.index }" 
 									src="${contextPath }/review/download?stored_file_name=${photo_view.stored_file_name}"> 
 								<b>${photo_view.original_file_name }</b>  
-								<a href="#this" id="delete" onClick="$(original_file_name_${status.index}).remove(); photo_count--; $('#photo_count').val(photo_count); $(this).parent().remove();">삭제버튼</a><!-- (삭제버튼 누를 때 기존에 formdata에 저장된 같은 이름의 파일을 삭제해서 나중에 수정버튼을 눌렀을 때 서비스쪽으로 데이터들이 옮겨지게) -->
+								<a href="#this" id="delete" onClick="$(original_file_name_${status.index}).remove(); photo_count--; $('#photo_count').val(photo_count); $(this).parent().remove();">삭제버튼</a>
 								<br>
 							</p>
 						</c:if>

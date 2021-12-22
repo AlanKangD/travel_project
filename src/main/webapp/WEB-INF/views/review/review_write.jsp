@@ -16,7 +16,6 @@
 	function load_preview_0(input){//대표이미지 프리뷰 로드
 		
 		var file = input.files[0]
-		
 	      if (file != '') {
 	         var reader = new FileReader();
 	         reader.readAsDataURL(file);
@@ -25,8 +24,7 @@
 	         }
 	      }
 	}
-	
-	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 함수
+	function add_file(){//사진을 추가할 수 있는 input과 preview를 생성하는 기능
 		if(photo_count == 10){
 			alter("사진은 최대 10장까지 첨부할 수 있습니다.")
 		}else{
@@ -43,7 +41,6 @@
 	
 	function load_preview(input){
 		var file1 = input.files[0]
-		
 		if(file1 != ''){
 			var reader = new FileReader();
 			reader.readAsDataURL(file1);
@@ -92,6 +89,5 @@
 			</form>
 		</div>
 	<jsp:include page="../default/footer.jsp"></jsp:include>
-
 </body>
 </html>
