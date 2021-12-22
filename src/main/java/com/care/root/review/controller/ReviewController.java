@@ -45,23 +45,30 @@ public class ReviewController {
 	@GetMapping("review_modify")
 	public String review_modify(@RequestParam("review_no") int review_no, Model model) {
 		rs.getData(review_no, model);
+		rs.content_photo(review_no, model);
 		return "review/review_modify";
 	}
 	@GetMapping("review_boardList")
 	public String review_boardList(Model model,
-			@RequestParam(required = false, defaultValue = "1") int num) {
-		rs.boardList(model, num);
+			@RequestParam(required = false, defaultValue = "1") int num,
+			@RequestParam(required = false) String r_search_option,
+			@RequestParam(required = false) String keyword) {
+		System.out.println(r_search_option);
+		System.out.println(keyword);
+		rs.boardList(model, num, r_search_option, keyword);
 		return "review/review_boardList";
 	}
-	@GetMapping("review_content")
+	@GetMapping("review_content") 
 	public String content(@RequestParam("review_no") int review_no, Model model, 
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		System.out.println("content실행");
 		
 		rs.content(review_no, model);
+		
+		rs.content_photo(review_no, model);
+		
 		return "review/review_content";
 	}
-	
 	
 	
 	//review관련 기능 구현
@@ -69,7 +76,7 @@ public class ReviewController {
 	public void r_writeSave(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
 			HttpServletRequest request,
-			@RequestParam("photo_count") int photo_count) throws Exception {
+			@RequestParam(value="photo_count", required=false, defaultValue="0") int photo_count) throws Exception {
 		String message = rs.r_writeSave(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
@@ -77,22 +84,24 @@ public class ReviewController {
 		out.println(message);
 	    }
 	
+	
 	@PostMapping("r_modify")
 	public void r_modify(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
-			HttpServletRequest request) throws Exception {
-		String message = rs.r_modify(mul, request);
+			HttpServletRequest request,
+			@RequestParam(value="photo_count", required=false, defaultValue="0") int photo_count) throws Exception {
+		String message = rs.r_modify(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
 		out = response.getWriter();
 		out.print(message);
 	}
 	@GetMapping("download")
-	public void download(@RequestParam("review_file_name") String review_file_name,
+	public void download(@RequestParam("stored_file_name") String stored_file_name,
 	         HttpServletResponse response) throws Exception {
 	    response.addHeader(
-	   "Content-disposition","attachment;fileName="+ review_file_name);
-	    File file = new File(ReviewFileService.IMAGE_REPO+"/"+ review_file_name);
+	   "Content-disposition","attachment;fileName="+ stored_file_name);// 파일 다운로드 받을 수 있도록
+	    File file = new File(ReviewFileService.IMAGE_REPO+"/"+ stored_file_name);
 	    FileInputStream in = new FileInputStream(file);
 	    FileCopyUtils.copy(in, response.getOutputStream());
 	    in.close();
@@ -118,5 +127,17 @@ public class ReviewController {
 		}
 		// 로직 처리 후 likeCheck 값 넘김
 		return likeCheck;
+	}
+	@GetMapping("review_delete")
+	public void review_delete(@RequestParam("review_no") int review_no,
+			HttpServletResponse response,
+			HttpServletRequest request) throws Exception {
+		System.out.println(review_no);
+		String delete_check = rs.review_delete(review_no, request);
+		
+		PrintWriter out = null;
+		response.setContentType("text/html; charset=utf-8");
+		out = response.getWriter();
+		out.println(delete_check);
 	}
 }

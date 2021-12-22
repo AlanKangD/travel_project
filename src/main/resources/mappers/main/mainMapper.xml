@@ -11,6 +11,8 @@
 	   <result property="contentOne" column="content_one"/>
 	   <result property="contentTwo" column="content_two"/>
 	   <result property="mainImageFile" column="main_image_file"/>
+	   <result property="imageFile1" column="image_file1"/>
+	   <result property="imageFile2" column="image_file2"/>
 	   <result property="likeHit" column="likeHit"/>
 	   <result property="upHit" column="upHit"/>
 	   <result property="latitude" column="latitude"/>
@@ -23,6 +25,20 @@
 		  <result property="id" column="id"/>
 		  <result property="place" column="place"/>
 		  <result property="image" column="image"/>
+    </resultMap>
+    
+    <resultMap  id="mainReply" type="com.care.root.main.dto.ReplyDTO">
+    	<id property="repNo" column="rep_no"/>
+    	<result property="repContent" column="rep_content"/>
+    	<result property="placeName" column="place_name"/>
+    	<result property="id" column="id"/>
+    	<result property="likeHit" column="likeHit"/>
+    	<result property="saveDate" column="savedate"/>
+    </resultMap>
+    
+    <resultMap  id="mainRepLike" type="com.care.root.main.dto.MainRepLikeDTO">
+    	<result property="repNo" column="rep_no"/>
+    	<result property="id" column="id"/>
     </resultMap>
     
     
@@ -43,12 +59,16 @@
     </select>
   
   <insert id="register">
-  	insert into main(main_category, place_name, content_one, content_two, main_image_file, latitude, longitude, address)
-  	values(#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile}, #{latitude},#{longitude},#{address})
+  	insert into main(main_category, place_name, content_one, content_two, main_image_file, image_file1, image_file2, latitude, longitude, address)
+  	values(#{mainCategory},#{placeName},#{contentOne},#{contentTwo},#{mainImageFile}, #{imageFile1}, #{imageFile2}, #{latitude},#{longitude},#{address})
   </insert>
   
   <select id="getMyList" resultMap="mylist">
   	select * from mylist where id = #{id}
+  </select>
+  
+  <select id="getAllMyList" resultMap="mylist">
+  	select * from mylist
   </select>
   
   <delete id="deleteView">
@@ -60,6 +80,43 @@
   	content_two = #{contentTwo} where place_name = #{placeName}
   </update>
   
-
+  <insert id="addReply">
+  	insert into main_reply(rep_no, place_name, rep_content, id, likeHit)
+  	 values(main_reply_seq.nextval, #{placeName}, #{repContent}, #{id}, 0)
+  </insert>
+  
+  <select id="getReply" resultMap="mainReply">
+  	select B.* from(select rownum rn, A.* from(select * from main_reply 
+  	where place_name = #{placeName} order by rep_no desc)A)B where rn between #{s} and #{e}
+  </select>
+  
+  <delete id="deleteReply">
+  	delete from main_reply where rep_no = #{repNo}
+  </delete>
+  
+	<select id="getDataCount" resultType="Integer">
+		select count(*) from main_reply where place_name = #{placeName}
+	</select>
+	
+	<select id="getLikeList" resultMap="mainRepLike">
+		select * from main_like
+	</select>
+	
+	<insert id="updateLike">
+		insert into main_like(rep_no,id) values(#{repNo},#{id})
+	</insert>
+	
+	<delete id="cancelLike">
+		delete from main_like where rep_no = #{repNo} and id = #{id}
+	</delete>
+	
+	<update id="likeSet">
+		<if test="num == 1">
+			update main_reply set likeHit = likeHit - 1 where rep_no = #{repNo}
+		</if>
+		<if test="num == 0">
+			update main_reply set likeHit = likeHit + 1 where rep_no = #{repNo}
+		</if>
+	</update>
   
   </mapper>

@@ -2,7 +2,9 @@ package com.care.root.main.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -24,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
+import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.service.MainService;
 
 @RequestMapping("main")
@@ -58,9 +62,9 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@GetMapping("download")
-	public void download(@RequestParam String mainImageFile, HttpServletResponse response)
+	public void download(@RequestParam String imageFile, HttpServletResponse response)
 										throws Exception{
-		ms.download(mainImageFile, response);
+		ms.download(imageFile, response);
 	}
 	
 	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
@@ -90,7 +94,7 @@ public class MainController implements SessionCommonName {
 	   }
 	
 	@GetMapping(value = "getMyList", produces = "application/json;charset=utf-8")
-	@ResponseBody
+	@ResponseBody // 찜하기 사진 내용 가져오기 기능 contoller ->  jsp의 header.jsp ajax myList로 작동
 	public List<MyListDTO> getMyList(HttpSession session) {
 		return ms.getMyList(session);
 	}
@@ -101,6 +105,30 @@ public class MainController implements SessionCommonName {
 		return ms.deleteMyList(listNo);
 	}
 	
+	// 댓글 
 	
+	@PostMapping(value ="addReply", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addReply(@RequestBody ReplyDTO dto) {
+		return ms.addReply(dto);
+	}
+	
+	@GetMapping(value ="getReply", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> getReply(@RequestParam String placeName,@RequestParam int num) {
+		return ms.getReply(placeName, num);
+	}
+	
+	@DeleteMapping(value = "deleteReply", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String deleteReply(@RequestParam int repNo) {
+		return ms.deleteReply(repNo);
+	}
+	
+	@PostMapping(value="likeCheck", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String likeCheck(@RequestParam int repNo,@RequestParam String id) {
+		return ms.likeCheck(repNo,id);
+	}
 	
 }

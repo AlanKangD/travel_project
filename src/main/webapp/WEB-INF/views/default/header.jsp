@@ -17,8 +17,7 @@ function loginpopup(url,name){
 	var winY=window.screenTop;
 	
 	var popX=winX+(winWidth-popWidth)/2;
-	var popY=winY+(winHeight-popHeight)/2;
-	
+	var popY=winY+(winHeight-popHeight)/4;
 	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 }
 </script>
@@ -27,27 +26,27 @@ function loginpopup(url,name){
 .wrapp { width: 100%; height:120px; margin: auto; background-color: #d3e7ef;
 text-align: center; padding-top:20px; padding-bottom: 10px; }
 }
-<<<<<<< HEAD
-
 </style> 
 <script>
 
 	function myList(){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/main/getMyList",
+			url : "${contextPath}/main/getMyList",
 			type : "get",
 			dataType : "json",
 			success : function(list){
 				console.log(list)
-				let html = "";
-				list.forEach(function(data){
-					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
-					html += " "+data.place
-					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
-				})
-				$("#replyList").html(html)
-			}, error : function(){
+				if(list != ""){		
+					let html = "";
+					list.forEach(function(data){
+						var mainImageFile = data.image
+						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+						html += " "+data.place
+						html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
+					})
+					$("#replyList").html(html)
+				}
+				}, error : function(){
 			}
 		})
 	}
@@ -55,7 +54,7 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 	function deleteList(listNo){
 		console.log(listNo)
 		$.ajax({
-			url : "${pageContext.request.contextPath}/main/deleteList?listNo="+listNo,
+			url : "${contextPath}/main/deleteList?listNo="+listNo,
 			type : "delete",
 			dataType : "json",
 			success : function(data){
@@ -99,6 +98,8 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 			</c:choose>
 			<li><a href="${contextPath }/review/review_boardList">후기 게시판</a></li>	
 			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+			<li><a href="${contextPath }/review/review_boardList">리뷰게시판</a></li>	
+			<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">

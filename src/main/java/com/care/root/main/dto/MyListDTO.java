@@ -6,7 +6,6 @@ public class MyListDTO {
 	private String place;
 	private String image;
 	
-	
 	public int getListNo() {
 		return listNo;
 	}

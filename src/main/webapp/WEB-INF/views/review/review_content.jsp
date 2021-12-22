@@ -263,6 +263,15 @@
 		document.location.href="${contextPath}/member/loginForm";
 	}
 	
+	//리뷰 삭제
+	function delete_check(){
+		if(confirm("리뷰를 삭제하시겠습니까?") == true){ //삭제 확인
+			document.location.href="${contextPath}/review/review_delete?review_no=${contentData.review_no }"
+		}else{// 삭제 취소
+			return false;
+		}
+	}
+	
 </script>
 </head>
 <body onload="replyData()">
@@ -350,20 +359,24 @@
 			<tr>
 				<!--  
 				<td>
-					<c:if test="${ contentData.review_file_name != 'nan' }">
-						<img width="200px" height="150px" id="preview"
-							src="${contextPath}/review/download?review_file_name=${contentData.review_file_name}">
-					</c:if>
-					<c:if test="${contentData.review_file_name == 'nan' }">
-						<img style="align: right;" alt="선택된 이미지가 없습니다." src=""
-							id="preview" width="200" height="150">
-					</c:if>
-					</td>
+					<c:forEach var="photo_view" items="${photo_view }">
+						<c:if test="${photo_view.original_file_name != null && photo_view.original_file_name != nan}">
+							<img width="200px" height="150px" src="${contextPath }/review/download?stored_file_name=${photo_view.stored_file_name}">
+						</c:if>
+					</c:forEach>
+				</td>
 				<td>
+<<<<<<< HEAD
 				-->
 				<td>
 					<input type="button" value="수정" onclick="location.href='${contextPath}/review/review_modify?review_no=${contentData.review_no }'">
 					<input type="button" value="목록" onclick="location.href='${contextPath}/review/review_boardList'">
+=======
+					<br>
+					<input type="button" value="삭제" onclick="delete_check();">
+					<input type="button" value="modify" onclick="location.href='${contextPath}/review/review_modify?review_no=${contentData.review_no }'">
+					<input type="button" value="목록으로" onclick="location.href='${contextPath}/review/review_boardList'">
+>>>>>>> 6e5821183581dcad68c3d0fa477fca163e981a3a
 				</td>
 			</tr>
 		</table>

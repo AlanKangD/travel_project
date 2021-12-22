@@ -37,7 +37,7 @@ public class MemberController implements SessionCommonName{
 		
 		int result = ms.registerWrite(dto);
 		if(result == 1) {
-			return "redirect:memberInfo";
+			return "redirect:loginForm";
 		}
 	
 		return "redirect:registerForm";
@@ -59,10 +59,12 @@ public class MemberController implements SessionCommonName{
 	}
 	@PostMapping("loginChk")
 	public String loginChk(Model model,@RequestParam String id, @RequestParam String pw) {
+		System.out.println("aaaaaa");
 		int result = ms.loginChk(id, pw);
 		if(result == 2 ) {
 			System.out.println("admin" + id);
 			model.addAttribute(adminSession, id);
+			
 			return "redirect:loginSuccess";
 		}else if(result == 1) {
 			System.out.println("user" + id);
@@ -75,6 +77,9 @@ public class MemberController implements SessionCommonName{
 	public String loginSuccess(@RequestParam(value="adminId",required = false, defaultValue = "nan") String adminId,
 									@RequestParam(value="userId",required = false, defaultValue = "nan") String userId,
 											HttpSession session) {
+	
+		
+		session.setAttribute("ss", "<script>opener.location.reload();window.close();</script>");
 		System.out.println(adminId);
 		System.out.println(userId);
 		if(adminId.equals("admin")) {
@@ -82,6 +87,7 @@ public class MemberController implements SessionCommonName{
 		}else if(!userId.equals("nan")) {
 			session.setAttribute(userSession, userId);
 		}
+		
 		
 		
 		return "member/loginForm";
