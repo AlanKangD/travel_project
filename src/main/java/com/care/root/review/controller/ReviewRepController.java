@@ -26,17 +26,14 @@ public class ReviewRepController {
 	
 	@PostMapping(value="replyAdd", produces = "application/json; charset=utf-8")
 	public String replyAdd(@RequestBody Map<String, Object> map) throws Exception {
-		System.out.println("replyAdd 소환");
 		ReviewRepDTO dto = new ReviewRepDTO();
-		System.out.println( (String)map.get("replyId") );
-		System.out.println( (String)map.get("replyContent"));
-		System.out.println( (String)map.get("write_no"));
-		System.out.println( (String)map.get("tagId") );
+		// 가져온 아이디, 댓글 내용, 글 번호, 태그를 DTO에 넣고 replyAdd로 넘겨줌
 		dto.setId( (String)map.get("replyId") );
 		dto.setR_reply_content((String)map.get("replyContent"));
 		dto.setR_write_group( Integer.parseInt((String)map.get("write_no")) );
 		dto.setR_reply_tag( (String)map.get("tagId") );
 		rs.replyAdd(dto);
+		// DB에 성공적으로 값이 들어갔다면 ajax에 true 반환
 		return "{\"result\" : true}";
 	}
 	

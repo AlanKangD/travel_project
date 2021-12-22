@@ -106,21 +106,26 @@ public class ReviewController {
 	    FileCopyUtils.copy(in, response.getOutputStream());
 	    in.close();
 	}
+	
 	@ResponseBody
 	@RequestMapping(value="updateLike", method=RequestMethod.POST)
 	public int updateLike(int review_no, String id) {
+		
+		// 해당 게시글 번호와 회원 아이디의 like_check 컬럼 값을 받아옴
 		int likeCheck = rs.likeCheck(review_no, id);
-		System.out.println(likeCheck);
+
+		// likeCheck가 0일 때(현재 추천을 안 누른 상태)
 		if(likeCheck == 0) {
-			// 좋아요 처음 누름
-			rs.insertLike(review_no, id);				// like 테이블 삽입
-			rs.updateLike(review_no);					// 게시판 테이블 +1
-			rs.updateLikeCheck(review_no, id);			// like 테이블 구분자 1
+			rs.insertLike(review_no, id);		// 좋아요 테이블에 값 insert,
+			rs.updateLikeCheck(review_no, id);	// like_check 컬럼값 1로 변경,
+			rs.updateLike(review_no);			// 게시글의 좋아요 수 +1
+		// likeCheck가 1일 때(추천을 이미 누른 상태)
 		} else if(likeCheck == 1) {
-			rs.updateLikeCheckCancel(review_no, id);	// like 테이블 구분자 0
-			rs.updateLikeCancel(review_no);				// 게시판 테이블 -1
-			rs.deleteLike(review_no, id);				// like 테이블 삭제
+			rs.deleteLike(review_no, id);				// like_check 컬럼 값 0으로 변경,
+			rs.updateLikeCheckCancel(review_no, id);	// 좋아요 테이블에 들어갔던 값 delete,
+			rs.updateLikeCancel(review_no);				// 게시글의 좋아요 수 -1
 		}
+		// 로직 처리 후 likeCheck 값 넘김
 		return likeCheck;
 	}
 	@GetMapping("review_delete")
