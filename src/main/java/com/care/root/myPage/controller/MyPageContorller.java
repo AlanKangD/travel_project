@@ -75,10 +75,11 @@ public class MyPageContorller {
 	
 	@PostMapping(value="saveData", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String calendar(@RequestParam String data) {
+	public String calendar(@RequestParam String data, @RequestParam String id, Model model) {
 		CalendarDTO dto = new CalendarDTO();
 		System.out.println("data : " + data); //데이터가 잘 넘어오는 지 확인하는 디버깅 
-		dto.setId("kno12350");
+		System.out.println("cal Id : " + id); //들어오는 아이디 확인 완료!
+		dto.setId(id);
 		try {
 			List<Map<String, Object>> info = new Gson().fromJson(String.valueOf(data),
 		              new TypeToken<List<Map<String, Object>>>(){}.getType());
@@ -102,7 +103,9 @@ public class MyPageContorller {
 				System.out.println("dto start : " + dto.getStart());
 				System.out.println("dto end : " + dto.getEnd());
 				System.out.println("-------------dto 값이 잘 넘겨지는 지 확인");
+				mps.chkMyCal(id);
 				mps.calendarinsert(dto); //아직 데이터베이스 생성 안함 생성하면 주석 없애줄 예정
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();		

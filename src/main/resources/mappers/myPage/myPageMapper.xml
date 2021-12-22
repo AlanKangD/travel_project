@@ -43,6 +43,15 @@
 		  <result property="image" column="image"/>
     </resultMap>
     
+    <resultMap id="calendar" type="com.care.root.myPage.dto.CalendarDTO">
+    	<id property="calendarNo" column="calendr_no"/>
+    	<result property="id" column="id"/>
+    	<result property="title" column="title"/>
+    	<result property="start" column="start_date"/>
+    	<result property="end" column="end_date"/>
+    	<result property="allday" column="allday"/>
+    </resultMap>
+    
     <select id="getQnaData" resultMap="qna">
     	select * from qna_board where id=#{id}
     </select>
@@ -66,5 +75,9 @@
 	 <insert id="calendarinsert">
 		insert into calendar(calendr_no, id, title, start_date, end_date) values(calendar_no_SEQ.nextval,#{id},#{title},#{start},#{end})
 	</insert>
+	
+	<select id="getCalendarList" resultMap="calendar">
+		select * from calendar where id=#{id}
+	</select>
 </mapper>
 

@@ -18,4 +18,5 @@ public interface MyPageMapper {
 	public void userDelete(String id); //회원 삭제 기능
 	public void calendarinsert(CalendarDTO dto); //캘린더 일정 저장하기 기능 
 	public List<MyListDTO> myTripList(String id); //나의 찜 목록 가져오기 기능
+	public List<CalendarDTO> getCalendarList(String id); //해당하는 아이디의 캘린더 모든 정보를 가지고 오는기능
 }

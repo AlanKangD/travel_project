@@ -26,6 +26,7 @@
         var calendarEl = document.getElementById('calendar');
         var checkbox = document.getElementById('drop-remove');
 
+   	 	
         // initialize the external events
         // -----------------------------------------------------------------
 
@@ -111,9 +112,10 @@
 	// 두번째 시도 배열을 풀지 않고 전체의 데이터를 넘겨주는 것 와.. 성공 여기서 넘어간다
 	 var jsondata = JSON.stringify(events);
 	 console.log(jsondata);
+	 
 	 //이차 배열 JSONOBject , JSONArray
 	 $.ajax({
-		 url : "saveData",
+		 url : "saveData?id=${userId}",
 		 type : "POST",
 		 dataType : "json",
 		 data : {

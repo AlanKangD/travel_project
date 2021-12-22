@@ -64,6 +64,17 @@ public class MyPageServiceImpl implements MyPageService{
 		model.addAttribute("myList", list);
 	}
 
+	@Override
+	public void chkMyCal(String id) {
+		List<CalendarDTO> list =  mapper.getCalendarList(id);
+		for(CalendarDTO test : list) {
+			System.out.println("test id : " + test.getId());
+			System.out.println("test title : " + test.getTitle());
+			
+		} 
+		
+	}
+
 
 	
 	
