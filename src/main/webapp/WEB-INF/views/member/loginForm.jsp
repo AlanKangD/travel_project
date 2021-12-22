@@ -7,11 +7,22 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript">
-setTimeout(function(){
-	opener.document.getElementById('Id').value=$('#Id').val();
-	opener.location.reload(); //부모창 리프레쉬
-	self.close(); //현재창 닫기
-},100000); //1000당 1초
+function parentRefresh(){
+	fo.submit()
+}
+function registerForm(url,name){
+	var popHeight=1000;
+	var popWidth=1000;
+	var winHeight=document.body.clientHeight;
+	var winWidth=document.body.clientWidth;
+	var winX=window.screenLeft;
+	var winY=window.screenTop;
+	
+	var popX=winX+(winWidth-popWidth)/40;
+	var popY=winY+(winHeight-popHeight)/40;
+	window.resizeTo(1750,950)
+	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+}
 </script>
 <style type="text/css">
 text{
@@ -20,6 +31,7 @@ font-family: 'Gothic A1', sans-serif;
 </style>
 </head>
 <body>
+${ss}    <!-- 로그인 성공시 팝업창 닫힘 -->
 	<div align="center">
 		<c:choose>
 			<c:when test="${adminId != null}">
@@ -31,11 +43,11 @@ font-family: 'Gothic A1', sans-serif;
 		</c:choose>
 	
 		<c:if test="${userId == null && adminId == null}">
-		<form action="${contextPath }/member/loginChk" method="post"> 
+		<form id='fo' action="${contextPath }/member/loginChk" method="post"> 
 			<input type="text" name="id" placeholder="로그인할 아이디 입력"> <br>
 			<input type="password" name="pw" placeholder="로그인할 비밀번호 입력"> <br>
-			<a href="${contextPath }/member/registerForm" onclick="window.open('http://localhost:8085/root/member/registerForm','회원가입','width=#,height=#'); return false">회원가입</a>
-			<input type="submit" value="로그인" id="setTimeout">
+			<a href="javascript:registerForm('${contextPath }/member/registerForm','registerForm');">회원가입</a>
+			<input type="button" value="로그인"  onclick="parentRefresh()">
 		</form>
 		</c:if>
 	</div>

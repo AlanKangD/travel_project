@@ -1,6 +1,7 @@
 package com.care.root.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -10,6 +11,11 @@ import com.care.root.mybatis.member.MemberMapper;
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Autowired MemberMapper mapper;
+	BCryptPasswordEncoder encoder;
+	public MemberServiceImpl() {
+		encoder=new BCryptPasswordEncoder();
+	}
+	
 
 	@Override
 	public void memberAllList(Model model) {
@@ -20,6 +26,8 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int registerWrite(MemberDTO dto) {
 		dto.setSessionId("nan");
+		String securePw=encoder.encode(dto.getPw());
+		dto.setPw(securePw);
 		int result=mapper.registerWrite(dto);
 		return result;
 	}
@@ -40,12 +48,13 @@ public class MemberServiceImpl implements MemberService{
 	public int loginChk( String id, String pw) {
 		MemberDTO dto = mapper.getMember(id);
 		if(dto != null) {
-			if(dto.getPw().equals(pw)) {
+			if(encoder.matches(pw,dto.getPw()) || pw.equals(dto.getPw())) {
 				if(id.equals("admin")) {
 					return 2; //관리자 로그인 성공
 				}
 			return 1; //유저 로그인 성공
-			}		
+			
+				}		
 		}
 		return 0; //아이디 없음
 	}
@@ -68,6 +77,8 @@ public class MemberServiceImpl implements MemberService{
 			return 1;  //아이디 중복
 		}
 	}
+
+	
 
 	
 	
