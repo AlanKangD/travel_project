@@ -71,13 +71,12 @@ public class ReviewController {
 	}
 	
 	
-	
 	//review관련 기능 구현
 	@PostMapping("r_writeSave")
 	public void r_writeSave(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
 			HttpServletRequest request,
-			@RequestParam("photo_count") int photo_count) throws Exception {
+			@RequestParam(value="photo_count", required=false, defaultValue="0") int photo_count) throws Exception {
 		String message = rs.r_writeSave(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
@@ -90,7 +89,7 @@ public class ReviewController {
 	public void r_modify(MultipartHttpServletRequest mul,
 			HttpServletResponse response,
 			HttpServletRequest request,
-			@RequestParam("photo_count") int photo_count) throws Exception {
+			@RequestParam(value="photo_count", required=false, defaultValue="0") int photo_count) throws Exception {
 		String message = rs.r_modify(mul, request, photo_count);
 		PrintWriter out = null;
 		response.setContentType("text/html; charset=utf-8");
@@ -123,5 +122,17 @@ public class ReviewController {
 			rs.deleteLike(review_no, id);				// like 테이블 삭제
 		}
 		return likeCheck;
+	}
+	@GetMapping("review_delete")
+	public void review_delete(@RequestParam("review_no") int review_no,
+			HttpServletResponse response,
+			HttpServletRequest request) throws Exception {
+		System.out.println(review_no);
+		String delete_check = rs.review_delete(review_no, request);
+		
+		PrintWriter out = null;
+		response.setContentType("text/html; charset=utf-8");
+		out = response.getWriter();
+		out.println(delete_check);
 	}
 }

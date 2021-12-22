@@ -39,7 +39,6 @@
 			photo_count++;
 			$("#photo_count").val(photo_count);
 		}
-		
 	}
 	
 	function load_preview(input){

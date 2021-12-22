@@ -18,7 +18,6 @@
 		$("#review_file").attr('id', ('review_file_') + photo_count);
 		photo_num++;
 	})
-   
    	function add_list(input){
 		
 		if(input != null){
@@ -34,10 +33,10 @@
 			   	
 			   	$("#photo_div").append(str_photo)
 			   
-			   	if(file != ''){//파일 유무 확인
+			   	if(file != ''){
 					var reader = new FileReader();
 					reader.readAsDataURL(file);
-					reader.onload = function(e){//reader.onload 파일이 로드되었다면 event를 실행한다
+					reader.onload = function(e){
 						$("#review_file_name_"+(photo_num -2)).attr('src', e.target.result);
 					}
 				}
@@ -92,7 +91,7 @@
 				<hr>
 				
 				<div id="file_div" align="right">
-					<p ><!-- onchange="readURL(this)" $('#review_file').attr(style, display:none);   -->
+					<p >
 							<input type="file" id="review_file" name="review_file" onchange="$(this).attr('style', 'display:none;'); $(photo_count).val(photo_count); add_list(this);"/>
 					</p>
 			  	</div>

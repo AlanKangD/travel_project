@@ -5,17 +5,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.care.root.mybatis.review.ReviewMapper">
-	
-		<!-- <resultMap id="board" type="com.care.root.review.dto.ReviewDTO">
-			<id property="review_no" column="review_no"/>
-			<result property="review_title" column="review_title"/>
-			<result property="review_content" column="review_content"/>
-			<result property="id" column="id"/>
-			<result property="review_file_name" column="review_file_name"/>
-			<result property="review_date" column="review_date"/>
-			<result property="review_hit_num" column="review_like"/>
-			<result property="review_like" column="review_hit_num"/>
-		</resultMap> -->
 	<resultMap id="review" type="com.care.root.review.dto.ReviewDTO">
 		<!--
 			property = DTO
@@ -56,6 +45,10 @@
 	
 	<delete id="photo_delete">
 		delete from r_photo where origin_file_name = #{original_file_name}
+	</delete>
+	
+	<delete id="review_delete">
+		delete from review where review_no = ${review_no}
 	</delete>
 	
 	<select id="boardList" resultMap="review">
@@ -103,6 +96,26 @@
 	
 	<select id="selectReviewCount" resultType="Integer">
 		select count(*) from review
+		<choose>
+			<when test='r_search_option == "all"'>
+				where(review_title like '%' || #{keyword} || '%'
+				or id like '%' || #{keyword} || '%'
+				or review_content like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "tc"'>
+				where(review_title like '%' || #{keyword} || '%'
+				or review_content like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "title"'>
+				where(review_title like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "content"'>
+				where(review_content like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "id"'>
+				where(id like '%' || #{keyword} || '%')
+			</when>
+		</choose>
 	</select>
 	
 	<!-- content.jsp 내용 부분 불러오기-->
