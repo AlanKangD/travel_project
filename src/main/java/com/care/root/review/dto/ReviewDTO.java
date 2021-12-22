@@ -1,6 +1,7 @@
 package com.care.root.review.dto;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,17 @@ public class ReviewDTO {
 	private String review_content;
 	private int review_hit_num;
 	private int review_like;
-	private Timestamp review_date;
+	private String review_date;
 	private String review_file_name;
 	private int r_reply_count;
+	
+	public void setReview_date(Timestamp review_date) {	// java.sql
+		SimpleDateFormat fo = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		this.review_date = fo.format(review_date);
+	}
+	public String getReview_date() {
+		return review_date;
+	}
 	
 	public int getR_reply_count() {
 		return r_reply_count;
@@ -60,12 +69,6 @@ public class ReviewDTO {
 	}
 	public void setReview_like(int review_like) {
 		this.review_like = review_like;
-	}
-	public Timestamp getReview_date() {
-		return review_date;
-	}
-	public void setReview_date(Timestamp review_date) {
-		this.review_date = review_date;
 	}
 	public int getReview_no() {
 		return review_no;

@@ -23,12 +23,9 @@ function loginpopup(url,name){
 }
 </script>
 <style type="text/css">
-
-.wrapp { width: 100%; height:120px; margin: auto; background-color: #d3e7ef;
-text-align: center; padding-top:20px; padding-bottom: 10px; }
+.wrapp { width: 100%; height:0px; margin: auto; background-color: #066289;
+text-align: center; padding-top:0px  }
 }
-<<<<<<< HEAD
-
 </style> 
 <script>
 
@@ -75,7 +72,7 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 </head> 
 <body >
 	<div class="wrapp">
-    <div><img src="${contextPath}/resources/img/traduler-logo-blue.png" height="80px"></div> 
+    <div><img src="${contextPath}/resources/img/traduler-logo.png" width="20%" style="margin-top: 30px;"></div> 
 	<header id="header">
 		<nav>
 			<ul>
