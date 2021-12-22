@@ -138,7 +138,7 @@
 		        <option value="id"<c:if test='${searchOption == "id"}'>selected</c:if> >작성자</option>
 	    </select>
 	    <input name="keyword" id="keyword" value="${keyword }">
-	    <button type="button" class="btn btn-secondary" onclick="selectFunc()">검색</button>
+	    <button type="button" onclick="selectFunc()">검색</button>
 	</form>
 	</div>
 	
@@ -280,7 +280,7 @@
 		</div>
 	</div>
 			<div align="right">	
-			<button type="button" class="btn btn-dark" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button>
+			<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button>
 			</div>
 		</div>
 	</div>
