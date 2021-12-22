@@ -17,8 +17,7 @@ function loginpopup(url,name){
 	var winY=window.screenTop;
 	
 	var popX=winX+(winWidth-popWidth)/2;
-	var popY=winY+(winHeight-popHeight)/2;
-	
+	var popY=winY+(winHeight-popHeight)/4;
 	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 }
 </script>
@@ -34,7 +33,7 @@ text-align: center; padding-top:30px  }
 
 	function myList(){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/main/getMyList",
+			url : "${contextPath}/main/getMyList",
 			type : "get",
 			dataType : "json",
 			success : function(list){
@@ -42,7 +41,7 @@ text-align: center; padding-top:30px  }
 				let html = "";
 				list.forEach(function(data){
 					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+					html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
 					html += " "+data.place
 					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
 				})
@@ -55,7 +54,7 @@ text-align: center; padding-top:30px  }
 	function deleteList(listNo){
 		console.log(listNo)
 		$.ajax({
-			url : "${pageContext.request.contextPath}/main/deleteList?listNo="+listNo,
+			url : "${contextPath}/main/deleteList?listNo="+listNo,
 			type : "delete",
 			dataType : "json",
 			success : function(data){
@@ -98,7 +97,11 @@ text-align: center; padding-top:30px  }
 				</c:otherwise>
 			</c:choose>
 			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+<<<<<<< HEAD
 			<li><a href="${contextPath }/review/review_boardList">리뷰게시판</a></li>	
+=======
+			<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
+>>>>>>> 9c9cea5c41fab011ec0e68322f5f3831dc44b5e6
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
