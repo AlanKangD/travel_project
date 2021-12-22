@@ -15,8 +15,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	
-	<resources mapping="/calendar/css/**" location="/resources/calendar/css/" />
-	<resources mapping="/calendar/js/**" location="/resources/calendar/js/" />
+	<resources mapping="/fullcalendar/**" location="/resources/fullcalendar/" />
 	<resources mapping="/assets/css/**" location="/resources/assets/css/" />
 	<resources mapping="/assets/js/**" location="/resources/assets/js/" />
 	<resources mapping="/images/**" location="/resources/images/" />

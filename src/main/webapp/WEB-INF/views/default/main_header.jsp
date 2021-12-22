@@ -96,6 +96,7 @@ text-align: center; padding-top:0px  }
 			</c:choose>
 			<li><a href="${contextPath }/review/review_boardList">후기 게시판</a></li>	
 			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+				<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
