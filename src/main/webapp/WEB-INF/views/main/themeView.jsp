@@ -19,7 +19,7 @@
    .flexB{width: 50%; }
    .flexBa{background-color: aqua; text-align: center;}
    .imageFlex{margin-right: 10px;}
-  .aa,  .bb{  font-size: 50px; padding-top: 23.3%;}
+  .aa,  .bb{  font-size: 50px; padding-top: 200px;}
    .aa {padding-right: 10px;}
    .bb {padding-left: 10px;}
    
@@ -109,7 +109,7 @@ function addMyList() {
    }
    
    function getReply(num){	  
-	//	myVar = setInterval(setImageNext, 3000)
+		myVar = setInterval(setImageNext, 3000)
 	   
       if(num == undefined){
          num = 1;
@@ -323,7 +323,7 @@ function readURL(input) {
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	
 	               <div class="mainbtn" style="display:flex;">                
 	                   <div class="aa"><a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()"> &lt; </a>  </div>     
-		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
+		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="width:700px ;height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
 		               <div class="bb"><a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()"> &gt;</a></div>
 	               </div>                    
 	               		  
