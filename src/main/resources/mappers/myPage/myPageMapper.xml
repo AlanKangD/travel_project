@@ -79,5 +79,9 @@
 	<select id="getCalendarList" resultMap="calendar">
 		select * from calendar where id=#{id}
 	</select>
+	
+	<delete id="deleteAllCal">
+		delete from calendar where id=#{id}
+	</delete>
 </mapper>
 

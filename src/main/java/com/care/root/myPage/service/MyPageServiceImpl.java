@@ -65,8 +65,8 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 
 	@Override
-	public List<CalendarDTO> getCalendarList(String id) {
-		List<CalendarDTO> list =  mapper.getCalendarList(id);
+	public ArrayList<CalendarDTO> getCalendarList(String id) {
+		ArrayList<CalendarDTO> list =  mapper.getCalendarList(id);
 		for(CalendarDTO test : list) {
 			System.out.println("test id : " + test.getId());
 			System.out.println("test title : " + test.getTitle());
@@ -74,6 +74,11 @@ public class MyPageServiceImpl implements MyPageService{
 		} 
 		
 		return list;
+	}
+
+	@Override
+	public void deleteAllCal(String id) {
+		mapper.deleteAllCal(id);
 	}
 
 

@@ -1,5 +1,6 @@
 package com.care.root.myPage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,15 +85,20 @@ public class MyPageContorller {
 			List<Map<String, Object>> info = new Gson().fromJson(String.valueOf(data),
 		              new TypeToken<List<Map<String, Object>>>(){}.getType());
 			//String으로 가져온 이중배열을 파싱을 과정을 하기 위해서 Gson 을 사용해서 풀었습니다.
+			if(ckCal != null) {
+				mps.deleteAllCal(id);
+			} //이곳에서 모든 데이터를 삭제하고 하단에서 다시 캘린더의 정보를 저장해주는 역할을 합니다.
 			for (Map<String, Object> plz : info) {
 				
+				/*
 				if(ckCal != null) {
 					for(CalendarDTO chk : ckCal) {
 						if(chk.getTitle().equals(plz.get("title")) && chk.getStart().equals(plz.get("start"))) {
 							return "{\"data\" : \"테이터베이스에 이미 저장되었습니다.\"}";
 						}
 					}
-				}
+				} 체크한후 데이터 베이스 저장 안되게 실행됬지만 데이터 베이스를 다 깔끔하게 지우고 실행시키면 되지 않을까??
+				 */
 				
 				dto.setTitle((String) plz.get("title"));
 				dto.setStart((String)plz.get("start"));
@@ -116,11 +122,18 @@ public class MyPageContorller {
 	
 	@GetMapping(value="getMyCal", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<CalendarDTO> getMyCal(@RequestParam("id") String id) {
-		List<CalendarDTO> list =  mps.getCalendarList(id);
+	public ArrayList<CalendarDTO> getMyCal(@RequestParam("id") String id) {
+		ArrayList<CalendarDTO> list =  mps.getCalendarList(id);
 		System.out.println("getMyCal : " + id);
 		
 		return list;
+	}
+	@GetMapping(value="allDelete", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String allDelete(@RequestParam("id") String id) {
+		mps.deleteAllCal(id);
+		
+		return "{\"data\" : \"완료\"}";
 	}
 	
 }
