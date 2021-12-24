@@ -40,7 +40,54 @@
 	width: 100px;
 	height: 100px;
 }
-
+.page_wrap {
+	text-align:center;
+	font-size:0;
+ }
+.page_nation {
+	display:inline-block;
+}
+.page_nation .none {
+	display:none;
+}
+.page_nation a {
+	display:block;
+	margin:0 3px;
+	float:left;
+	border:1px solid #e6e6e6;
+	width:28px;
+	height:28px;
+	line-height:28px;
+	text-align:center;
+	background-color:#fff;
+	font-size:13px;
+	color:#999999;
+	text-decoration:none;
+}
+.page_nation .arrow {
+	border:1px solid #ccc;
+}
+.page_nation .pprev {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_pprev.png') no-repeat center center;
+	margin-left:0;
+}
+.page_nation .prev {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_prev.png') no-repeat center center;
+	margin-right:7px;
+}
+.page_nation .next {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_next.png') no-repeat center center;
+	margin-left:7px;
+}
+.page_nation .nnext {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_nnext.png') no-repeat center center;
+	margin-right:0;
+}
+.page_nation a.active {
+	background-color:#42454c;
+	color:#fff;
+	border:1px solid #42454c;
+}
 </style>
 <meta charset="utf-8">
 <title>Insert title here</title>
@@ -118,62 +165,55 @@
          </c:forEach>
       </table>   
       <hr>
-         <div align="center">
+         <div class="page_wrap">
+		 <div class="page_nation">
          <c:choose>
             <c:when test="${num != 1 }">
-               <button type="button" onclick=
-               "location.href='${contextPath}/review/review_boardList?num=1'">
-               &laquo; </button>
+               <a class="arrow pprev" href="${contextPath}/review/review_boardList?num=1"></a>
             </c:when>
             <c:otherwise>
-               <button type="button" disabled>≪</button>
+               <a class="arrow pprev"></a>
             </c:otherwise>
          </c:choose>
          
          <c:choose>
             <c:when test="${num > 1 }">
-               <button type="button" onclick=
-               "location.href='${contextPath}/review/review_boardList?num=${num - 1}'">
-                &lt;</button>
+                <a class="arrow prev" href="${contextPath}/review/review_boardList?num=${num - 1}"></a>
             </c:when>
             <c:otherwise>
-               <button type="button" disabled>&lt;</button>
+               <a class="arrow prev"></a>
             </c:otherwise>
          </c:choose>
          
          <c:forEach var="cnt" begin="${beginPage}" end="${ endPage }">
                <c:choose>
                <c:when test="${num == cnt }">
-                  <a href="${contextPath}/review/review_boardList?num=${cnt}"><b>[${cnt}]</b></a>
+                  <a class="active" href="${contextPath}/review/review_boardList?num=${cnt}"><b>${cnt}</b></a>
                </c:when>
                <c:otherwise>
-                  <a href="${contextPath}/review/review_boardList?num=${cnt}">[${cnt}]</a>
+                  <a href="${contextPath}/review/review_boardList?num=${cnt}">${cnt}</a>
                </c:otherwise>
                </c:choose>
          </c:forEach>
          
          <c:choose>
             <c:when test="${num < repeat}">
-               <button type="button" onclick=
-               "location.href='${contextPath}/review/review_boardList?num=${num + 1}'">
-                &gt; </button>
+                <a class="arrow next" href="${contextPath}/review/review_boardList?num=${num + 1}"></a>
             </c:when>
             <c:otherwise>
-               <button type="button" disabled>&gt;</button>
+               <a class="arrow next"></a>
             </c:otherwise>
          </c:choose>
          
          <c:choose>
             <c:when test="${num != repeat}">
-               <button type="button" onclick=
-               "location.href='${contextPath}/review/review_boardList?num=${repeat}'">
-                &raquo; </button>
+                <a class="arrow nnext" href="${contextPath}/review/review_boardList?num=${repeat}"></a>
             </c:when>
             <c:otherwise>
-               <button type="button" disabled>≫</button>
+                <a class="arrow nnext"></a>
             </c:otherwise>
          </c:choose>
-         
+         </div>
          </div>
       <input type="button" value="리뷰 작성" onclick="location.href='${contextPath}/review/review_write'">   
    </div>

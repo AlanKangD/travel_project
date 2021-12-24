@@ -53,13 +53,6 @@ public class QnAController implements SessionCommonName{
 		qs.writeSave(dto, request, response);
 	}
 	
-//	@GetMapping("contentView")
-//	public String contentView(@RequestParam int qnaNo, Model model,
-//								@RequestParam(required = false) String pwd) {
-//		qs.contentView(qnaNo,pwd, model);
-//		return "qna_board/contentView";
-//	}
-	
 	@GetMapping("contentView")
 	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req,
 								   @RequestParam(required = false, defaultValue = "1") int num,
