@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src='/resources/fullcalendar/main.js'></script>
 <script src='/resources/fullcalendar/ko.js'></script>
+
 <style type="text/css">
 	.fc-event {
 		margin-top:5px;

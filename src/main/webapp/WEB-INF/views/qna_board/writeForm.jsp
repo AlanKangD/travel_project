@@ -49,7 +49,18 @@
 		}
 		
 	}
-	
+	function loginpopup(url,name){
+	      var popHeight=290;
+	      var popWidth=230;
+	      var winHeight=document.body.clientHeight;
+	      var winWidth=document.body.clientWidth;
+	      var winX=window.screenLeft;
+	      var winY=window.screenTop;
+	      
+	      var popX=winX+(winWidth-popWidth)/2;
+	      var popY=winY+(winHeight-popHeight)/4;
+	      window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	   }
 </script>
 </head>
 <body>
