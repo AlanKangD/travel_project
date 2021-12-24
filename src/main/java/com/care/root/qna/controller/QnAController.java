@@ -35,7 +35,7 @@ public class QnAController implements SessionCommonName{
 					@RequestParam(required = false, defaultValue = "1") int num,
 					@RequestParam(required = false) String searchOption,
 					@RequestParam(required = false) String keyword) {
-		System.out.println(searchOption);
+		System.out.println(searchOption+"1");
 		System.out.println(keyword);
 		qs.qnaAllList(model,num, searchOption, keyword);
 		return "qna_board/allList";
