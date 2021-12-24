@@ -8,8 +8,11 @@
 <meta charset='utf-8' />
 <link href='${contextPath }/resources/fullcalendar/main.css' rel='stylesheet' />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <script src='${contextPath }/resources/fullcalendar/main.js'></script>
 <script src='${contextPath }/resources/fullcalendar/ko.js'></script>
+
+
 <style type="text/css">
 	.fc-event {
 		margin-top:5px;

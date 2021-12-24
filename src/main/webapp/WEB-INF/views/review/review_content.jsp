@@ -260,7 +260,7 @@
 	// 비회원 용 좋아요 버튼(로그인 폼으로 보내는 역할만 수행)
 	function fakeLike(){
 		alert("로그인이 필요한 서비스입니다.")
-		document.location.href="${contextPath}/member/loginForm";
+		document.location.href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');";
 	}
 	
 	//리뷰 삭제
@@ -272,6 +272,18 @@
 		}
 	}
 	
+	function loginpopup(url,name){
+		var popHeight=290;
+		var popWidth=230;
+		var winHeight=document.body.clientHeight;
+		var winWidth=document.body.clientWidth;
+		var winX=window.screenLeft;
+		var winY=window.screenTop;
+		
+		var popX=winX+(winWidth-popWidth)/2;
+		var popY=winY+(winHeight-popHeight)/4;
+		window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	}
 </script>
 </head>
 <body onload="replyData()">
@@ -389,7 +401,7 @@
 					<c:choose>
 						<c:when test="${ userId == null }">
 							<b>로그인 한 회원만 댓글을 작성할 수 있습니다.</b>&emsp;
-							<a href="${contextPath }/member/loginForm">로그인</a>
+							<a href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');">로그인</a>
 						</c:when>
 						<c:otherwise>
 							<b>댓글 작성자</b><input type="text" id="repId" name="replyId" value="${ userId }" readonly style="width: 50%;"/>
