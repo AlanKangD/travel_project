@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8' />
-<link href='/resources/fullcalendar/main.css' rel='stylesheet' />
+<link href='${contextPath }/resources/fullcalendar/main.css' rel='stylesheet' />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src='/resources/fullcalendar/main.js'></script>
-<script src='/resources/fullcalendar/ko.js'></script>
+
+<script src='${contextPath }/resources/fullcalendar/main.js'></script>
+<script src='${contextPath }/resources/fullcalendar/ko.js'></script>
+
+
 <style type="text/css">
 	.fc-event {
 		margin-top:5px;
@@ -65,12 +68,13 @@
         		  dataType : "json",
         		  data : {},
         		  success : function(data) {
-        			  console.log(data);
-        			  for(var i=0; i<data.lenght; i++) {
-        				  calendar.addevent ({
-        					  title : data.title,
-        					  start: data.start,
-        					  end: data.end
+        			 
+        			  console.log(data[0].title);
+        			  for(var i=0; i<data.length; i++) {
+        				  calendar.addEvent ({
+        					  title : data[i].title,
+        					  start: data[i].start,
+        					  end: data[i].end
         				  })
         			  }
         			  //calendar.addevent ({})
@@ -136,6 +140,36 @@
 	 
 		
     }
+   function allDelete() {
+    	
+	 //calendar.getEvents() 모든 데이터를 가져오는 함수 입니다.
+   	//calendar.getEventById( id ) 해당 아이디의 id값만 추출하는 함수입니다. 
+   	var allEvent = calendar.getEvents(); //array
+	 //console 창에서 allDay : ture 이면 하루종일의 일정을 뜻하며 하루에서 따로 지정한 값이면 
+	 // allDay : false 입니다.
+	 //instance 의 정보에서 start와 end정보를 알아야합니다.
+	 console.log(allEvent);
+
+	 $.ajax({
+		 url : "allDelete?id=${userId}",
+		 type : "GET",
+		 dataType : "json",
+		 data : {
+			 data : JSON.stringify(allEvent)
+		 },
+		 traditional: true,
+		 success : function(data) {
+			alert("삭제 되셨습니다.");
+			location.reload();
+		 },
+		 errer : function() {
+			 alert("서버 문제 발생!");
+		 }
+		 
+	 })
+	 
+		
+    }
 
 
 </script>
@@ -162,6 +196,8 @@
 		</p>
 		<button style="width:120px; height:40px; vertical-align:middle; 
 						font-size:17px; cursor:pointer" onclick="javascript:allSave();">전체 저장</button>
+		<button style="width:120px; height:40px; vertical-align:middle; 
+						font-size:17px; cursor:pointer" onclick="javascript:allDelete();">전체 삭제</button>
 		
 	</div>
 		
