@@ -67,14 +67,15 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@PostMapping("deleteView")
-	public String deleteView(MainDTO dto, @RequestParam String theme) {
-		 ms.deleteView(dto);
-		try {
-			theme = URLEncoder.encode(theme, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}	
-		 return "redirect:themeList?theme="+theme;
+	public String deleteView(MainDTO dto) {
+		 ms.deleteView(dto);		
+		 String theme = dto.getMainCategory();
+			try {
+				theme = URLEncoder.encode(theme, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return "redirect:themeList?theme="+theme;
 	}
 	
 	@RequestMapping("modifyView")

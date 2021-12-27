@@ -76,8 +76,8 @@
   </delete>
   
   <update id="modifyView">
-  	update main set main_image_file = #{mainImageFile}, content_one = #{contentOne},
-  	content_two = #{contentTwo} where place_name = #{placeName}
+  	update main set main_image_file = #{mainImageFile}, content_two = #{contentTwo} 
+  	where place_name = #{placeName}
   </update>
   
   <insert id="addReply">

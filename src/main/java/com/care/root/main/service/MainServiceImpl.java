@@ -80,9 +80,18 @@ public class MainServiceImpl implements MainService {
 					return d;
 			}
 	}
-	private void deleteImage(MultipartHttpServletRequest mul) {
-		File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; // 저장한 레파지토리에서 삭제해줌 
+	private void deleteImage(MultipartHttpServletRequest mul) { // modify시 메인 이미지(오리지널이미지)만 교체(삭제)
+		File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; 
 		deleteOrigin.delete(); 
+	}
+	
+	private void deleteImageAll(MainDTO dto) {  //저장된 이미지 3개 모두 삭제 
+		File deleteMain = new File(IMAGE_REPO+"/"+dto.getMainImageFile()) ;
+		File deleteImage1 = new File(IMAGE_REPO+"/"+dto.getImageFile1()) ;
+		File deleteImage2 = new File(IMAGE_REPO+"/"+dto.getImageFile2()) ;
+		deleteMain.delete(); 
+		deleteImage1.delete(); 
+		deleteImage2.delete(); 
 	}
 					
 	private String saveImageFile(MultipartHttpServletRequest mul) {
@@ -136,7 +145,7 @@ public class MainServiceImpl implements MainService {
 	public void modifyView(MultipartHttpServletRequest mul) {
 		MainDTO dto = fileProcess(mul);		
 		dto.setPlaceName(mul.getParameter("placeName"));
-		dto.setContentOne(mul.getParameter("contentOne"));
+//		dto.setContentOne(mul.getParameter("contentOne"));
 		dto.setContentTwo(mul.getParameter("contentTwo"));
 		mapper.modifyView(dto);				
 	}
@@ -191,6 +200,8 @@ public class MainServiceImpl implements MainService {
 			msg = "새로운 관광지가 추가되었습니다";
 			url = "/main/themeList?theme=" + mul.getParameter("mainCategory");
 		} else {
+			deleteImageAll(dto);
+			
 			msg = "모든 값은 필수 입력사항입니다.";
 			url = "/main/addPlace?theme="+ mul.getParameter("mainCategory");
 		}
@@ -271,12 +282,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void deleteView(MainDTO dto) {
-		File deleteFileMain = new File(IMAGE_REPO+"/"+dto.getMainImageFile());
-		File deleteFile1 = new File(IMAGE_REPO+"/"+dto.getImageFile1());
-		File deleteFile2 = new File(IMAGE_REPO+"/"+dto.getImageFile2());
-		deleteFileMain.delete();
-		deleteFile1.delete();
-		deleteFile2.delete();
+		deleteImageAll(dto);
 		mapper.deleteView(dto.getPlaceName());			
 	}
 

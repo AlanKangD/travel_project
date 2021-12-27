@@ -296,7 +296,7 @@ function setImageNext(){
          
          <form action="deleteView?placeName=${dto.placeName }" method="post">
 		   <input type="hidden" name="${dto.placeName }">    
-		    <input type="hidden" name="theme" value="${dto.mainCategory } ">    
+		    <input type="hidden" name="mainCategory" value="${dto.mainCategory } ">    
 		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
 		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
 		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
