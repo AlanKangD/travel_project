@@ -256,7 +256,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	   public Map<String, Object> getReply(String placeName, int num) {		
-	      int pageLetter = 5;	    
+	      int pageLetter = 3;	    
 	      int end = num * pageLetter;
 	      int start = end + 1 - pageLetter;
 	      
@@ -267,7 +267,7 @@ public class MainServiceImpl implements MainService {
 	   }
 	
 	private Map<String, Object> pagingNum(String placeName, int num) {
-		  int pageLetter = 5;
+		  int pageLetter = 3;
 	      int dataCount = mapper.getDataCount(placeName);
 	      int repeat = dataCount / pageLetter;
 	      if(dataCount % pageLetter != 0) {
