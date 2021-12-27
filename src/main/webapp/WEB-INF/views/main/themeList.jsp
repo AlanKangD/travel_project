@@ -21,16 +21,19 @@
 							<header>
 								<h1>This is Phantom, a free, fully responsive site<br />
 								template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
-								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>							
 							</header>
 							<a href="../index">뒤로가기 </a>
-							<button onclick="location.href='${contextPath}/main/addPlace?theme=${theme }' ">Add Place(관리자용)</button>
+								<c:if test="${adminId != null }">
+							<button onclick="location.href='${contextPath}/main/addPlace?theme=${theme}' ">Add Place(관리자용)</button>
+							</c:if>
 						
+							
 							<section class="tiles">
 							<c:forEach var="list" items="${list }">
 								<article style="width:250px; height:250px;">
 										<span class="image">
-											<img src= "${contextPath}/main/download?mainImageFile=${list.mainImageFile}" width="250px;" height="250px;">
+											<img src= "${contextPath}/main/download?imageFile=${list.mainImageFile}" width="250px;" height="250px;">
 										</span>
 											<a href="${contextPath }/main/themeView?placeName=${list.placeName}">
 											<h2>${list.placeName }</h2>

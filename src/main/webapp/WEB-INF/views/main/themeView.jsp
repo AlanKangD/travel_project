@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 <!DOCTYPE html>
 <html>
    <head>
@@ -10,7 +12,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8c629ab5a17830f4015943a3a149a898"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
 
    
 <style>
@@ -24,8 +26,7 @@
    .bb {padding-left: 10px;}
 </style>
 <script>
-function addMyList() {
-      
+function addMyList() {      
       let form = {};
       let arr = $("#listForm").serializeArray()
       console.log(arr)
@@ -58,26 +59,6 @@ function addMyList() {
       })  
    }
    
-   function deleteView(placeName, mainCategory){
-      console.log(placeName, mainCategory);
-      $.ajax({
-         url : "deleteView?placeName="+placeName,
-         type : "delete",
-         dataType : "json",
-         success : function(data){
-            console.log(data.result)
-            if(data.result == true){
-               alert("삭제 성공");
-               location.href="${contextPath}/main/themeList?theme="+mainCategory;
-            }else{
-               alert("에이젝스 data result == false");
-            }
-         },error : function(){
-            alert("에이젝스 실패 , 서버 문제 발생");
-         }
-      })      
-   }
-
    function addReply(){
       let form = {}
       let arr = $("#addReply").serializeArray()
@@ -294,25 +275,28 @@ function setImageNext(){
             <input type="hidden" name="place" value="${dto.placeName }">
             <input type="hidden" name="image" value="${dto.mainImageFile }">
             <input type="hidden" name="id" value="${userId}">
-         </form>         
-            
+         </form>                     
          <c:if test="${userId != null}">
-                  <button  style="margin-left: 80%" onclick="addMyList()">일정 추가하기</button>
-             </c:if>            
-             <c:if test="${userId == null}">
-                <button  style="margin-left: 80%" onclick="loginFirst()">일정 추가하기</button>
-                <script type="text/javascript">
-                   function loginFirst() {
-                      alert('일정추가는 로그인 후 가능합니다.')
-                   }
-                </script>
-             </c:if>
-         
-         <c:if test="${adminId != null }">
-  	       <button onclick="deleteView('${dto.placeName}' , '${dto.mainCategory }')">삭제</button>     
+              <button  style="margin-left: 80%" onclick="addMyList()">일정 추가하기</button>
+         </c:if>            
+         <c:if test="${userId == null}">
+            <button  style="margin-left: 80%" onclick="loginFirst()">일정 추가하기</button>
+            <script type="text/javascript">
+               function loginFirst() {
+                  alert('일정추가는 로그인 후 가능합니다.')
+               }
+            </script>
          </c:if>
-          
-         <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
+         
+         <form action="deleteView?placeName=${dto.placeName }" method="post">
+		   <input type="hidden" name="${dto.placeName }">    
+		    <input type="hidden" name="theme" value="${dto.mainCategory } ">    
+		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
+		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
+		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
+		    <input type="submit" value="삭제하기">
+          </form>
+       <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
          <form action="${contextPath }/main/modifyView" method="post" enctype="multipart/form-data">
             <div class="inner" style="text-align: center">
@@ -336,7 +320,7 @@ function setImageNext(){
                <c:choose>
                   <c:when test="${adminId != null }">
                      <input type="text" name="contentOne" value="${dto.contentOne }">
-                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>                  
+                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>         
                      <button type="submit">수정</button><br>   <br>         
                   </c:when>
                   <c:otherwise>
