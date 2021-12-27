@@ -70,7 +70,7 @@
 									<span class="image">
 										<img src="images/pic02.jpg" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="${contextPath }/main/themeList?theme=식도락" >
 										<h2>식도락</h2>
 										<div class="content">
 											<p>맛있는 음식으로 가볍게 기분전환하고 싶은 당신을 위해 준비했어요.</p>
@@ -81,7 +81,7 @@
 									<span class="image">
 										<img src="images/pic03.jpg" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="${contextPath }/main/themeList?theme=관광지" >
 										<h2>관광지</h2>
 										<div class="content">
 											<p>세부 내용 미정</p>
@@ -92,7 +92,7 @@
 									<span class="image">
 										<img src="images/pic04.jpg" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="${contextPath }/main/themeList?theme=액티비티" >
 										<h2>액티비티</h2>
 										<div class="content">
 											<p>온몸으로 짜릿함을 느끼고 싶은 당신을 위해 준비했어요.</p>
@@ -103,7 +103,7 @@
 									<span class="image">
 										<img src="images/pic05.jpg" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="${contextPath }/main/themeList?theme=글램핑" >
 										<h2>글램핑</h2>
 										<div class="content">
 											<p>세부 내용 미정</p>
@@ -114,7 +114,7 @@
 									<span class="image">
 										<img src="images/pic06.jpg" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="${contextPath }/main/themeList?theme=드라이브" >
 										<h2>드라이브</h2>
 										<div class="content">
 											<p>세부 내용 미정</p>

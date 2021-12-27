@@ -1,13 +1,9 @@
 package com.care.root.qna.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.CommonDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +28,9 @@ public class QnAController implements SessionCommonName{
 	
 	@GetMapping("allList")
 	public String qnaAllList(Model model,
-					@RequestParam(required = false, defaultValue = "1") int num,
-					@RequestParam(required = false) String searchOption,
-					@RequestParam(required = false) String keyword) {
-		System.out.println(searchOption+"1111");
-		System.out.println(keyword);
+		@RequestParam(required = false, defaultValue = "1") int num,
+		@RequestParam(required = false) String searchOption,
+		@RequestParam(required = false) String keyword) {
 		qs.qnaAllList(model,num, searchOption, keyword);
 		return "qna_board/allList";
 	}

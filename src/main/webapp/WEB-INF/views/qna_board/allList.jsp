@@ -29,12 +29,6 @@
   }
   a { text-decoration: none; }
   
-  .answerComplete{
-  	background-color: #FAF4C0;
-  }
-  .answerYet{
-  	background-color: #86E57F;
-  }
   .searchDiv{
   	margin-top: 50px;
   	margin-left: 40px;
@@ -178,7 +172,7 @@
 			</td>
 			<td>${dto.qnaHit}</td>
 			<td>
-				답변완료
+				공지사항
 			</td>
 		</tr>
 	 </c:forEach>		
@@ -215,10 +209,10 @@
 						<td>${dto.qnaHit}</td>
 						<td>
 							<c:if test="${dto.repCheck == '답변완료'}">
-								<span class="answerComplete ">답변완료</span>
+								<span style="background-color: #FAECC5; padding:10px;">답변완료</span>
 							</c:if>
 							<c:if test="${dto.repCheck == '답변예정'}">
-								<span class="answerYet">답변예정</span>
+								<span style="background-color: white; padding: 10px; border:solid 1px black;">답변예정</span>
 							</c:if>
 						</td>
 					</tr>
