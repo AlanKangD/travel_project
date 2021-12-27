@@ -114,10 +114,10 @@
 									<span class="image">
 										<img src="images/pic06.jpg" alt="" />
 									</span>
-									<a href="generic.html">
+									<a href="${contextPath }/main/themeList?theme=드라이브" >
 										<h2>드라이브</h2>
 										<div class="content">
-											<p>세부 내용 미정</p>
+											<p>멋진 풍경과 함께 시원하게 달리고 싶은 당신을 위해 준비했어요.</p>
 										</div>
 									</a>
 								</article>								

@@ -23,7 +23,7 @@ function loginpopup(url,name){
 </script>
 <style type="text/css">
 
-.wrapp { width: 100%; height:120px; margin: auto; background-color: #d3e7ef;
+.wrapp { width: 100%; height:120px; margin: auto; background-color: #fff;
 text-align: center; padding-top:20px; padding-bottom: 10px; }
 }
 </style> 
@@ -74,7 +74,7 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 </head> 
 <body >
 	<div class="wrapp">
-    <div><img src="${contextPath}/resources/img/traduler-logo-blue.png" height="80px"></div> 
+    <div><img src="${contextPath}/resources/img/traduler-logo-green.png" height="80px"></div> 
 	<header id="header">
 		<nav>
 			<ul>
@@ -96,10 +96,9 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 				<li><a href="${contextPath }/member/logout">로그아웃</a></li>
 				</c:otherwise>
 			</c:choose>
-			<li><a href="${contextPath }/review/review_boardList">후기 게시판</a></li>	
-			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
-			<li><a href="${contextPath }/review/review_boardList">리뷰게시판</a></li>			
-			<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
+			<li><a href="${contextPath }/review/review_boardList">리뷰 게시판</a></li>	
+			<li><a href="${contextPath }/qna/allList">QnA 게시판</a></li>	
+			<li><a href="${contextPath }/myPage/myPageList">MY PAGE</a></li>	
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">

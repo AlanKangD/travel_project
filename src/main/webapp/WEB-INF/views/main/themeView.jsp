@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
 <!DOCTYPE html>
 <html>
@@ -336,7 +338,7 @@ function setImageNext(){
                <c:choose>
                   <c:when test="${adminId != null }">
                      <input type="text" name="contentOne" value="${dto.contentOne }">
-                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>                  
+                     <textarea rows="5" cols="7" name="contentTwo" >${fn:replace(dto.contentTwo, replaceChar, "<br/>")}</textarea>                  
                      <button type="submit">수정</button><br>   <br>         
                   </c:when>
                   <c:otherwise>

@@ -38,7 +38,15 @@
 												<p>${list.contentOne }</p>
 											</div>
 										</a>
-										관심콘텐츠 ❤️  ${list.likeHit }
+										<c:choose>
+											<c:when test="${ list.likeHit == 0 }">
+												관심콘텐츠 <img src="${contextPath}/resources/img/like_off.png" width="20px;" height="20px"> 0
+											</c:when>
+											<c:otherwise>
+												관심콘텐츠 <img src="${contextPath}/resources/img/like_on.png" width="20px;" height="20px"> ${ list.likeHit }
+											</c:otherwise>
+										</c:choose>
+										
 									</article>
 							</c:forEach>																					
 							</section>

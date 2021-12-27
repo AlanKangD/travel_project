@@ -7,10 +7,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 <style type="text/css">
+.qna_content_title {
+	width: 100%;
+	height: 80px;
+	margin-top: 20px;
+	margin-bottom: 0px;
+}
+.qna_content_set {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.qna_content_id {
+	width: 30%;
+	float: left;
+	margin-bottom: 10px;
+}
+.qna_content_details {
+	margin-top: auto;
+	width: 70%;
+	float: right;
+	margin-bottom: 10px;
+}
+.qna_content_writing {
+	width: 100%;
+	float: left;
+}
+.qna_content_block {
+	margin-top: 150px;
+	margin-bottom: 150px;
+}
 </style>
+<meta charset="UTF-8">
+<title>QnA 게시글(일반)</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -126,25 +156,41 @@
 </script>
 </head>
 <body onload="getReply()">
+
 <c:import url="../default/header.jsp" />
-<div class="wrap">
+<div class="wrap" align="left" style="
+	padding-right: 50px; padding-left: 50px; padding-top: 0px; margin-top: 0px;">
 
 <form id="fo" action="${contextPath }/qna/modify" method="post">
  	<input type="hidden" name="qnaNo" value="${dto.qnaNo }">
 	
-	<h2>Q&A</h2>
-	<hr>
 	<c:choose>
 		<c:when test="${dto.id == userId}">
-			<h3><b><input type="text" name="qnaTitle" id="title" value="${dto.qnaTitle }"></b></h3>
+			<div class="qna_content_title" style="text-align: left;">
+				<h1><input type="text" name="qnaTitle" id="title" value="${dto.qnaTitle }"></h1>
+			</div>
 		</c:when>
 		<c:otherwise>
-			<h3><b>${dto.qnaTitle }</b></h3>
+			<div class="qna_content_title" style="text-align: left;">
+				<h1>${dto.qnaTitle }</h1>
+				<hr>
+			</div>
 		</c:otherwise>
 	</c:choose>
-	<br>
-	<b>작성자</b> : ${dto.id } &nbsp; <b>작성일</b> : ${dto.viewDate } &nbsp; <b>조회</b> : ${dto.qnaHit }<br>
-	<hr>
+	
+	
+	<div class="qna_content_set">
+			<div class="qna_content_id">
+			</div>
+			<div class="qna_content_details" style="text-align: right;">
+				<strong>작성자</strong>&nbsp;${ dto.id } &emsp;
+				<strong>작성일</strong>&nbsp;${ dto.viewDate } &emsp;
+				<strong>조회수</strong>&nbsp;${ dto.qnaHit }
+		</div>
+		<hr>
+	</div>
+	
+	
 	<c:choose>
 		<c:when test="${dto.id == userId}">
 			<textarea class="partC" rows="7" cols="80" name="qnaContent"
@@ -160,7 +206,6 @@
 		<c:if test="${adminId != null }">
 			<button type="button" class="btn btn-dark" onclick="replyShow()">답변하기</button>
 		</c:if>
-	<hr>
 </form>	
 	<div id="reply" style="display: none;">
 		<form id="replyFo">

@@ -12,7 +12,65 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 <style type="text/css">
-#main {width: 80%; margin-left: 5%; margin-right: 5%;}
+
+.qna_list_title {
+	width: 100%;
+	height: 120px;
+	text-align: left;
+	float: left;
+}
+.qna_title {
+	float: left;
+	width: 100%;
+	height: 55%;
+}
+.qna_title_sub {
+	float: left;
+	width: 50%;
+	height: 45%;
+	padding-top: -20px;
+	margin-top: 0px;
+}
+.qna_title_cnt{
+	float: right;
+	width: 50%;
+}
+.search_div {
+	bottom: 38px;
+	display: inline-block;
+	position: relative;
+	float: right;
+	width: 100%;
+	height: 90px;
+}
+.search_div_main {
+	width: 100%;
+	position: relative;
+}
+.search_div_category {
+	position: absolute;
+	text-align: right;
+	width: 100px;
+	left: 82%;
+	float: right;
+}
+.qna_write_cnt_div {
+	position: absolute;
+	top: 80px;
+}
+.qna_write_btn_div {
+	width: 100%;
+	height: 45px;
+}
+.search_div_sub {
+	position: absolute;
+	top: 55px;
+	right: 0px;
+	display: inline-block;
+	float: right;
+}
+
+
 
  .search_area{
     display: inline-block;
@@ -30,10 +88,12 @@
   a { text-decoration: none; }
   
   .answerComplete{
-  	background-color: #FAF4C0;
+  	padding: 5px;
+  	background-color: #86E57F;
   }
   .answerYet{
-  	background-color: #86E57F;
+  	padding: 5px;
+  	background-color: #eaeaea;
   }
   .searchDiv{
   	margin-top: 50px;
@@ -90,7 +150,7 @@
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA 게시판</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	function selectFunc() {
@@ -110,9 +170,10 @@
 <body>
 
 <c:import url="../default/header.jsp" />
-<div id="main">
-<div class="board_head" style="display: flex;">
-	
+<div class="wrap" align="center" 
+		style="padding-left: 50px; padding-right: 50px;">
+<!-- <div class="board_head" style="display: flex;">
+ -->	
 	<c:choose>
 		<c:when test="${param.num == null }">
 			<c:set var="num" value="1"/>
@@ -122,13 +183,43 @@
 		</c:otherwise>
 	</c:choose>
 
-	<div>
-		<h1>QnA게시판</h1>
-		궁금한 부분이 있으면 해결해드립니다.<p>
-		총 ${dataCount}개의 글  ( Page ${num } / ${repeat} )
+	<div class="qna_list_title">
+		<div class="qna_title">
+			<h1>QnA 게시판</h1>
+		</div>
+		<div class="qna_title_cnt">
+			
+		</div>
+		<p class="qna_title_sub">Traduler를 이용하면서 생긴<br>
+			궁금한 점이나 불편한 점을 해결해드릴게요.</p>
 	</div>
+
+	<div class="search_div">
+	   <div class="search_div_main" id="search_div"><!-- 리뷰 검색 기능 -->
+	      <form id="selectFo" method="get" action="${contextPath}/qna/allList">
+	         <div class="search_div_category">
+	        	<select name="searchOption" style="width: 100%;">
+	            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
+	            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
+	            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
+	            <option value="content"<c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
+	            <option value="id"<c:if test='${searchOption == "id" }'>selected</c:if> >작성자</option>
+	         </select>
+	         </div>
+	         <div class="qna_write_cnt_div">
+	         	 총 ${dataCount}개의 글  ( Page <b>${num}</b> / ${repeat} )
+	         </div>
+	         <div class="search_div_sub">
+	       		<input name="keyword" style="height: 44px; "id="keyword" value="${keyword }">
+	         	<button type="button" onclick="selectFunc()">검색</button>
+	         </div>
+	      </form>
+	   </div>
+   </div>
 	
-	<div class="searchDiv">
+	
+	
+	<%-- <div class="searchDiv">
 	<form id="selectFo" method="get" action="${contextPath}/qna/allList" class="search_area">
 	    <select name="searchOption">
 		    	<option value="all"<c:if test='${searchOption == "all"}'>selected</c:if> >전체</option>
@@ -140,13 +231,10 @@
 	    <input name="keyword" id="keyword" value="${keyword }">
 	    <button type="button" class="btn btn-secondary" onclick="selectFunc()">검색</button>
 	</form>
-	</div>
+	</div> --%>
 	
-</div>
 
-<div align="center">
-
-<table class="table">
+<table class="table" style="background-color: #FF9900;">
   <thead>
     <tr>
       <th scope="col">No.</th>
@@ -160,7 +248,7 @@
   <tbody>
   
  	 <c:forEach var="dto" items="${noticeList}">
-		<tr style="background-color: #BDBDBD;">
+		<tr style="background-color: #FF9900;">
 			<th scope="row">
 				&lt; 공지 &gt; 
 			</th>
@@ -229,6 +317,10 @@
 	</tbody>	
 </table>
 		
+	<div class="qna_write_btn_div" align="left">
+		<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button> 
+	</div>
+		
 	<div class="page_wrap">
 		 <div class="page_nation">
 			<c:choose>
@@ -279,11 +371,8 @@
 			</c:choose>
 		</div>
 	</div>
-			<div align="right">	
-			<button type="button" class="btn btn-dark" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button>
-			</div>
-		</div>
-	</div>
+	<hr>
+</div>
 <c:import url="../default/footer.jsp" />
 
 </body>

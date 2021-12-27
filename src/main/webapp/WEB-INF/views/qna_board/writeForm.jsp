@@ -10,7 +10,7 @@
 <style>
 #main {width: 80%; margin-left: 5%; margin-right: 5%;}
 
-#tdid {background-color: red;}
+#tdid {background-color: }
 #tdid input{background-color: blue;}
 
 </style>
