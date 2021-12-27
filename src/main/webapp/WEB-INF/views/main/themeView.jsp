@@ -323,7 +323,7 @@ function setImageNext(){
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
 	               
-	              <div class="mainbtn" style="display:flex;">                
+	              <div class="mainbtn" style="display:flex; flex-flow:column; padding-left: 200px;">                
 	                   <div class="aa"><a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer;"> &lt; </a>  </div>     
 		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
 		               <div class="bb"><a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer;"> &gt;</a></div>
