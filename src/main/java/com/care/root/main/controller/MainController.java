@@ -78,7 +78,6 @@ public class MainController implements SessionCommonName {
 		 return "redirect:themeList?theme="+theme;
 	}
 	
-//	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
 	@RequestMapping("modifyView")
 	public String modifyView(MultipartHttpServletRequest mul) {
 		ms.modifyView(mul);
