@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: ￪ﾹﾀ￬ﾄﾤ￪ﾷﾜ
-Build-Jdk: 11.0.11
+Built-By: samsung
+Build-Jdk: 1.8.0_281
 Created-By: Maven Integration for Eclipse
 

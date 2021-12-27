@@ -21,13 +21,13 @@ public class CommonIntercepter extends HandlerInterceptorAdapter implements Sess
 		if(session.getAttribute(userSession) == null && session.getAttribute(adminSession) == null ) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.print("<script> alert('글작성은 로그인한 사용자만 가능합니다.'); </script>");
+			out.print("<script> alert('로그인한 사용자만 가능합니다.'); </script>");
 					//+ "location.href='" + request.getContextPath() + "/member/loginForm'; </script>");
 			StringBuffer sb=new StringBuffer();
 			sb.append("<script type='text/javascript'>");
-			 sb.append("var pop = window.open('http://localhost:8085/root/member/loginForm', 'loginpopup', 'top=0, left=0, width=290, height=230, resizable=no, scrollbars=no')");
+			 sb.append("var pop = window.open('http://localhost:8083/root/member/loginForm', 'loginpopup', 'top=0, left=0, width=290, height=230, resizable=no, scrollbars=no')");
 			 sb.append("</script>");
-			 response.setContentType("text/html; charset=UTF-8");
+			 response.setContentType("text/html; charset=UTF-8"); 
 			 out.println(sb);
 			 out.flush();
 			return false;
