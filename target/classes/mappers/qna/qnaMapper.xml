@@ -49,11 +49,11 @@
              (select * from qna_board where id like '%' || #{keyword} || '%'  
           	 order by qna_no desc)A)B where rn between #{s} and #{e} and id not in('admin') 
           </when>
-          <when test='searchOption == "content"'> <!-- 본문 -->
+          <when test='searchOption == "content"'> <!-- 내용 -->
              (select * from qna_board where qna_content like '%' || #{keyword} || '%'  
           	 order by qna_no desc)A)B where rn between #{s} and #{e} and id not in('admin') 
           </when>
-          <otherwise>
+          <otherwise> <!-- 검색기능 사용 x -->
 	         (select * from qna_board where id not in('admin') order by qna_no desc)A)B 
 	         where rn between #{s} and #{e}
           </otherwise>

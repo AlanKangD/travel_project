@@ -60,7 +60,7 @@ public class QnAServiceImpl implements QnAService{
 		
 		int pagingCount = (num-1) / pagingNum; // (0 ~ 4 / 5 ~ 9)
 		beginPage = pagingCount * pagingNum + 1 ;
-		endPage = beginPage + 4; // 10개로한다면 여기 +5해줘야한다
+		endPage = beginPage + 4; // 10개로 한다면 여기 +5 해줘야한다
 		
 		if(repeat < endPage) {
 			endPage = repeat;

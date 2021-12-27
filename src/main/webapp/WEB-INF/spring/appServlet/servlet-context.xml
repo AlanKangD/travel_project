@@ -39,6 +39,8 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/qna/writeForm"/>
+			<mapping path="/review/review_write"/>
+			<mapping path="/myPage/myPageList"/>
 			<beans:ref bean="ci"/>
 		</interceptor>
 	</interceptors>

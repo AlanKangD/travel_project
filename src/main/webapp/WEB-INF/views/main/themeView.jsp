@@ -4,6 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <% pageContext.setAttribute("replaceChar", "\n"); %>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -18,8 +19,8 @@
 <style>
    #main {width: 80%; margin-left: 10%; margin-right: 10%;}
    .flex{display: flex;}
-   .flexB{width: 50%; }
-   .flexBa{background-color: aqua; text-align: center;}
+   .flexB{width: 50%;}
+   .flexBa{ font-size :30px; text-align: center; background-color: #D4F4FA;}
    .imageFlex{margin-right: 10px;}
   .aa,  .bb{  font-size: 50px; padding-top: 200px;}
    .aa {padding-right: 10px;}
@@ -90,7 +91,7 @@ function addMyList() {
    }
    
    function getReply(num){	  
-		myVar = setInterval(setImageNext, 3000)
+		myVar = setInterval(setImageNext, 5000)
 	   
       if(num == undefined){
          num = 1;
@@ -106,21 +107,21 @@ function addMyList() {
                 var beginPage = data.beginPage;
                 var endPage = data.endPage;
                 var list = data.list;
-               let html = "총 "+dataCount+"개의댓글<br><table border='1'>";
+               let html = "<table border='1'>";
             list.forEach(function(data){
                if('${userId}' != ""){
                   html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='updateLike("+data.repNo+','+num+")'>👍🏻</a> "+data.likeHit
                   if(data.id == '${userId}' || '${adminId}' != ""){   
-                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")'>삭제</button>"
+                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' style='width: 100px; height: 55px;' >삭제</button>"
                      }
                   html += "<br>"+data.repContent+"</td></tr>"
                }else{
                html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='fakeLike()'>👍🏻</a> &nbsp;"+data.likeHit+"<br>"+data.repContent+"</td></tr>"   
                 }
             })
-            html += "<tr><td>"
+            html += "<tr><td align='center' style='font-size: 20pt'>"
             if(num > 1){
-               html += "<button onclick='getReply("+(num-1)+")'>&lt;</button>"
+               html += "<a style='cursor:pointer' onclick='getReply("+(num-1)+")'> &lt; </a>"
             }
             for(pageNum = beginPage; pageNum <= endPage; pageNum++){
                if (num == pageNum) {
@@ -130,7 +131,7 @@ function addMyList() {
                     }
             }
             if(num < endPage){
-               html += "<button onclick='getReply("+(num+1)+")'>&gt;</button>"
+               html += "<a style='cursor:pointer' onclick='getReply("+(num+1)+")'> &gt; </a>"
             }
             html += "</td></tr></table>";
          $("#reply").html(html)
@@ -195,7 +196,7 @@ $(function(){
          $(".openMap").text( "지도 줄이기" )
          mapSwitch = 0;
       }else{
-         $("#map").css({ width: "50%"})
+         $("#map").css({ width: "50%", height: "500px"})
          $(".openMap").text( "지도 펼치기" )
          mapSwitch = 1;
       }
@@ -256,7 +257,7 @@ function setImageNext(){
   }
   
   function start(){
-      myVar = setInterval(setImageNext, 3000);
+      myVar = setInterval(setImageNext, 5000);
    }
   function stop(){
 	    clearInterval(myVar);
@@ -301,7 +302,7 @@ function setImageNext(){
          <form action="${contextPath }/main/modifyView" method="post" enctype="multipart/form-data">
             <div class="inner" style="text-align: center">
                <h1><input type="hidden" name="placeName" value="${dto.placeName }">${dto.placeName }</h1>
-               <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">테마 : ${dto.mainCategory }</h5>                        
+               <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">${dto.contentOne }</h5>                        
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
 	               
@@ -315,24 +316,24 @@ function setImageNext(){
 	                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
 	               </c:if>
                </span>  
-         
-               <br>             
+               <div style="text-align: left;">       
                <c:choose>
                   <c:when test="${adminId != null }">
-                     <input type="text" name="contentOne" value="${dto.contentOne }">
-                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>         
+                     <input type="hidden" name="contentOne" value="${dto.contentOne }">
+                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>                  
+
                      <button type="submit">수정</button><br>   <br>         
                   </c:when>
                   <c:otherwise>
-                     <p>${dto.contentOne }</p>
-                     <p>${dto.contentTwo }</p>         
+                     <p>${fn:replace(dto.contentTwo, replaceChar, "<br/>")}</p>         
                   </c:otherwise>
-               </c:choose>                         
+               </c:choose>
+               </div>                         
             </div>            
             </form>
                   
-            <div class='flex'>   
-               <div class="flexA" id="map" style="width:50%;height:500px;"></div>                
+            <div class='flex'>
+               <div class="flexA" id="map" style="width:50%;height:520px;"></div>
                <script>
                            var mapContainer = document.getElementById('map');
                            var mapOption = {
@@ -346,28 +347,29 @@ function setImageNext(){
                            });
                            marker.setMap(map);
                   </script>
-                  
                <div class="flexB">
                   <div  class="flexBa">
-                     주변 맛집을 추천해주세요!
-                  </div>                  
-                  <div style="background-color: yellow">
-                     <c:if test="${userId != null || adminId != null  }">
-                     작성자 : ${userId }
-                     <form id="addReply">
-                        <input type="hidden" name="id" value="${userId }">   
-                        <input type="hidden" name="placeName" value="${dto.placeName }">   
-                        <input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="(맛집을 추천해주세요!)">                                                            
-                        <button type="button" onclick="addReply()">등록</button>
-                     </form>
-                     </c:if>
+                    <strong>&lt; &nbsp;&nbsp;&nbsp; 주변 맛집을 추천해주세요  &nbsp;&nbsp;&nbsp; &gt;</strong>
+                  </div> 
+                    <div>
                      <div id = "reply"></div>
                   </div>
                </div>
-            </div>   
-            <label>주소 :  ${dto.address }</label> <button class="openMap">지도 펼치기</button>
-            
-         </div>            
+            </div>
+            <div style="display: flex;">
+            <label style="width: 50%">주소 : ${dto.address }</label>
+            <div style="width: 50%">
+				<c:if test="${userId != null || adminId != null  }">
+                    <form id="addReply">
+                       <input type="hidden" name="id" value="${userId }">   
+                       <input type="hidden" name="placeName" value="${dto.placeName }">
+                       <input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="나만의 맛집을 추천해주세요!">                                                            
+                       <button type="button" onclick="addReply()">등록</button>
+                    </form>
+            	</c:if>
+            </div>
+		  </div>          
+          </div>            
       <c:import url="../default/footer.jsp"></c:import>         
    </body>
 </html>
