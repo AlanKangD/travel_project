@@ -6,16 +6,22 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- 히카리 커넥션풀 빈 등록 -->
+	<!-- 히카리 커넥션풀 빈 등록
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName"
-			value="oracle.jdbc.driver.OracleDriver" />
-		<property name="jdbcUrl"
-			value="jdbc:oracle:thin:@210.221.253.215:1521:xe" />
-		<property name="username" value="foracle" />
-		<property name="password" value="1234" />
 
+		<property name="driverClassName"	value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@mydb.c1e6gktiuus0.ap-northeast-2.rds.amazonaws.com:1521:ORCL" />
+		<property name="username" value="admin" />
+		<property name="password" value="password" />
 	</bean>
+	 -->
+	   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+      <property name="jdbcUrl" value="jdbc:oracle:thin:@210.221.253.215:1521:xe" />
+      <property name="username" value="foracle" />
+      <property name="password" value="1234" />
+   </bean>   
+	
 	<!-- 히카리 데이터소스 빈 등록 -->
 	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource">
 		<constructor-arg ref="hikariConfig" />

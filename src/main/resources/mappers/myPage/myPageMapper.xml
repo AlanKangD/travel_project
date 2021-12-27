@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.care.root.mybatis.myPage.MyPageMapper">
+	<resultMap  id="qna" type="com.care.root.qna.dto.QnADTO">
+	   <id property="qnaNo" column="qna_no"/>
+	   <result property="qnaTitle" column="qna_title"/>
+	   <result property="qnaContent" column="qna_content"/>
+	   <result property="qnaHit" column="qna_hit"/>
+	   <result property="saveDate" column="savedate"/>
+	   <result property="qnaPwd" column="qna_pwd"/>
+	   <result property="id" column="id"/>
+    </resultMap>
+    
+    <resultMap id="review" type="com.care.root.review.dto.ReviewDTO">
+		<id property="review_no" column="review_no" />
+		<result property="id" column="id" />
+		<result property="review_title" column="review_title" />
+		<result property="review_content" column="review_content" />
+		<result property="review_hit_num" column="review_hit_num" />
+		<result property="review_like" column="review_like" />
+		<result property="review_date" column="review_date" />
+		<result property="review_file_name" column="review_file_name" />
+	</resultMap>
+	
+	<resultMap id="member" type="com.care.root.member.dto.MemberDTO" >
+		<id property="id" column="id" />
+		<result property="pw" column="pw" />
+		<result property="addr1" column="addr1" />
+		<result property="addr2" column="addr2" />
+		<result property="addr3" column="addr3" />
+		<result property="email" column="email" />
+		<result property="sessionId" column="session_id" />
+		<result property="phoneNumber" column="phone_number" />
+	</resultMap>
+	
+	<resultMap  id="mylist" type="com.care.root.main.dto.MyListDTO">
+	      <id property="listNo" column="list_no"/>
+		  <result property="id" column="id"/>
+		  <result property="place" column="place"/>
+		  <result property="image" column="image"/>
+    </resultMap>
+    
+    <resultMap id="calendar" type="com.care.root.myPage.dto.CalendarDTO">
+    	<id property="calendarNo" column="calendr_no"/>
+    	<result property="id" column="id"/>
+    	<result property="title" column="title"/>
+    	<result property="start" column="start_date"/>
+    	<result property="end" column="end_date"/>
+    	<result property="allday" column="allday"/>
+    </resultMap>
+    
+    <select id="getQnaData" resultMap="qna">
+    	select * from qna_board where id=#{id}
+    </select>
+    
+    <select id="getReviewData" resultMap="review">
+    	select * from review where id=#{id}
+    </select>
+    
+	<select id="getMember" resultMap="member">
+		select * from member where id=#{id} 
+	</select>
+	<update id="userModify">
+		update member set pw=#{pw}, addr1=#{addr1}, addr2=#{addr2}, addr3=#{addr3}, email=#{email},phone_number=#{phoneNumber},session_id=#{sessionId}where id=#{id}
+	 </update>
+	 <delete id="userDelete">
+	 	delete from member where id=#{id} 
+	 </delete>
+	 <select id="myTripList" resultMap="mylist">
+	 	select place from myList where id=#{id}
+	 </select>
+	 <insert id="calendarinsert">
+		insert into calendar(calendr_no, id, title, start_date, end_date) values(calendar_no_SEQ.nextval,#{id},#{title},#{start},#{end})
+	</insert>
+	
+	<select id="getCalendarList" resultMap="calendar">
+		select * from calendar where id=#{id}
+	</select>
+	
+	<delete id="deleteAllCal">
+		delete from calendar where id=#{id}
+	</delete>
+</mapper>
+

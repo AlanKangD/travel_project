@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath }"/>      
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,12 +77,11 @@
 				console.log(list)
 				let html = "";
 				list.forEach(function(data){
-					let qrIdContent = data.qrId + data.qrContent
 					html += "<div><b>답변자 : 관리자</b> | "
 	                html += "<b>답변일</b> : "+data.saveDate+"<br><br>"
-	                
 	                if('${adminId}' == ""){
-	                	html += "<textarea rows='10' cols='50' name='qrContent' readonly>"+data.qrContent+"</textarea><br>"
+	                	var qrContent = data.qrContent.replace(/(\n|\r\n)/g, '<br>');
+	                	html += qrContent+"<p><hr>"
 	                }else{
 		                html += "<form action='${contextPath }/qna/repModify' method='post'>"
 		                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
@@ -142,7 +143,7 @@
 		</c:otherwise>
 	</c:choose>
 	<br>
-	<b>작성자</b> : ${dto.id } &nbsp; <b>작성일</b> : ${dto.saveDate } &nbsp; <b>조회</b> : ${dto.qnaHit }<br>
+	<b>작성자</b> : ${dto.id } &nbsp; <b>작성일</b> : ${dto.viewDate } &nbsp; <b>조회</b> : ${dto.qnaHit }<br>
 	<hr>
 	<c:choose>
 		<c:when test="${dto.id == userId}">
@@ -150,8 +151,7 @@
 									 id="content">${dto.qnaContent }</textarea> 
 		</c:when>
 		<c:otherwise>
-			<textarea class="partC" rows="7" cols="80" name="qnaContent" readonly
-									 id="content">${dto.qnaContent }</textarea> 
+			${fn:replace(dto.qnaContent, replaceChar, "<br/>")}
 		</c:otherwise>
 	</c:choose>
 	<p>
@@ -162,6 +162,15 @@
 		</c:if>
 	<hr>
 </form>	
+	<div id="reply" style="display: none;">
+		<form id="replyFo">
+			<h3>답변을 작성하세요</h3>
+			<input type="hidden" name="qrWriteGroup" value="${dto.qnaNo }">
+			<input type="hidden"  name="id" value="admin">
+			<textarea rows="10" cols="50" name="qrContent" id="repContent"></textarea>
+			<button type="button" onclick="addReply()">답변 작성완료</button>
+		</form>
+	</div>
 	<div id="getReply"></div>
 	
 	<div align="right">
@@ -174,17 +183,6 @@
 	</c:if>	
 	<button type="button" class="btn btn-dark" onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
 	</div>
-	
-	<div id="reply" style="display: none;">
-		<form id="replyFo">
-			<h3>답변을 작성하세요</h3>
-			<input type="hidden" name="qrWriteGroup" value="${dto.qnaNo }">
-			<input type="hidden"  name="id" value="admin">
-			<textarea rows="10" cols="50" name="qrContent" id="repContent"></textarea>
-			<button type="button" onclick="addReply()">답변 작성완료</button>
-		</form>
-	</div>	
-
 </div>
 <c:import url="../default/footer.jsp" />
 </body>

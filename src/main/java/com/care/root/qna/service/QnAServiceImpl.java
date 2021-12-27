@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,39 +33,43 @@ public class QnAServiceImpl implements QnAService{
 	@Override
 	public void qnaAllList(Model model, int num,String searchOption,String keyword) {
 		int pageLetter = 8;
+		int end = num * pageLetter;
+		int start = end + 1 - pageLetter;
+		pagingNum(model, num, searchOption, keyword);
+		
+		List<QnADTO> list = mapper.qnaAllList(start, end, searchOption, keyword);
+		List<QnADTO> noticeList = mapper.noticeList();
+		
+		model.addAttribute("searchOption",searchOption);
+		model.addAttribute("keyword",keyword);
+        model.addAttribute("nowday",makeNew());
+		model.addAttribute("qnaList",replyConfirm(list));		
+		model.addAttribute("noticeList",noticeList);		
+	}	
+	
+	private void pagingNum(Model model, int num, String searchOption, String keyword){
+		int pageLetter = 8;
 		int dataCount = mapper.getDataCount(searchOption, keyword);
 		int repeat = dataCount / pageLetter;
 		if(dataCount % pageLetter != 0) {
 			repeat += 1;
 		}
-		int end = num * pageLetter;
-		int start = end + 1 - pageLetter;
-		
 		int pagingNum = 5; // 페이징 넘버링 개수(1 ~ 5 / 6 ~ 10)
-		int beginpage = 0;
+		int beginPage = 0;
 		int endPage = 0;
 		
-		int pageingCount = (num-1) / pagingNum;
-		beginpage = pageingCount * pagingNum + 1 ;
-		endPage = beginpage + 4;
+		int pagingCount = (num-1) / pagingNum; // (0 ~ 4 / 5 ~ 9)
+		beginPage = pagingCount * pagingNum + 1 ;
+		endPage = beginPage + 4; // 10개로 한다면 여기 +5 해줘야한다
 		
 		if(repeat < endPage) {
 			endPage = repeat;
-		}
-		
-		List<QnADTO> list = mapper.qnaAllList(start, end, searchOption, keyword);
-		List<QnADTO> noticeList = mapper.noticeList();
-		
-		model.addAttribute("beginpage",beginpage);
+		}			
+		model.addAttribute("beginPage",beginPage);
 		model.addAttribute("endPage",endPage);
-		model.addAttribute("searchOption",searchOption);
-		model.addAttribute("keyword",keyword);
 		model.addAttribute("dataCount",dataCount);
-        model.addAttribute("nowday",makeNew());
 		model.addAttribute("repeat",repeat);
-		model.addAttribute("qnaList",replyConfirm(list));		
-		model.addAttribute("noticeList",noticeList);		
-	}	
+	}
 	
 	private String makeNew() { // [new] 새글 로직
 		   SimpleDateFormat simp = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -143,10 +148,10 @@ public class QnAServiceImpl implements QnAService{
 	}
 	
 	@Override
-	public int contentView(int qnaNo, Model model) {	
+	public int contentView(int qnaNo, Model model, String admin) {	
 		int result = 0 ;			
 		QnADTO	dto = mapper.contentView(qnaNo);
-		if(dto.getQnaPwd() == null) {  // 비밀번호가 없으면(=비밀글이 아니면) 0
+		if(dto.getQnaPwd() == null || admin != null) {  // 비밀번호가 없으면(=비밀글이 아니면) 0
 			upHit(qnaNo);	
 	   		model.addAttribute("dto", dto);
 		} else {  //비밀글이면  1 

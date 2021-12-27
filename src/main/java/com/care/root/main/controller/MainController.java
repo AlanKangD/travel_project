@@ -2,6 +2,7 @@ package com.care.root.main.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.care.root.common.sessionName.SessionCommonName;
+import com.care.root.main.dto.MainDTO;
 import com.care.root.main.dto.MyListDTO;
 import com.care.root.main.dto.ReplyDTO;
 import com.care.root.main.service.MainService;
@@ -63,7 +66,18 @@ public class MainController implements SessionCommonName {
 		ms.download(imageFile, response);
 	}
 	
-	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
+	@PostMapping("deleteView")
+	public String deleteView(MainDTO dto, @RequestParam String theme) {
+		 ms.deleteView(dto);
+		try {
+			theme = URLEncoder.encode(theme, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}	
+		 return "redirect:themeList?theme="+theme;
+	}
+	
+	@RequestMapping("modifyView")
 	public String modifyView(MultipartHttpServletRequest mul) {
 		ms.modifyView(mul);
 		String theme = mul.getParameter("mainCategory");	
@@ -75,14 +89,6 @@ public class MainController implements SessionCommonName {
 		return "redirect:themeList?theme="+theme;
 	}
 	
-	
-	@DeleteMapping(value ="deleteView",  produces = "application/json;charset=utf-8" )
-	@ResponseBody
-	public String deleteView(@RequestParam String placeName) {		
-		return ms.deleteView(placeName);
-	}
-	
-	
 	@PostMapping(value="addMyList", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	   public String addMyList(@RequestBody MyListDTO dto) {
@@ -90,7 +96,7 @@ public class MainController implements SessionCommonName {
 	   }
 	
 	@GetMapping(value = "getMyList", produces = "application/json;charset=utf-8")
-	@ResponseBody
+	@ResponseBody // 찜하기 사진 내용 가져오기 기능 contoller ->  jsp의 header.jsp ajax myList로 작동
 	public List<MyListDTO> getMyList(HttpSession session) {
 		return ms.getMyList(session);
 	}
@@ -110,10 +116,10 @@ public class MainController implements SessionCommonName {
 	}
 
 	@GetMapping(value ="getReply", produces="application/json;charset=utf-8")
-	   @ResponseBody
-	   public Map<String, Object> getReply(@RequestParam String placeName,@RequestParam int num) {
-	      return ms.getReply(placeName, num);
-	   }
+	@ResponseBody
+	public Map<String, Object> getReply(@RequestParam String placeName,@RequestParam int num) {
+		return ms.getReply(placeName, num);
+	}
 	
 	@DeleteMapping(value = "deleteReply", produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -122,9 +128,8 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@PostMapping(value="likeCheck", produces="application/json;charset=utf-8")
-	   @ResponseBody
-	   public String likeCheck(@RequestParam int repNo,@RequestParam String id) {
-	      return ms.likeCheck(repNo,id);
-	   }
-	
+	@ResponseBody
+	public String likeCheck(@RequestParam int repNo,@RequestParam String id) {
+		return ms.likeCheck(repNo,id);
+	}	
 }

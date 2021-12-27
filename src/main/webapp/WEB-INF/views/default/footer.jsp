@@ -1,8 +1,8 @@
 	<!-- Footer -->
 					<footer id="footer">
-						<div class="inner">							
-							<section>
-								<h2>Follow</h2>
+						<div class="inner" style="text-align: center">							
+							<!-- <section>
+								<h2>Traduler</h2>
 								<ul class="icons">
 									<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
 									<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
@@ -13,9 +13,9 @@
 									<li><a href="#" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
 									<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
 								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</section> -->
+							<ul class="copyright" style="text-align: center">
+								<li>Copyright &copy; 2021 Traduler COMPANY Corp. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
 					</footer>

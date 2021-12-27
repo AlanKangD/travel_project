@@ -5,17 +5,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.care.root.mybatis.review.ReviewMapper">
-	
-		<!-- <resultMap id="board" type="com.care.root.review.dto.ReviewDTO">
-			<id property="review_no" column="review_no"/>
-			<result property="review_title" column="review_title"/>
-			<result property="review_content" column="review_content"/>
-			<result property="id" column="id"/>
-			<result property="review_file_name" column="review_file_name"/>
-			<result property="review_date" column="review_date"/>
-			<result property="review_hit_num" column="review_like"/>
-			<result property="review_like" column="review_hit_num"/>
-		</resultMap> -->
 	<resultMap id="review" type="com.care.root.review.dto.ReviewDTO">
 		<!--
 			property = DTO
@@ -28,35 +17,114 @@
 		<result property="review_hit_num" column="review_hit_num" />
 		<result property="review_like" column="review_like" />
 		<result property="review_date" column="review_date" />
-		<result property="review_file_name" column="review_file_name" />
+	</resultMap>
+	<!-- content.jsp에 불러올 이미지 resultMap -->
+	<resultMap type="com.care.root.review.dto.ReviewPhotoDTO" id="photo_view">
+		<result property="stored_file_name" column="stored_file_name"/>
+		<result property="original_file_name" column="origin_file_name"/>
 	</resultMap>
 	
+	<!-- 리뷰 작성자, 제목, 내용 저장 -->
 	<insert id="r_writeSave">
 		insert into review(review_no, id, review_title, review_content)  
-		values(review_seq.nextval, #{id}, #{review_title}, #{review_content})
+		values(review_seq_seq.nextval, #{id}, #{review_title}, #{review_content})
 	</insert>
-	
+	<!-- 리뷰 사진 저장 -->
 	<insert id="photo_save">
-		insert into r_photo(id, r_write_group, origin_file_name, stored_file_name) 
-		values(#{id}, (select review_no from review where id=#{id} and review_title = #{review_title}), #{original_file_name}, #{stored_file_name})
+		insert into r_photo(photo_num, id, r_write_group, origin_file_name, stored_file_name) 
+		values(photo_num.nextval, #{id}, (select review_no from review where id=#{id} and review_title = #{review_title}), #{original_file_name}, #{stored_file_name})
 	</insert>
 	
 	<update id="r_modify">
-		update review set review_title=#{review_title}, review_content=#{review_content}, 
-		review_file_name=#{review_file_name} where review_no=#{review_no}
+		update review set review_title=#{review_title}, review_content=#{review_content} where review_no=#{review_no}
 	</update>
+	
+	<update id="photo_modify">
+		update r_photo set origin_file_name = #{original_file_name}, stored_file_name = #{stored_file_name} where r_write_group = #{review_no}
+	</update>
+	
+	<delete id="photo_delete">
+		delete from r_photo where origin_file_name = #{original_file_name}
+	</delete>
+	
+	<delete id="review_delete">
+		delete from review where review_no = ${review_no}
+	</delete>
 	
 	<select id="boardList" resultMap="review">
 		select B.* from(select rownum rn, A.* from
-		(select * from review order by review_no desc)A)B where rn between #{s} and #{e}
+		<choose>
+			<when test='r_search_option == "all"'>
+				(select * from review
+				where review_title like '%' || #{keyword} || '%'
+				or id like '%' || #{keyword} || '%'
+				or review_content like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "tc"'>
+				(select * from review
+				where review_title like '%' || #{keyword} || '%'
+				or review_content '%' || #{keyword} || '%'
+				order by review_no desc)A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "title"'>
+				(select * from review
+				where review_title like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "content"'>
+				(select * from review
+				where review_content like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<when test='r_search_option == "id"'>
+				(select * from review
+				where id like '%' || #{keyword} || '%'
+				order by review_no desc) A)
+				B where rn between #{s} and #{e}
+			</when>
+			<otherwise>
+			(select * from review order by review_no desc)A)
+			B where rn between #{s} and #{e}	
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="selectReviewCount" resultType="Integer">
 		select count(*) from review
+		<choose>
+			<when test='r_search_option == "all"'>
+				where(review_title like '%' || #{keyword} || '%'
+				or id like '%' || #{keyword} || '%'
+				or review_content like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "tc"'>
+				where(review_title like '%' || #{keyword} || '%'
+				or review_content like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "title"'>
+				where(review_title like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "content"'>
+				where(review_content like '%' || #{keyword} || '%')
+			</when>
+			<when test='r_search_option == "id"'>
+				where(id like '%' || #{keyword} || '%')
+			</when>
+		</choose>
 	</select>
 	
+	<!-- content.jsp 내용 부분 불러오기-->
 	<select id="content" resultMap="review">
 		select * from review where review_no = #{review_no}
+	</select>
+	<!-- content.jsp 이미지 불러오기 -->
+	<select id="photo_view" resultMap="photo_view">
+		select stored_file_name, origin_file_name from r_photo where r_write_group = #{review_no} order by photo_num asc
 	</select>
 	
 	
@@ -106,34 +174,37 @@
 		<result property="like_date" column="like_date"/>
 	</resultMap>
 	
-	<!-- 게시글 추천수 -->
-	<update id="updateLike" parameterType="int">
-		update review set review_like = review_like + 1 where review_no=#{review_no}
-	</update>
-	<!-- 게시글 추천수 취소 -->
-	<update id="updateLikeCancel" parameterType="int">
-		update review set review_like = review_like - 1 where review_no=#{review_no}
-	</update>
-	<!-- 게시글 추천 시 Like 테이블에 insert -->
-	<insert id="insertLike">
-		insert into r_like(like_no,review_no,id) values((SELECT NVL(MAX(like_no),0)+1 from r_like),#{review_no},#{id})
-	</insert>
-	<!-- 게시글 추천 취소 시 delete -->
-	<delete id="deleteLike">
-		delete from r_like where review_no = #{review_no} and id = #{id}
-	</delete>
-	<!-- 게시글 추천 시 Check를 1로 만들어서 중복 방지 -->
-	<update id="updateLikeCheck">
-		update r_like set like_check = 1 where review_no=#{review_no} and id=#{id}
-	</update>
-	<!-- 게시글 추천 취소 다시 0 -->
-	<update id="updateLikeCheckCancel">
-		update r_like set like_check = 0 where review_no=#{review_no} and id=#{id}
-	</update>
-	<!-- 게시글 추천 중복 방지 select 문 -->
+	<!-- 좋아요 눌렀는지 안 눌렀는지 확인 -->
 	<select id="likeCheck" resultType="int">
 		select count(*) from r_like where review_no=#{review_no} and id=#{id}
 	</select>
+	
+	<!-- 안 눌렀다면 r_like 테이블에 값 insert -->
+	<insert id="insertLike">
+		insert into r_like(like_no,review_no,id) values((SELECT NVL(MAX(like_no),0)+1 from r_like),#{review_no},#{id})
+	</insert>
+	<!-- like_check 값 1로 변경 -->
+	<update id="updateLikeCheck">
+		update r_like set like_check = 1 where review_no=#{review_no} and id=#{id}
+	</update>
+	<!-- 게시글 좋아요 수 +1 -->
+	<update id="updateLike" parameterType="int">
+		update review set review_like = review_like + 1 where review_no=#{review_no}
+	</update>
+	
+	<!-- 눌렀다면 r_like 테이블에서 값 delete -->
+	<delete id="deleteLike">
+		delete from r_like where review_no = #{review_no} and id = #{id}
+	</delete>
+	<!-- like_check 값 0으로 변경  -->
+	<update id="updateLikeCheckCancel">
+		update r_like set like_check = 0 where review_no=#{review_no} and id=#{id}
+	</update>
+	<!-- 게시글 좋아요 수 -1 -->
+	<update id="updateLikeCancel" parameterType="int">
+		update review set review_like = review_like - 1 where review_no=#{review_no}
+	</update>
+	
 	
 </mapper>
   	

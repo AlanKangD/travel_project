@@ -10,7 +10,6 @@
 <style>
 #main {width: 80%; margin-left: 5%; margin-right: 5%;}
 
-#tdid {background-color: red;}
 #tdid input{background-color: blue;}
 
 </style>
@@ -31,7 +30,6 @@
 		id = document.getElementById('id');
 		title = document.getElementById('title');
 		content = document.getElementById('content');
-	var checked = document.querySelector("input[name='agreement']:checked")
 	
 		if( id.value == "" ){
 			alert("아이디는 필수 사항입니다.");
@@ -42,14 +40,23 @@
 		}else if( content.value == "" ){
 			alert("내용은 필수 사항입니다.");
 			content.focus();
-		}else if( checked.value == "nonAgree" ){
-			alert("개인정보 수집 및 이용에 동의해 주시기 바랍니다.");
 		}else{
 			fo.submit();
 		}
 		
 	}
-	
+	function loginpopup(url,name){
+	      var popHeight=290;
+	      var popWidth=230;
+	      var winHeight=document.body.clientHeight;
+	      var winWidth=document.body.clientWidth;
+	      var winX=window.screenLeft;
+	      var winY=window.screenTop;
+	      
+	      var popX=winX+(winWidth-popWidth)/2;
+	      var popY=winY+(winHeight-popHeight)/4;
+	      window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	   }
 </script>
 </head>
 <body>
@@ -86,8 +93,8 @@
 		<tr>	
 			<th>비밀글</th> 
 			<td id="tdid">
-				<input type="radio" name="qna_secret" value="open"onclick="secret()" checked >공개글
-				<input type="radio" name="qna_secret" value="secret"onclick="secret()">비밀글
+				<input type="radio" name="qna_secret" value="open" onclick="secret()" checked >공개글
+				<input type="radio" name="qna_secret" value="secret" onclick="secret()">비밀글
 			</td>
 		</tr>
 		
@@ -95,27 +102,6 @@
 			<th>비밀번호</th>
 			<td><input type="password" name="qnaPwd"></td>	
 		</tr>
-		
-		<tr>
-			<th>개인정보 수집 및 <br>이용 동의</th> 
-			<td>
-			<textarea rows="10" cols="70" name="qna_content" readonly>■ 개인정보의 수집·이용 목적
-			서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적
-			
-			■ 수집하려는 개인정보의 항목
-			이름, 주소, 연락처, 이메일 등
-			
-			■ 개인정보의 보유 및 이용 기간
-			회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외없이 해당정보를 파기합니다. 
-			</textarea><br>
-
-			개인정보 수집 및 이용에 동의하십니까?
-			<input type="radio" name="agreement" value="agree" >동의함
-			<input type="radio" name="agreement" value="nonAgree" checked >동의안함
-
-			</td>
-		</tr>
-		
 		<tr>	
 			<td colspan="2"> <button type="button" 
 				onclick="location.href='${contextPath }/qna/allList'">목록</button>

@@ -29,29 +29,59 @@
   }
   a { text-decoration: none; }
   
-  .answerComplete{
-  	background-color: #FAF4C0;
-  }
-  .answerYet{
-  	background-color: #86E57F;
-  }
   .searchDiv{
   	margin-top: 50px;
   	margin-left: 40px;
   }
-  .pageNonClick{
-    color: #BDBDBD;
-    padding-left: 10px;padding-right: 10px;padding-top: 5px;padding-bottom: 5px;
-  }
-  .pageClick{
-    color: #BDBDBD;
-    background-color:#003399;
-    padding-left: 10px;padding-right: 10px;padding-top: 5px;padding-bottom: 5px;
-  }
-  .pageBut button{
-  	 border: 0;
-  }
 
+.page_wrap {
+	text-align:center;
+	font-size:0;
+ }
+.page_nation {
+	display:inline-block;
+}
+.page_nation .none {
+	display:none;
+}
+.page_nation a {
+	display:block;
+	margin:0 3px;
+	float:left;
+	border:1px solid #e6e6e6;
+	width:28px;
+	height:28px;
+	line-height:28px;
+	text-align:center;
+	background-color:#fff;
+	font-size:13px;
+	color:#999999;
+	text-decoration:none;
+}
+.page_nation .arrow {
+	border:1px solid #ccc;
+}
+.page_nation .pprev {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_pprev.png') no-repeat center center;
+	margin-left:0;
+}
+.page_nation .prev {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_prev.png') no-repeat center center;
+	margin-right:7px;
+}
+.page_nation .next {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_next.png') no-repeat center center;
+	margin-left:7px;
+}
+.page_nation .nnext {
+	background:#f8f8f8 url('${contextPath}/resources/arrow/page_nnext.png') no-repeat center center;
+	margin-right:0;
+}
+.page_nation a.active {
+	background-color:#42454c;
+	color:#fff;
+	border:1px solid #42454c;
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -69,6 +99,18 @@
 		}
 		
 	}
+	function loginpopup(url,name){
+	      var popHeight=290;
+	      var popWidth=230;
+	      var winHeight=document.body.clientHeight;
+	      var winWidth=document.body.clientWidth;
+	      var winX=window.screenLeft;
+	      var winY=window.screenTop;
+	      
+	      var popX=winX+(winWidth-popWidth)/2;
+	      var popY=winY+(winHeight-popHeight)/4;
+	      window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	   }
 </script>
 </head>
 <body>
@@ -102,9 +144,10 @@
 		        <option value="id"<c:if test='${searchOption == "id"}'>selected</c:if> >작성자</option>
 	    </select>
 	    <input name="keyword" id="keyword" value="${keyword }">
-	    <button type="button" class="btn btn-secondary" onclick="selectFunc()">검색</button>
+	    <button type="button" onclick="selectFunc()">검색</button>
 	</form>
 	</div>
+	
 </div>
 
 <div align="center">
@@ -125,11 +168,11 @@
  	 <c:forEach var="dto" items="${noticeList}">
 		<tr style="background-color: #BDBDBD;">
 			<th scope="row">
-				&lt;공지&gt; 
+				&lt; 공지 &gt; 
 			</th>
 			<td>						
 				<a href="${contextPath}/qna/contentView?qnaNo=${dto.qnaNo}">
-				${dto.qnaTitle}
+				<b>${dto.qnaTitle}</b>
 				</a> 
 				<c:if test="${dto.saveDate >= nowday}">	
 					<span class="badge bg-secondary">New</span>								
@@ -141,7 +184,7 @@
 			</td>
 			<td>${dto.qnaHit}</td>
 			<td>
-				답변완료
+				공지사항
 			</td>
 		</tr>
 	 </c:forEach>		
@@ -178,10 +221,10 @@
 						<td>${dto.qnaHit}</td>
 						<td>
 							<c:if test="${dto.repCheck == '답변완료'}">
-								<span class="answerComplete ">답변완료</span>
+								<span style="background-color: #FAECC5; padding:10px;">답변완료</span>
 							</c:if>
 							<c:if test="${dto.repCheck == '답변예정'}">
-								<span class="answerYet">답변예정</span>
+								<span style="background-color: white; padding: 10px; border:solid 1px black;">답변예정</span>
 							</c:if>
 						</td>
 					</tr>
@@ -192,64 +235,58 @@
 	</tbody>	
 </table>
 		
-			<div align="center" class="pageBut">
+	<div class="page_wrap">
+		 <div class="page_nation">
 			<c:choose>
 				<c:when test="${num != 1 }">
-					<button type="button" onclick=
-					"location.href='${contextPath}/qna/allList?num=1&searchOption=${searchOption}&keyword=${keyword}'">
-					&laquo; </button>
+					<a class="arrow pprev" href="${contextPath}/qna/allList?num=1&searchOption=${searchOption}&keyword=${keyword}"></a>
 				</c:when>
 				<c:otherwise>
-					<button type="button" disabled>≪</button>
+					<a class="arrow pprev"></a>
 				</c:otherwise>
 			</c:choose>
 			
 			<c:choose>
 				<c:when test="${num > 1 }">
-					<button type="button" onclick=
-					"location.href='${contextPath}/qna/allList?num=${num - 1}&searchOption=${searchOption}&keyword=${keyword}'">
-					 &lt;</button>
+					<a class="arrow prev" href="${contextPath}/qna/allList?num=${num - 1}&searchOption=${searchOption}&keyword=${keyword}"></a>
 				</c:when>
 				<c:otherwise>
-					<button type="button" disabled>&lt;</button>
+					<a class="arrow prev"></a>
 				</c:otherwise>
 			</c:choose>
 			
-				<c:forEach var="cnt" begin="${beginpage}" end="${endPage}">
+				<c:forEach var="cnt" begin="${beginPage}" end="${endPage}">
 					<c:choose>
 					<c:when test="${num == cnt }">
-						<a class="pageClick" href="${contextPath}/qna/allList?num=${cnt}&searchOption=${searchOption}&keyword=${keyword}">${cnt}</a>
+						<a class="active" href="${contextPath}/qna/allList?num=${cnt}&searchOption=${searchOption}&keyword=${keyword}">${cnt}</a>
 					</c:when>
 					<c:otherwise>
-						<a class="pageNonClick" href="${contextPath}/qna/allList?num=${cnt}&searchOption=${searchOption}&keyword=${keyword}">${cnt}</a>
+						<a href="${contextPath}/qna/allList?num=${cnt}&searchOption=${searchOption}&keyword=${keyword}">${cnt}</a>
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>
 			
 			<c:choose>
 				<c:when test="${num < repeat}">
-					<button type="button" onclick=
-					"location.href='${contextPath}/qna/allList?num=${num + 1}&searchOption=${searchOption}&keyword=${keyword}'">
-					 &gt; </button>
+					<a class="arrow next" href="${contextPath}/qna/allList?num=${num + 1}&searchOption=${searchOption}&keyword=${keyword}"></a>
 				</c:when>
 				<c:otherwise>
-					<button type="button" disabled>&gt;</button>
+					<a class="arrow next"></a>
 				</c:otherwise>
 			</c:choose>
 			
 			<c:choose>
 				<c:when test="${num != repeat}">
-					<button type="button" onclick=
-					"location.href='${contextPath}/qna/allList?num=${repeat}&searchOption=${searchOption}&keyword=${keyword}'">
-					 &raquo; </button>
+					 <a class="arrow nnext" href="${contextPath}/qna/allList?num=${repeat}&searchOption=${searchOption}&keyword=${keyword}"></a>
 				</c:when>
 				<c:otherwise>
-					<button type="button" disabled>≫</button>
+					 <a class="arrow nnext"></a>
 				</c:otherwise>
 			</c:choose>
-			</div>
+		</div>
+	</div>
 			<div align="right">	
-			<button type="button" class="btn btn-dark" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button>
+			<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button>
 			</div>
 		</div>
 	</div>

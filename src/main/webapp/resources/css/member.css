@@ -1,0 +1,8 @@
+@charset "UTF-8";
+fo{
+font-family:NanumGothic,나눔고딕,'Nanum Gothic','맑은 고딕',HelveticaNeue,DroidSans,Sans-serif,Helvetica;
+}
+fo button{
+margin-left: 120px; padding: 10px 20px;  border-radius: 5px;
+		background-color: aqua; color: blue;
+}

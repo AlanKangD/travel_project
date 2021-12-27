@@ -11,4 +11,5 @@ public interface MemberMapper {
 	public void memberDelete(String id);//회원 삭제 기능
 	public void memberModify(MemberDTO dto); //회원 수정 기능
 	public int idChk(String id); //아이디 중복체크
+	
 }

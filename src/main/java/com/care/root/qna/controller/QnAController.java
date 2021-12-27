@@ -1,13 +1,9 @@
 package com.care.root.qna.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.CommonDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +28,9 @@ public class QnAController implements SessionCommonName{
 	
 	@GetMapping("allList")
 	public String qnaAllList(Model model,
-					@RequestParam(required = false, defaultValue = "1") int num,
-					@RequestParam(required = false) String searchOption,
-					@RequestParam(required = false) String keyword) {
-		System.out.println(searchOption);
-		System.out.println(keyword);
+		@RequestParam(required = false, defaultValue = "1") int num,
+		@RequestParam(required = false) String searchOption,
+		@RequestParam(required = false) String keyword) {
 		qs.qnaAllList(model,num, searchOption, keyword);
 		return "qna_board/allList";
 	}
@@ -53,22 +47,17 @@ public class QnAController implements SessionCommonName{
 		qs.writeSave(dto, request, response);
 	}
 	
-//	@GetMapping("contentView")
-//	public String contentView(@RequestParam int qnaNo, Model model,
-//								@RequestParam(required = false) String pwd) {
-//		qs.contentView(qnaNo,pwd, model);
-//		return "qna_board/contentView";
-//	}
-	
 	@GetMapping("contentView")
 	   public String contentView(@RequestParam int qnaNo, Model model, HttpServletRequest req,
 								   @RequestParam(required = false, defaultValue = "1") int num,
 								   @RequestParam(required = false) String searchOption,
-								   @RequestParam(required = false) String keyword) { 	   
+								   @RequestParam(required = false) String keyword,
+								   HttpSession session) { 	   
 		model.addAttribute("num",num);	
 		model.addAttribute("searchOption",searchOption);	
 		model.addAttribute("keyword",keyword);	
-		int result = qs.contentView(qnaNo, model);
+		String admin = (String)session.getAttribute(adminSession);
+		int result = qs.contentView(qnaNo, model, admin);
 			if(result == 1) {
 				return "qna_board/secretView";
 			 }
@@ -126,5 +115,4 @@ public class QnAController implements SessionCommonName{
 		System.out.println(qrContent);
 		qs.repModify(qrId,qrContent,response,request);
 	}
-	
 }

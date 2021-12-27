@@ -1,6 +1,7 @@
 package com.care.root.main.dto;
 
 public class MainRepLikeDTO {
+
 	private int repNo;
 	private String id;
 	
@@ -17,7 +18,4 @@ public class MainRepLikeDTO {
 		this.id = id;
 	}
 
-	
-	
-	
 }

@@ -17,18 +17,15 @@ function loginpopup(url,name){
 	var winY=window.screenTop;
 	
 	var popX=winX+(winWidth-popWidth)/2;
-	var popY=winY+(winHeight-popHeight)/2;
-	
+	var popY=winY+(winHeight-popHeight)/4;
 	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 }
 </script>
 <style type="text/css">
 
-.wrapp { width: 100%; height:100px; margin: auto; background-color: yellow;
-text-align: center; padding-top:30px  }
+.wrapp { width: 100%; height:120px; margin: auto; background-color: #d3e7ef;
+text-align: center; padding-top:20px; padding-bottom: 10px; }
 }
-
-
 </style> 
 <script>
 
@@ -39,15 +36,18 @@ text-align: center; padding-top:30px  }
 			dataType : "json",
 			success : function(list){
 				console.log(list)
-				let html = "";
-				list.forEach(function(data){
-					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?imageFile="+mainImageFile+" '><br>"	
-					html += " "+data.place
-					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
-				})
-				$("#replyList").html(html)
-			}, error : function(){
+				if(list != ""){		
+					let html = "";
+					list.forEach(function(data){
+						var mainImageFile = data.image
+						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+						html += " "+data.place
+						html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
+					})
+					$("#replyList").html(html)
+				}
+				}, error : function(){
+
 			}
 		})
 	}
@@ -75,7 +75,11 @@ text-align: center; padding-top:30px  }
 </head> 
 <body >
 	<div class="wrapp">
-    <div> <h1>제주</h1> </div> 
+    <div>
+    	<a href="${contextPath }/index">
+    		<img src="${contextPath}/resources/img/traduler-logo-blue.png" height="80px">
+    	</a>
+    </div> 
 	<header id="header">
 		<nav>
 			<ul>
@@ -85,10 +89,13 @@ text-align: center; padding-top:30px  }
 	</header>	
 	<nav id="menu">
 	<h3>유저아이디 : ${userId }</h3>
+	
 		<h2>Menu</h2>
 		<ul>
 			<li><a href="${contextPath }/index">HOME</a></li>
-			<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+			<c:if test="${adminId != null }">
+				<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+			</c:if>
 			<c:choose>
 				<c:when test="${userId == null && adminId == null }">
 					<li><a href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');">로그인</a></li>
@@ -97,7 +104,9 @@ text-align: center; padding-top:30px  }
 				<li><a href="${contextPath }/member/logout">로그아웃</a></li>
 				</c:otherwise>
 			</c:choose>
-			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>	
+			<li><a href="${contextPath }/review/review_boardList">후기 게시판</a></li>	
+			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>			
+			<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
 			
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">

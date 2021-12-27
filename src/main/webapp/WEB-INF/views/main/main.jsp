@@ -4,21 +4,55 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Phantom by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
-	</head>
+<head>
+<title>Phantom by HTML5 UP</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="${contextPath }/assets/css/main.css?v=3" />
+<style type="text/css">
+.travel_main_header {
+	width: 100%;
+    height: 500px;
+    background-image: url(/root/resources/img/main_header.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 1px;
+}
+.travel_main_title {
+	color: white;
+    font-size: 40px;
+    margin-top: 250px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+}
+.travel_main_title_sub {
+	color: white;
+    font-size: 30px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+}
+.travel_main_intro {
+	margin-top: 50px;
+	font-size: 26px;
+	text-align: center;
+}
+</style>
+</head>
 	<body>
-	<c:import url="../default/header.jsp"></c:import>
+	<c:import url="../default/main_header.jsp"></c:import>
+	<div class="travel_main_header">
+		<h2 class="travel_main_title">여행의 설렘은 계획부터 시작되는 거니까.</h2>
+        <h4 class="travel_main_title_sub">지금 트래줄러에서 설렘을 계획해 보세요.</h4>
+	</div>
 			<div id="wrapper">
 					<div id="main">
 						<div class="inner">
 							<header>
-								<h1>This is Phantom, a free, fully responsive site<br />
-								template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
-								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+								<div class="travel_main_intro">
+								<h2>여행 계획의 시작은 ‘테마 정하기’예요.<br />
+								자신의 취향에 맞는 테마부터 한번 골라볼까요 ?</h2>
+								</div>
 							</header>
 							<section class="tiles">
 								<article class="style1">
@@ -28,7 +62,7 @@
 										<a href="${contextPath }/main/themeList?theme=힐링" >
 										<h2>힐링</h2>
 										<div class="content">
-											<p>카테고리에도 컨텐트 컬럼 하나 필요함 . 이자리에 </p>
+											<p>몸도 마음도 지친 당신을 위해 준비했어요.</p>
 										</div>
 									</a>
 								</article>
@@ -36,10 +70,10 @@
 									<span class="image">
 										<img src="images/pic02.jpg" alt="" />
 									</span>
-									<a href="generic.html">
-										<h2>Lorem</h2>
+									<a href="${contextPath }/main/themeList?theme=식도락" >
+										<h2>식도락</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>맛있는 음식으로 가볍게 기분전환하고 싶은 당신을 위해 준비했어요.</p>
 										</div>
 									</a>
 								</article>
@@ -47,10 +81,10 @@
 									<span class="image">
 										<img src="images/pic03.jpg" alt="" />
 									</span>
-									<a href="generic.html">
-										<h2>Feugiat</h2>
+									<a href="${contextPath }/main/themeList?theme=관광지" >
+										<h2>관광지</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>세부 내용 미정</p>
 										</div>
 									</a>
 								</article>
@@ -58,10 +92,10 @@
 									<span class="image">
 										<img src="images/pic04.jpg" alt="" />
 									</span>
-									<a href="generic.html">
-										<h2>Tempus</h2>
+									<a href="${contextPath }/main/themeList?theme=액티비티" >
+										<h2>액티비티</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>온몸으로 짜릿함을 느끼고 싶은 당신을 위해 준비했어요.</p>
 										</div>
 									</a>
 								</article>
@@ -69,10 +103,10 @@
 									<span class="image">
 										<img src="images/pic05.jpg" alt="" />
 									</span>
-									<a href="generic.html">
-										<h2>Aliquam</h2>
+									<a href="${contextPath }/main/themeList?theme=글램핑" >
+										<h2>글램핑</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>세부 내용 미정</p>
 										</div>
 									</a>
 								</article>
@@ -80,10 +114,10 @@
 									<span class="image">
 										<img src="images/pic06.jpg" alt="" />
 									</span>
-									<a href="generic.html">
-										<h2>Veroeros</h2>
+									<a href="${contextPath }/main/themeList?theme=드라이브" >
+										<h2>드라이브</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>세부 내용 미정</p>
 										</div>
 									</a>
 								</article>								
