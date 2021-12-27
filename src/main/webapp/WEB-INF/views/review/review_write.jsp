@@ -10,7 +10,7 @@
 <style type="text/css">
 </style>
 <meta charset="utf-8">
-<title>후기 작성</title>
+<title>리뷰 작성</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	var photo_count = 1; // 사진 파일 수 
@@ -58,16 +58,15 @@
 	<jsp:include page="../default/header.jsp"></jsp:include>
 
 		<div id="wrap" style="width:600px; margin: 0 auto;">
-			<h1 style="text-align:center;">여행 후기</h1><br>
+			<h1 style="text-align:center;">여행 리뷰 작성</h1><br>
 			<form method="post" action="${contextPath }/review/r_writeSave" enctype="multipart/form-data">
-				<b>작성자 : </b>	<input type="text" name="id" value="${ userId }" readonly>
-				<hr>
-				<b>제 목 : </b>	<input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
-				<hr>
-				<b>내 용 : </b><br> 
+				<b>작성자</b>	<input type="text" name="id" value="${ userId }" readonly>
+				<br>
+				<b>제목</b><input type="text" name="review_title" size="30" placeholder="제목을 입력해 주세요.">
+				<br>
+				<b>내용</b>
 				<textarea style="resize:none;" rows="40" cols="80" placeholder="내용을 입력해 주세요." name="review_content"></textarea>
-				<hr>
-				
+				<br>
 				<div id="preview_div">
       				<img id="preview_0" name="preview_0" src="#" width=320 height=180 alt="대표이미지가 없습니다." />
 				</div>
@@ -76,19 +75,21 @@
 					<p>
 						<b>대표이미지</b>
 						<input type="file" id="review_file_name_0" name="review_file_name_0" onchange="load_preview_0(this);"/>
-						<span style="font-size:15px; color: gray;">※사진은 최대 10개까지 등록이 가능합니다.</span><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
+						<span style="font-size:15px; color: gray;">※사진은 최대 10장까지 등록 가능합니다.</span><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
 					</p>
 				</div>
-				
 				<hr>
-				
 				<div align="right">
 					<p>
-					이미지 파일 <input type="number" id="photo_count"  name="photo_count" readonly> 장
+					이미지 파일 <input type="number" id="photo_count"  name="photo_count" readonly> 장 &emsp;
 					<input type="button" value="사진추가" onClick="add_file();">
-					<input type="submit" value="등록" />
-					<input type="button" value="목록으로" onClick="location.href='${contextPath}/review/review_boardList'"/>
 					</p>
+				</div>
+				<hr>
+				<div align="right">
+					<input type="button" value="목록으로" onClick="location.href='${contextPath}/review/review_boardList'"/>
+					&emsp;
+					<input type="submit" value="등록"/>
 				</div>
 			</form>
 		</div>

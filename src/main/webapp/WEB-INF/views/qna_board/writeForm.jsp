@@ -10,7 +10,9 @@
 <style>
 #main {width: 80%; margin-left: 5%; margin-right: 5%;}
 
-#tdid input{background-color: blue;}
+#tdid {background-color: }
+
+#tdid input{ }
 
 </style>
 
@@ -91,10 +93,11 @@
 		</tr>
 		
 		<tr>	
-			<th>비밀글</th> 
+			<th>비밀번호</th> 
 			<td id="tdid">
-				<input type="radio" name="qna_secret" value="open" onclick="secret()" checked >공개글
-				<input type="radio" name="qna_secret" value="secret" onclick="secret()">비밀글
+				<input type="text" name="qna_secret" placeholder="비밀글을 원하시면 입력해주세요">
+				<!-- <input type="radio" name="qna_secret" value="open"onclick="secret()" checked >공개글
+				<input type="radio" name="qna_secret" value="secret"onclick="secret()">비밀글 -->
 			</td>
 		</tr>
 		

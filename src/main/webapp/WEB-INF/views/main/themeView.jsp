@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <% pageContext.setAttribute("replaceChar", "\n"); %>
@@ -22,9 +24,19 @@
    .flexB{width: 50%;}
    .flexBa{ font-size :30px; text-align: center; background-color: #D4F4FA;}
    .imageFlex{margin-right: 10px;}
-  .aa,  .bb{  font-size: 50px; padding-top: 200px;}
+  .aa,  .bb{  font-size: 50px; }
    .aa {padding-right: 10px;}
    .bb {padding-left: 10px;}
+   .main-set {
+		width: 100%;
+		height: 500px;
+   }
+   .mainbtn {
+   	background-color: pink;
+   }
+   .main-sub {
+   	background-color: orange;
+   }
 </style>
 <script>
 function addMyList() {      
@@ -306,11 +318,11 @@ function setImageNext(){
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
 	               
-	              <div class="mainbtn" style="display:flex;">                
-	                   <div class="aa"><a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer;"> &lt; </a>  </div>     
-		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
-		               <div class="bb"><a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer;"> &gt;</a></div>
-	               </div>
+		               <div style="background-color: pink;"><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
+		               <div>                                                 
+	                  	<a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&lt;</b> </a> 
+		               	<a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&gt;</b></a>
+		               </div>  
 	               
 	               <c:if test="${adminId != null }">
 	                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
@@ -319,9 +331,7 @@ function setImageNext(){
                <div style="text-align: left;">       
                <c:choose>
                   <c:when test="${adminId != null }">
-                     <input type="hidden" name="contentOne" value="${dto.contentOne }">
                      <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>                  
-
                      <button type="submit">수정</button><br>   <br>         
                   </c:when>
                   <c:otherwise>
@@ -349,7 +359,7 @@ function setImageNext(){
                   </script>
                <div class="flexB">
                   <div  class="flexBa">
-                    <strong>&lt; &nbsp;&nbsp;&nbsp; 주변 맛집을 추천해주세요  &nbsp;&nbsp;&nbsp; &gt;</strong>
+                    <strong>주변 맛집을 추천해주세요</strong>
                   </div> 
                     <div>
                      <div id = "reply"></div>
