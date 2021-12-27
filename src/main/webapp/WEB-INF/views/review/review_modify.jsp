@@ -5,8 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>리뷰 수정</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	var photo_count = ${photo_view.size()}; // 사진 파일 수 
@@ -49,10 +50,10 @@
 	}
 </script>
 </head>
-<body>review_modify.jsp<br>
+<body>
 	<jsp:include page="../default/header.jsp"></jsp:include>
 	
-		<h1 style="text-align:center;">review modify</h1>
+		<h1 style="text-align:center;">여행 리뷰 수정</h1>
 		
 		<br>
 		<div id="wrap" style="width:600px; margin: 0 auto;">
@@ -66,10 +67,12 @@
 					<input type="hidden" id="original_file_name_${status.index }" name="original_file_name_${status.index }" value="${photo_view.original_file_name}">
 				</c:forEach>
 				
-		  		<b>작성자 : </b>	<input type="text" name="id" value="${contentData.id }" readonly><hr>
-			   	<b>제 목 : </b>  <input type="text" size="30" name="review_title" value="${contentData.review_title}"><hr>
-			  	<b>내 용 : </b>  <textarea style="resize:none;" rows="20" cols="80" name="review_content">${contentData.review_content}</textarea>
-			 	<hr>
+		  		<b>작성자</b>	<input type="text" name="id" value="${contentData.id }" readonly>
+		  		<br>
+			   	<b>제목</b>  <input type="text" size="30" name="review_title" value="${contentData.review_title}">
+			   	<br>
+			  	<b>내용</b>  <textarea style="resize:none;" rows="20" cols="80" name="review_content">${contentData.review_content}</textarea>
+			 	<br>
 			  	
 				<div id="photo_div">
 					<h3>이미지 목록</h3>
@@ -86,21 +89,21 @@
 					</c:forEach>
 				</div>
 				
-				<hr>
-				
 				<div id="file_div" align="right">
-					<p >
-							<input type="file" id="review_file" name="review_file" onchange="$(this).attr('style', 'display:none;'); $(photo_count).val(photo_count); add_list(this);"/>
+					<p>
+						<input type="file" id="review_file" name="review_file" onchange="$(this).attr('style', 'display:none;'); $(photo_count).val(photo_count); add_list(this);"/>
 					</p>
 			  	</div>
 			  	
 			  	<span style="font-size:15px; color: gray;">※사진은 최대 10개까지 등록이 가능합니다.</span><!-- onchange="readURL(this)" 이미지를 미리보기 할 수 있음 -->
 			  	<hr>
-			  	
 			  	<div align="right">
 				  	이미지 파일 <input type="number" id="photo_count" name="photo_count" readonly> 장
-				  	<input type="submit" value="수정하기">
+			 	</div>
+			 	<hr>
+			 	<div align="right">
 				 	<input type="button" onclick="location.href='${contextPath}/review/review_boardList'" value="목록으로">
+			 		&emsp;<input type="submit" value="수정하기">
 			 	</div>
 			 	
 			</form>

@@ -23,7 +23,7 @@ function loginpopup(url,name){
 </script>
 <style type="text/css">
 
-.wrapp { width: 100%; height:120px; margin: auto; background-color: #d3e7ef;
+.wrapp { width: 100%; height:120px; margin: auto; background-color: #fff;
 text-align: center; padding-top:20px; padding-bottom: 10px; }
 }
 </style> 
@@ -40,7 +40,7 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 					let html = "";
 					list.forEach(function(data){
 						var mainImageFile = data.image
-						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?imageFile="+mainImageFile+" '><br>"	
 						html += " "+data.place
 						html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
 					})
@@ -77,9 +77,8 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 	<div class="wrapp">
     <div>
     	<a href="${contextPath }/index">
-    		<img src="${contextPath}/resources/img/traduler-logo-blue.png" height="80px">
-    	</a>
-    </div> 
+    	<img src="${contextPath}/resources/img/traduler-logo-green.png" height="80px"></a></div> 
+    <div>
 	<header id="header">
 		<nav>
 			<ul>
@@ -104,10 +103,10 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 				<li><a href="${contextPath }/member/logout">로그아웃</a></li>
 				</c:otherwise>
 			</c:choose>
-			<li><a href="${contextPath }/review/review_boardList">후기 게시판</a></li>	
-			<li><a href="${contextPath }/qna/allList">QnA게시판</a></li>			
-			<li><a href="${contextPath }/myPage/myPageList">MY</a></li>	
-			
+			<li><a href="${contextPath }/review/review_boardList">리뷰 게시판</a></li>	
+			<li><a href="${contextPath }/qna/allList">QnA 게시판</a></li>	
+			<li><a href="${contextPath }/myPage/myPageList">MY PAGE</a></li>	
+
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
 				<li><br>
@@ -125,6 +124,7 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 	</nav>	
 	
 </div>	
+</div>
 	
 	<script src="${contextPath }/assets/js/jquery.min.js"></script>
 	<script src="${contextPath }/assets/js/skel.min.js"></script>

@@ -235,6 +235,7 @@ public class QnAServiceImpl implements QnAService{
 	@Override
 	public int secretPwdChk(String userPwd, int qnaNo, Model model,
 								HttpServletResponse response) {
+		System.out.println("여기들어옴?");
 		int result = 0;	
 		PrintWriter out = null;
 		QnADTO dto = mapper.contentView(qnaNo);
