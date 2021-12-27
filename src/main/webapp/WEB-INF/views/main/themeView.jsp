@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<% pageContext.setAttribute("replaceChar", "\n"); %> 
+<% pageContext.setAttribute("replaceChar", "\n"); %>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -12,7 +15,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8c629ab5a17830f4015943a3a149a898"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
 
    
 <style>
@@ -21,13 +24,22 @@
    .flexB{width: 50%;}
    .flexBa{ font-size :30px; text-align: center; background-color: #D4F4FA;}
    .imageFlex{margin-right: 10px;}
-  .aa,  .bb{  font-size: 50px; padding-top: 200px;}
+  .aa,  .bb{  font-size: 50px; }
    .aa {padding-right: 10px;}
    .bb {padding-left: 10px;}
+   .main-set {
+		width: 100%;
+		height: 500px;
+   }
+   .mainbtn {
+   	background-color: pink;
+   }
+   .main-sub {
+   	background-color: orange;
+   }
 </style>
 <script>
-function addMyList() {
-      
+function addMyList() {      
       let form = {};
       let arr = $("#listForm").serializeArray()
       console.log(arr)
@@ -60,26 +72,6 @@ function addMyList() {
       })  
    }
    
-   function deleteView(placeName, mainCategory){
-      console.log(placeName, mainCategory);
-      $.ajax({
-         url : "deleteView?placeName="+placeName,
-         type : "delete",
-         dataType : "json",
-         success : function(data){
-            console.log(data.result)
-            if(data.result == true){
-               alert("삭제 성공");
-               location.href="${contextPath}/main/themeList?theme="+mainCategory;
-            }else{
-               alert("에이젝스 data result == false");
-            }
-         },error : function(){
-            alert("에이젝스 실패 , 서버 문제 발생");
-         }
-      })      
-   }
-
    function addReply(){
       let form = {}
       let arr = $("#addReply").serializeArray()
@@ -296,25 +288,28 @@ function setImageNext(){
             <input type="hidden" name="place" value="${dto.placeName }">
             <input type="hidden" name="image" value="${dto.mainImageFile }">
             <input type="hidden" name="id" value="${userId}">
-         </form>         
-            
+         </form>                     
          <c:if test="${userId != null}">
-                  <button  style="margin-left: 80%" onclick="addMyList()">일정 추가하기</button>
-             </c:if>            
-             <c:if test="${userId == null}">
-                <button  style="margin-left: 80%" onclick="loginFirst()">일정 추가하기</button>
-                <script type="text/javascript">
-                   function loginFirst() {
-                      alert('일정추가는 로그인 후 가능합니다.')
-                   }
-                </script>
-             </c:if>
-         
-         <c:if test="${adminId != null }">
-  	       <button onclick="deleteView('${dto.placeName}' , '${dto.mainCategory }')">삭제</button>     
+              <button  style="margin-left: 80%" onclick="addMyList()">일정 추가하기</button>
+         </c:if>            
+         <c:if test="${userId == null}">
+            <button  style="margin-left: 80%" onclick="loginFirst()">일정 추가하기</button>
+            <script type="text/javascript">
+               function loginFirst() {
+                  alert('일정추가는 로그인 후 가능합니다.')
+               }
+            </script>
          </c:if>
-          
-         <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
+         
+         <form action="deleteView?placeName=${dto.placeName }" method="post">
+		   <input type="hidden" name="${dto.placeName }">    
+		    <input type="hidden" name="theme" value="${dto.mainCategory } ">    
+		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
+		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
+		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
+		    <input type="submit" value="삭제하기">
+          </form>
+       <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
          <form action="${contextPath }/main/modifyView" method="post" enctype="multipart/form-data">
             <div class="inner" style="text-align: center">
@@ -322,13 +317,13 @@ function setImageNext(){
                <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">${dto.contentOne }</h5>                        
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
-	               
-	              <div class="mainbtn" style="display:flex; flex-flow:column; padding-left: 200px;">                
-	                   <div class="aa"><a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer;"> &lt; </a>  </div>     
-		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
-		               <div class="bb"><a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer;"> &gt;</a></div>
-	               </div>
-	               
+
+	               <div style="background-color: pink;"><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
+	               <div>                                                 
+                  	<a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&lt;</b> </a> 
+	               	<a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&gt;</b></a>
+	               </div>  
+  
 	               <c:if test="${adminId != null }">
 	                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
 	               </c:if>
@@ -336,8 +331,7 @@ function setImageNext(){
                <div style="text-align: left;">       
                <c:choose>
                   <c:when test="${adminId != null }">
-                     <input type="hidden" name="contentOne" value="${dto.contentOne }">
-                     <textarea rows="5" cols="7" name="contentTwo" >${fn:replace(dto.contentTwo, replaceChar, "<br/>")}</textarea>                  
+                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>                  
                      <button type="submit">수정</button><br>   <br>         
                   </c:when>
                   <c:otherwise>
@@ -365,7 +359,7 @@ function setImageNext(){
                   </script>
                <div class="flexB">
                   <div  class="flexBa">
-                    <strong>&lt; &nbsp;&nbsp;&nbsp; 주변 맛집을 추천해주세요  &nbsp;&nbsp;&nbsp; &gt;</strong>
+                    <strong>주변 맛집을 추천해주세요</strong>
                   </div> 
                     <div>
                      <div id = "reply"></div>

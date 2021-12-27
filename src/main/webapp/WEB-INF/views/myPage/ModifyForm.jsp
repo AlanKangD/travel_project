@@ -2,12 +2,26 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath}"/>
-
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
+<style type="text/css">
+.info-modify-div {
+	margin-left: 25%;
+	width: 50%;
+}
+.info-modify-label {
+	width: 100%;
+	text-align: left;
+}
+.info-modify-label-btn {
+	width: 100%;
+	text-align: right;
+}
+</style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 정보 수정</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -44,20 +58,44 @@
 </script>
 </head>
 <body>
-	<c:import url="../default/header.jsp" />
-<div align="center">
-	<form id=fo action="${contextPath }/myPage/userModify" method="post">
-		아이디 : <input type="text" name="id" value="${id }" readonly><br> 
-		비밀번호 : <input type="text" name="pw" placeholder="수정 할 비밀번호 입력"><br> 
-		이메일 : <input type="text" name="email" placeholder="수정 할 이메일 입력"><br> 
-		전화번호 : <input type="text" name="phoneNumber" value="010--"><br> 
-		주소 입력 : <input type="text" id="addr1" name="addr1"  readonly placeholder="우편번호" >
-		<input type="button" onclick="daumpost()" value="우편번호 찾기"><br>
-		<input type="text" id="addr2" name="addr2" readonly placeholder="주소" ><br>
-		<input type="text"id="addr3" name="addr3"  placeholder="상세주소"><br>
-		<input type="submit"  value="수정하기">
-	</form>
-</div>
+<c:import url="../default/header.jsp" />
+	<div class="wrap"
+		style="padding-left: 50px; padding-right: 50px;">
+	<div align="center" class="info-modify-div">
+		<form id=fo action="${contextPath }/myPage/userModify" method="post">
+			<div class="info-modify-label">
+				<b style="text-align: left;">아이디</b>
+			</div>
+			<input type="text" name="id" value="${id }" readonly><br>
+			
+			<div class="info-modify-label">
+				<b style="text-align: left;">비밀번호</b>
+			</div>
+			<input type="text" name="pw" placeholder="수정 할 비밀번호 입력"><br>
+			
+			<div class="info-modify-label">
+				<b style="text-align: left;">이메일</b>
+			</div> 
+			<input type="text" name="email" placeholder="수정 할 이메일 입력"><br>
+			
+			<div class="info-modify-label">
+				<b style="text-align: left;">전화번호</b>
+			</div> 
+			<input type="text" name="phoneNumber" value="010--"><br>
+			
+			<div class="info-modify-label">
+				<b style="text-align: left;">주소</b>
+			</div>  
+			<input type="text" id="addr1" name="addr1"  readonly placeholder="우편번호" >
+			<div class="info-modify-label-btn">
+				<input type="button" onclick="daumpost()" value="우편번호 찾기"><br>
+			</div>
+			<input type="text" id="addr2" name="addr2" readonly placeholder="주소" ><br>
+			<input type="text"id="addr3" name="addr3"  placeholder="상세주소"><br>
+			<input type="submit" value="수정하기">
+		</form>
+	</div>
+	</div>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>

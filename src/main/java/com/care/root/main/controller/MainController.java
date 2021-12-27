@@ -67,7 +67,18 @@ public class MainController implements SessionCommonName {
 		ms.download(imageFile, response);
 	}
 	
-	@RequestMapping(value = "/modifyView", produces="text/plain; charset=UTF-8")
+	@PostMapping("deleteView")
+	public String deleteView(MainDTO dto, @RequestParam String theme) {
+		 ms.deleteView(dto);
+		try {
+			theme = URLEncoder.encode(theme, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}	
+		 return "redirect:themeList?theme="+theme;
+	}
+	
+	@RequestMapping("modifyView")
 	public String modifyView(MultipartHttpServletRequest mul) {
 		ms.modifyView(mul);
 		String theme = mul.getParameter("mainCategory");
@@ -78,14 +89,6 @@ public class MainController implements SessionCommonName {
 		}
 		return "redirect:themeList?theme="+theme;
 	}
-	
-	
-	@DeleteMapping(value ="deleteView",  produces = "application/json;charset=utf-8" )
-	@ResponseBody
-	public String deleteView(@RequestParam String placeName) {		
-		return ms.deleteView(placeName);
-	}
-	
 	
 	@PostMapping(value="addMyList", produces = "application/json;charset=utf-8")
 	@ResponseBody

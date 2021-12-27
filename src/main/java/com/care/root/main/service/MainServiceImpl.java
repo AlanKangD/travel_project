@@ -36,34 +36,71 @@ public class MainServiceImpl implements MainService {
 	MainMapper mapper;
 	@Override // 메인 이미지 경로 및 이름 설정
 	public MainDTO fileProcess(MultipartHttpServletRequest mul) {
-		MainDTO dto = subFileProcess(mul);
-		MultipartFile file = mul.getFile("mainImageFile");
-		if(file.getSize() != 0) {
-			SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
-			Calendar calendar = Calendar.getInstance();
-			String fileName = sf.format(calendar.getTime());
-			fileName += file.getOriginalFilename();
-			File saveFile = new File(IMAGE_REPO+"/"+fileName);
-			dto.setMainImageFile(fileName);
-			try {
-				file.transferTo(saveFile);  //해당 위치에 파일 저장 
-			} catch (Exception e) {
-				e.printStackTrace();
+		
+			MainDTO dto = subFileProcess(mul);
+			MultipartFile file = mul.getFile("mainImageFile");
+			
+			if(dto != null) {			
+				if(file.getSize() != 0) {
+					String fileName = saveImageFile(mul);
+					File saveFile = new File(IMAGE_REPO+"/"+fileName);
+					dto.setMainImageFile(fileName);
+					try {
+						file.transferTo(saveFile);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					if(mul.getParameter("originImageFile") != null) {   // 이미 등록되어있는 파일이 있으면, 삭제 
+						deleteImage(mul);
+					}
+				}
+				return dto;
+			}else {
+					MainDTO d = new MainDTO();
+					if(file.getSize() != 0) {
+						String fileName = saveImageFile(mul);
+						File saveFile = new File(IMAGE_REPO+"/"+fileName);
+						d.setMainImageFile(fileName);
+						try {
+							file.transferTo(saveFile);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						if(mul.getParameter("originImageFile") != null) {   // 이미 등록되어있는 파일이 있으면, 삭제 
+							deleteImage(mul);
+						}
+					}else {
+						try {
+							d.setMainImageFile(mul.getParameter("originImageFile"));
+						} catch (Exception e) {
+							d.setMainImageFile("nan");
+						}
+					}
+					return d;
 			}
-			if(mul.getParameter("originImageFile") != null) {   // 이미 등록되어있는 파일이 있으면, 삭제 
-				File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; // 저장한 레파지토리에서 삭제해줌 
-				deleteOrigin.delete(); 
-			}			
-		}else { 
-			try {
-				dto.setMainImageFile(mul.getParameter("originImageFile")); // 사진 필수라고 알림창띄워주기 
-			} catch (Exception e) { // 게시물 첫 등록이란 소리  
-				dto.setMainImageFile("nan");  
-			}
-		}
-		return dto;
 	}
+	private void deleteImage(MultipartHttpServletRequest mul) {
+		File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; // 저장한 레파지토리에서 삭제해줌 
+		deleteOrigin.delete(); 
+	}
+					
+	private String saveImageFile(MultipartHttpServletRequest mul) {
+		MultipartFile file = mul.getFile("mainImageFile");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
+		Calendar calendar = Calendar.getInstance();
+		String fileName = sf.format(calendar.getTime());
+		fileName += file.getOriginalFilename();
+		
+		return fileName;
+	}
+	
 	private MainDTO subFileProcess(MultipartHttpServletRequest mul) {
+		
+		MultipartFile subFile = mul.getFile("imageFile1");
+		if(subFile == null) {
+			MainDTO dto = null;
+			return dto;
+		}
 		MainDTO dto = new MainDTO();
 		for(int i=1; i < 3; i++) {
 			MultipartFile file = mul.getFile("imageFile"+i);
@@ -71,7 +108,7 @@ public class MainServiceImpl implements MainService {
 				SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss-");
 				Calendar calendar = Calendar.getInstance();
 				String fileName = sf.format(calendar.getTime());
-				fileName += file.getOriginalFilename();
+				fileName += file.getOriginalFilename();				
 				File saveFile = new File(IMAGE_REPO+"/"+fileName);						
 				if(i == 1) {
 					dto.setImageFile1(fileName);
@@ -79,7 +116,7 @@ public class MainServiceImpl implements MainService {
 					dto.setImageFile2(fileName);
 				}				
 				try {
-					file.transferTo(saveFile);  //해당 위치에 파일 저장 
+					file.transferTo(saveFile);  
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -223,15 +260,14 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public String deleteView(String placeName) {
-		int result = mapper.deleteView(placeName);	
-		System.out.println("result :" +result);
-		if(result == 1) {
-			return "{\"result\" : true} ";
-		}else {
-			return "{\"result\" : false}";
-		}
-		
+	public void deleteView(MainDTO dto) {
+		File deleteFileMain = new File(IMAGE_REPO+"/"+dto.getMainImageFile());
+		File deleteFile1 = new File(IMAGE_REPO+"/"+dto.getImageFile1());
+		File deleteFile2 = new File(IMAGE_REPO+"/"+dto.getImageFile2());
+		deleteFileMain.delete();
+		deleteFile1.delete();
+		deleteFile2.delete();
+		mapper.deleteView(dto.getPlaceName());			
 	}
 
 	@Override

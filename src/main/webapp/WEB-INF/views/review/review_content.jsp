@@ -59,7 +59,7 @@
 }
 </style>
 <meta charset="UTF-8">
-<title>후기 게시글</title>
+<title>리뷰 게시글</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 
@@ -185,7 +185,7 @@
 	            if(rep.length < 1) {
 	            	htmls += '<div style="text-align: center">';
 	            	htmls += '<b>등록된 댓글이 없습니다.</b>';
-	            	htmls += '<br></div>';
+	            	htmls += '<br><hr></div>';
 	            } else {
 	            	// 맨 아래 <div id="reply"> 에 반복적으로 보여지는 댓글 양식
 	            	rep.forEach(function(data){
@@ -343,7 +343,7 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
-				
+		
 			<!-- 좋아요 -->
 			<%-- <tr>
 				<td>
@@ -369,7 +369,6 @@
 		
 		<table border="1">	
 			<tr>
-				 
 				<td>
 					<c:forEach var="photo_view" items="${photo_view }">
 						<c:if test="${photo_view.original_file_name != null && photo_view.original_file_name != nan}">
@@ -379,13 +378,15 @@
 				</td>
 				<td>
 
-				<td>
+				<td style="text-align: right;">
 					<input type="button" value="삭제" onclick="delete_check();">
-					<input type="button" value="modify" onclick="location.href='${contextPath}/review/review_modify?review_no=${contentData.review_no }'">
-					<input type="button" value="목록으로" onclick="location.href='${contextPath}/review/review_boardList'">
+					<input type="button" value="수정" onclick="location.href='${contextPath}/review/review_modify?review_no=${contentData.review_no }'">
 				</td>
 			</tr>
 		</table>
+		<div style="margin-bottom: 30px;">
+			<input type="button" value="목록으로" onclick="location.href='${contextPath}/review/review_boardList'">
+		</div>
 		<!-- 댓글 수 -->
 		<table border="1">
 			<tr>
