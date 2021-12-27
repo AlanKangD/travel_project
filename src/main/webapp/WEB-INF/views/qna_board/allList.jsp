@@ -87,6 +87,7 @@
   }
   a { text-decoration: none; }
   
+
   .answerComplete{
   	padding: 5px;
   	background-color: #86E57F;
@@ -95,6 +96,7 @@
   	padding: 5px;
   	background-color: #eaeaea;
   }
+
   .searchDiv{
   	margin-top: 50px;
   	margin-left: 40px;
@@ -165,6 +167,18 @@
 		}
 		
 	}
+	function loginpopup(url,name){
+	      var popHeight=290;
+	      var popWidth=230;
+	      var winHeight=document.body.clientHeight;
+	      var winWidth=document.body.clientWidth;
+	      var winX=window.screenLeft;
+	      var winY=window.screenTop;
+	      
+	      var popX=winX+(winWidth-popWidth)/2;
+	      var popY=winY+(winHeight-popHeight)/4;
+	      window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	   }
 </script>
 </head>
 <body>
@@ -229,7 +243,7 @@
 		        <option value="id"<c:if test='${searchOption == "id"}'>selected</c:if> >작성자</option>
 	    </select>
 	    <input name="keyword" id="keyword" value="${keyword }">
-	    <button type="button" class="btn btn-secondary" onclick="selectFunc()">검색</button>
+	    <button type="button" onclick="selectFunc()">검색</button>
 	</form>
 	</div> --%>
 	
@@ -266,7 +280,7 @@
 			</td>
 			<td>${dto.qnaHit}</td>
 			<td>
-				답변완료
+				공지사항
 			</td>
 		</tr>
 	 </c:forEach>		
@@ -303,10 +317,10 @@
 						<td>${dto.qnaHit}</td>
 						<td>
 							<c:if test="${dto.repCheck == '답변완료'}">
-								<span class="answerComplete ">답변완료</span>
+								<span style="background-color: #FAECC5; padding:10px;">답변완료</span>
 							</c:if>
 							<c:if test="${dto.repCheck == '답변예정'}">
-								<span class="answerYet">답변예정</span>
+								<span style="background-color: white; padding: 10px; border:solid 1px black;">답변예정</span>
 							</c:if>
 						</td>
 					</tr>
@@ -371,7 +385,6 @@
 			</c:choose>
 		</div>
 	</div>
-	<hr>
 </div>
 <c:import url="../default/footer.jsp" />
 

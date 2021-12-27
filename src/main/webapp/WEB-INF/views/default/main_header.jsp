@@ -85,7 +85,9 @@ text-align: center; padding-top:0px  }
 		<h2>Menu</h2>
 		<ul>
 			<li><a href="${contextPath }/index">HOME</a></li>
-			<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+			<c:if test="${adminId != null }">
+				<li><a href="${contextPath }/member/memberInfo">회원 정보</a></li>
+			</c:if>
 			<c:choose>
 				<c:when test="${userId == null && adminId == null }">
 					<li><a href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');">로그인</a></li>
@@ -96,8 +98,7 @@ text-align: center; padding-top:0px  }
 			</c:choose>
 			<li><a href="${contextPath }/review/review_boardList">리뷰 게시판</a></li>	
 			<li><a href="${contextPath }/qna/allList">QnA 게시판</a></li>	
-				<li><a href="${contextPath }/myPage/myPageList">MY PAGE</a></li>	
-			
+			<li><a href="${contextPath }/myPage/myPageList">MY PAGE</a></li>	
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
 				<li><br>

@@ -111,6 +111,7 @@
    color:#fff;
    border:1px solid #42454c;
 }
+
 </style>
 <meta charset="utf-8">
 <title>리뷰 게시판</title>
@@ -213,15 +214,10 @@
             </tr>
             <c:set var="boardNum" value="${boardNum-1 }"/>
          </c:forEach>
-      </table>  
-	</div> 
-      
-	<div class="review_write_btn_div">
-		<input type="button" style="float: left;" value="리뷰 작성" onclick="location.href='${contextPath}/review/review_write'">   
-	</div>
-		
-		<div class="page_wrap">
-       	<div class="page_nation">
+      </table>   
+      <hr>
+         <div class="page_wrap">
+		 <div class="page_nation">
          <c:choose>
             <c:when test="${num != 1 }">
                <a class="arrow pprev" href="${contextPath}/review/review_boardList?num=1"></a>
@@ -271,6 +267,7 @@
          </div>
          </div>
         <hr>
+   </div>
    </div>
    
    <c:import url="../default/footer.jsp" />

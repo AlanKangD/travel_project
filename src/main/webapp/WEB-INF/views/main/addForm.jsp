@@ -12,9 +12,9 @@
 
 <style type="text/css">
 	#main {width: 80%; margin-left: 10%; margin-right: 10%;}
-  .pp {display:flex; background-color: aqua;}
-  .selectA{text-align: center; font-size:x-large; width: 200px; background-color: yellow; margin-left: 25%;}
-  .selectB{text-align: center; width:200px;background-color: red; font-size: x-large;}
+  .pp {display:flex; }
+  .selectA{text-align: center; font-size:x-large; width: 200px;  margin-left: 25%;}
+  .selectB{text-align: center; width:200px; font-size: x-large;}
   #addImage1 img, #addImage2 img{width:200px; height:200px;}
 </style>
 <script type="text/javascript">

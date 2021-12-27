@@ -4,6 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <% pageContext.setAttribute("replaceChar", "\n"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -12,22 +15,31 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8c629ab5a17830f4015943a3a149a898"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
 
    
 <style>
    #main {width: 80%; margin-left: 10%; margin-right: 10%;}
    .flex{display: flex;}
-   .flexB{width: 50%; }
-   .flexBa{background-color: aqua; text-align: center;}
+   .flexB{width: 50%;}
+   .flexBa{ font-size :30px; text-align: center; background-color: #D4F4FA;}
    .imageFlex{margin-right: 10px;}
-  .aa,  .bb{  font-size: 50px; padding-top: 200px;}
+  .aa,  .bb{  font-size: 50px; }
    .aa {padding-right: 10px;}
    .bb {padding-left: 10px;}
+   .main-set {
+		width: 100%;
+		height: 500px;
+   }
+   .mainbtn {
+   	background-color: pink;
+   }
+   .main-sub {
+   	background-color: orange;
+   }
 </style>
 <script>
-function addMyList() {
-      
+function addMyList() {      
       let form = {};
       let arr = $("#listForm").serializeArray()
       console.log(arr)
@@ -60,26 +72,6 @@ function addMyList() {
       })  
    }
    
-   function deleteView(placeName, mainCategory){
-      console.log(placeName, mainCategory);
-      $.ajax({
-         url : "deleteView?placeName="+placeName,
-         type : "delete",
-         dataType : "json",
-         success : function(data){
-            console.log(data.result)
-            if(data.result == true){
-               alert("삭제 성공");
-               location.href="${contextPath}/main/themeList?theme="+mainCategory;
-            }else{
-               alert("에이젝스 data result == false");
-            }
-         },error : function(){
-            alert("에이젝스 실패 , 서버 문제 발생");
-         }
-      })      
-   }
-
    function addReply(){
       let form = {}
       let arr = $("#addReply").serializeArray()
@@ -111,7 +103,7 @@ function addMyList() {
    }
    
    function getReply(num){	  
-		myVar = setInterval(setImageNext, 3000)
+		myVar = setInterval(setImageNext, 5000)
 	   
       if(num == undefined){
          num = 1;
@@ -127,21 +119,21 @@ function addMyList() {
                 var beginPage = data.beginPage;
                 var endPage = data.endPage;
                 var list = data.list;
-               let html = "총 "+dataCount+"개의댓글<br><table border='1'>";
+               let html = "<table border='1'>";
             list.forEach(function(data){
                if('${userId}' != ""){
                   html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='updateLike("+data.repNo+','+num+")'>👍🏻</a> "+data.likeHit
                   if(data.id == '${userId}' || '${adminId}' != ""){   
-                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")'>삭제</button>"
+                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' style='width: 100px; height: 55px;' >삭제</button>"
                      }
                   html += "<br>"+data.repContent+"</td></tr>"
                }else{
                html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='fakeLike()'>👍🏻</a> &nbsp;"+data.likeHit+"<br>"+data.repContent+"</td></tr>"   
                 }
             })
-            html += "<tr><td>"
+            html += "<tr><td align='center' style='font-size: 20pt'>"
             if(num > 1){
-               html += "<button onclick='getReply("+(num-1)+")'>&lt;</button>"
+               html += "<a style='cursor:pointer' onclick='getReply("+(num-1)+")'> &lt; </a>"
             }
             for(pageNum = beginPage; pageNum <= endPage; pageNum++){
                if (num == pageNum) {
@@ -151,7 +143,7 @@ function addMyList() {
                     }
             }
             if(num < endPage){
-               html += "<button onclick='getReply("+(num+1)+")'>&gt;</button>"
+               html += "<a style='cursor:pointer' onclick='getReply("+(num+1)+")'> &gt; </a>"
             }
             html += "</td></tr></table>";
          $("#reply").html(html)
@@ -216,7 +208,7 @@ $(function(){
          $(".openMap").text( "지도 줄이기" )
          mapSwitch = 0;
       }else{
-         $("#map").css({ width: "50%"})
+         $("#map").css({ width: "50%", height: "500px"})
          $(".openMap").text( "지도 펼치기" )
          mapSwitch = 1;
       }
@@ -277,7 +269,7 @@ function setImageNext(){
   }
   
   function start(){
-      myVar = setInterval(setImageNext, 3000);
+      myVar = setInterval(setImageNext, 5000);
    }
   function stop(){
 	    clearInterval(myVar);
@@ -296,61 +288,62 @@ function setImageNext(){
             <input type="hidden" name="place" value="${dto.placeName }">
             <input type="hidden" name="image" value="${dto.mainImageFile }">
             <input type="hidden" name="id" value="${userId}">
-         </form>         
-            
+         </form>                     
          <c:if test="${userId != null}">
-                  <button  style="margin-left: 80%" onclick="addMyList()">일정 추가하기</button>
-             </c:if>            
-             <c:if test="${userId == null}">
-                <button  style="margin-left: 80%" onclick="loginFirst()">일정 추가하기</button>
-                <script type="text/javascript">
-                   function loginFirst() {
-                      alert('일정추가는 로그인 후 가능합니다.')
-                   }
-                </script>
-             </c:if>
-         
-         <c:if test="${adminId != null }">
-  	       <button onclick="deleteView('${dto.placeName}' , '${dto.mainCategory }')">삭제</button>     
+              <button  style="margin-left: 80%" onclick="addMyList()">일정 추가하기</button>
+         </c:if>            
+         <c:if test="${userId == null}">
+            <button  style="margin-left: 80%" onclick="loginFirst()">일정 추가하기</button>
+            <script type="text/javascript">
+               function loginFirst() {
+                  alert('일정추가는 로그인 후 가능합니다.')
+               }
+            </script>
          </c:if>
-          
-         <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
+         
+         <form action="deleteView?placeName=${dto.placeName }" method="post">
+		   <input type="hidden" name="${dto.placeName }">    
+		    <input type="hidden" name="theme" value="${dto.mainCategory } ">    
+		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
+		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
+		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
+		    <input type="submit" value="삭제하기">
+          </form>
+       <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
          <form action="${contextPath }/main/modifyView" method="post" enctype="multipart/form-data">
             <div class="inner" style="text-align: center">
                <h1><input type="hidden" name="placeName" value="${dto.placeName }">${dto.placeName }</h1>
-               <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">테마 : ${dto.mainCategory }</h5>                        
+               <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">${dto.contentOne }</h5>                        
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
 	               
-	              <div class="mainbtn" style="display:flex;">                
-	                   <div class="aa"><a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer;"> &lt; </a>  </div>     
-		               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>                                                   
-		               <div class="bb"><a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer;"> &gt;</a></div>
-	               </div>
+		               <div style="background-color: pink;"><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
+		               <div>                                                 
+	                  	<a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&lt;</b> </a> 
+		               	<a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&gt;</b></a>
+		               </div>  
 	               
 	               <c:if test="${adminId != null }">
 	                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
 	               </c:if>
                </span>  
-         
-               <br>             
+               <div style="text-align: left;">       
                <c:choose>
                   <c:when test="${adminId != null }">
-                     <input type="text" name="contentOne" value="${dto.contentOne }">
-                     <textarea rows="5" cols="7" name="contentTwo" >${fn:replace(dto.contentTwo, replaceChar, "<br/>")}</textarea>                  
+                     <textarea rows="5" cols="7" name="contentTwo" >${dto.contentTwo }</textarea>                  
                      <button type="submit">수정</button><br>   <br>         
                   </c:when>
                   <c:otherwise>
-                     <p>${dto.contentOne }</p>
-                     <p>${dto.contentTwo }</p>         
+                     <p>${fn:replace(dto.contentTwo, replaceChar, "<br/>")}</p>         
                   </c:otherwise>
-               </c:choose>                         
+               </c:choose>
+               </div>                         
             </div>            
             </form>
                   
-            <div class='flex'>   
-               <div class="flexA" id="map" style="width:50%;height:500px;"></div>                
+            <div class='flex'>
+               <div class="flexA" id="map" style="width:50%;height:520px;"></div>
                <script>
                            var mapContainer = document.getElementById('map');
                            var mapOption = {
@@ -364,28 +357,29 @@ function setImageNext(){
                            });
                            marker.setMap(map);
                   </script>
-                  
                <div class="flexB">
                   <div  class="flexBa">
-                     주변 맛집을 추천해주세요!
-                  </div>                  
-                  <div style="background-color: yellow">
-                     <c:if test="${userId != null || adminId != null  }">
-                     작성자 : ${userId }
-                     <form id="addReply">
-                        <input type="hidden" name="id" value="${userId }">   
-                        <input type="hidden" name="placeName" value="${dto.placeName }">   
-                        <input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="(맛집을 추천해주세요!)">                                                            
-                        <button type="button" onclick="addReply()">등록</button>
-                     </form>
-                     </c:if>
+                    <strong>주변 맛집을 추천해주세요</strong>
+                  </div> 
+                    <div>
                      <div id = "reply"></div>
                   </div>
                </div>
-            </div>   
-            <label>주소 :  ${dto.address }</label> <button class="openMap">지도 펼치기</button>
-            
-         </div>            
+            </div>
+            <div style="display: flex;">
+            <label style="width: 50%">주소 : ${dto.address }</label>
+            <div style="width: 50%">
+				<c:if test="${userId != null || adminId != null  }">
+                    <form id="addReply">
+                       <input type="hidden" name="id" value="${userId }">   
+                       <input type="hidden" name="placeName" value="${dto.placeName }">
+                       <input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="나만의 맛집을 추천해주세요!">                                                            
+                       <button type="button" onclick="addReply()">등록</button>
+                    </form>
+            	</c:if>
+            </div>
+		  </div>          
+          </div>            
       <c:import url="../default/footer.jsp"></c:import>         
    </body>
 </html>

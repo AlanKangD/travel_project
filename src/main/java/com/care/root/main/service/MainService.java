@@ -21,7 +21,7 @@ public interface MainService extends MainFileStorage {
 	public void themeView(String placeName, Model model);	
 	public void register(MultipartHttpServletRequest mul,HttpServletResponse response, HttpServletRequest request);
 	public void download(String mainImageFile, HttpServletResponse response) throws Exception;
-	public String deleteView(String placeName);
+	public void deleteView(MainDTO dto);
 	public void modifyView(MultipartHttpServletRequest mul);
 
 	public String addMyList(MyListDTO dto);
