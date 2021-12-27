@@ -93,8 +93,8 @@
 		<tr>	
 			<th>비밀글</th> 
 			<td id="tdid">
-				<input type="radio" name="qna_secret" value="open"onclick="secret()" checked >공개글
-				<input type="radio" name="qna_secret" value="secret"onclick="secret()">비밀글
+				<input type="radio" name="qna_secret" value="open" onclick="secret()" checked >공개글
+				<input type="radio" name="qna_secret" value="secret" onclick="secret()">비밀글
 			</td>
 		</tr>
 		
