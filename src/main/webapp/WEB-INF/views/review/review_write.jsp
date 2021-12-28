@@ -16,7 +16,7 @@
 	var photo_count = 1; // 사진 파일 수 
 	var photo_num = 1; // input 변수 지정하기 위한 수
 	
-	function load_preview_0(input){//대표이미지 프리뷰 로드
+	function load_preview_0(input){//대표이미지 프리뷰
 		
 		var file = input.files[0]
 	      if (file != '') {
