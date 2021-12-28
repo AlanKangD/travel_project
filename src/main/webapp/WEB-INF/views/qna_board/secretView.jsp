@@ -40,13 +40,11 @@
 <div class="qua-secret-label">
 	<b>비밀번호</b><input type="text" name="inputPwd">
 </div>
+<button type="button" 
+	onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
+<button type="submit">확인</button>	
 </form>
 
-<div class="qua-secret-label-btn">
-	<button type="button" 
-	onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
-	<button type="submit">확인</button>
-</div>
 
 </div>
 <jsp:include page="../default/footer.jsp" />

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.care.root.common.sessionName.SessionCommonName;
 import com.care.root.main.dto.MainDTO;
@@ -51,8 +50,8 @@ public class MainController implements SessionCommonName {
 	
 	@PostMapping("register")
 	   public void register(MultipartHttpServletRequest mul,HttpServletResponse response,
-	                                    HttpServletRequest request) throws Exception {
-	      ms.register(mul, response, request);
+	                                    HttpServletRequest request) throws Exception {		
+		      ms.register(mul, response, request);
 	   }
 	
 	@GetMapping("themeView")
@@ -68,20 +67,21 @@ public class MainController implements SessionCommonName {
 	}
 	
 	@PostMapping("deleteView")
-	public String deleteView(MainDTO dto, @RequestParam String theme) {
-		 ms.deleteView(dto);
-		try {
-			theme = URLEncoder.encode(theme, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}	
-		 return "redirect:themeList?theme="+theme;
+	public String deleteView(MainDTO dto) {
+		 ms.deleteView(dto);		
+		 String theme = dto.getMainCategory();
+			try {
+				theme = URLEncoder.encode(theme, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return "redirect:themeList?theme="+theme;
 	}
 	
 	@RequestMapping("modifyView")
 	public String modifyView(MultipartHttpServletRequest mul) {
 		ms.modifyView(mul);
-		String theme = mul.getParameter("mainCategory");
+		String theme = mul.getParameter("mainCategory");	
 		try {
 			theme = URLEncoder.encode(theme, "utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -115,7 +115,7 @@ public class MainController implements SessionCommonName {
 	public String addReply(@RequestBody ReplyDTO dto) {
 		return ms.addReply(dto);
 	}
-	
+
 	@GetMapping(value ="getReply", produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> getReply(@RequestParam String placeName,@RequestParam int num) {
@@ -132,6 +132,5 @@ public class MainController implements SessionCommonName {
 	@ResponseBody
 	public String likeCheck(@RequestParam int repNo,@RequestParam String id) {
 		return ms.likeCheck(repNo,id);
-	}
-	
+	}	
 }

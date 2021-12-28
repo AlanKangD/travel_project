@@ -67,8 +67,8 @@
 .search_div_category {
 	position: absolute;
 	text-align: left;
-	right: 99%;
-	bottom: 8px;
+	right: 97%;
+	bottom: 3px;
 	width: 100px;
 	float: left;
 }
@@ -220,9 +220,9 @@
 	         <div class="qna_write_cnt_div">
 	         	 총 ${dataCount}개의 글  ( Page <b>${num}</b> / ${repeat} )
 	         </div>
-	         <div class="search_div_sub">
+	         <div class="search_div_sub" style="height: 30px;">
 	         <div class="search_div_category" style="float: left;">
-	        	<select name="searchOption">
+	        	<select name="searchOption" style="height: 30px;">
 	            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
 	            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
 	            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
@@ -231,38 +231,12 @@
 	         </select>
 	         </div>
 	         <div style="float: right;"></div>
-	       		<input name="keyword" style="height: 44px; "id="keyword" value="${keyword }">
-	         	<button type="button" onclick="selectFunc()">검색</button>
-	         </div>
-	      </form>
-	   </div>
-   </div>
-
-
-
-	<%-- <div class="search_div">
-	   <div class="search_div_main" id="search_div"><!-- 리뷰 검색 기능 -->
-	      <form id="selectFo" method="get" action="${contextPath}/qna/allList">
-	         <div class="search_div_category">
-	        	<select name="searchOption" style="width: 100%; height: 30px;">
-		            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
-		            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
-		            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
-		            <option value="content"<c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
-		            <option value="id"<c:if test='${searchOption == "id" }'>selected</c:if> >작성자</option>
-	         	</select>
-	         </div>
-	         <div class="qna_write_cnt_div">
-	         	 총 ${dataCount}개의 글  ( Page <b>${num}</b> / ${repeat} )
-	         </div>
-	         <div class="search_div_sub">
 	       		<input name="keyword" style="height: 30px; "id="keyword" value="${keyword }">
-	         	<button type="button" onclick="selectFunc()" style="width: 60px; height: 35px; font-size: 7pt;">검색</button>
+	         	<button type="button" style="width: 60px; height: 35px; font-size:10px;"onclick="selectFunc()">검색</button>
 	         </div>
 	      </form>
 	   </div>
    </div>
-   </div> --%>
 	
 
 <table class="table">

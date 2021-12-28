@@ -27,6 +27,7 @@
   .aa,  .bb{  font-size: 50px; }
    .aa {padding-right: 10px;}
    .bb {padding-left: 10px;}
+
    .main-set {
 		width: 100%;
 		height: 500px;
@@ -121,12 +122,14 @@ function addMyList() {
                 var beginPage = data.beginPage;
                 var endPage = data.endPage;
                 var list = data.list;
+
                let html = "<table border='1'>";
+
             list.forEach(function(data){
                if('${userId}' != ""){
                   html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='updateLike("+data.repNo+','+num+")'>👍🏻</a> "+data.likeHit
                   if(data.id == '${userId}' || '${adminId}' != ""){   
-                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' class='deleteBut'>삭제</button>"
+                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' style='width: 100px; height: 55px;' >삭제</button>"
                      }
                   html += "<br>"+data.repContent+"</td></tr>"
                }else{
@@ -180,9 +183,6 @@ function fakeLike() {
 }
 
 function updateLike(repNo, num) {
-   //console.log(repNo);
-   //console.log('${userId}');
-   console.log("num : " + num);
    $.ajax({
       url : "likeCheck?repNo="+repNo+"&id=${userId}",
       type : "post",
@@ -206,7 +206,6 @@ $(function(){
    $(".openMap").click(function(){
       if(mapSwitch == 1){
          $("#map").animate({ width: "150%"})
-         //$(".flexB").animate({ width: "0%"})
          $(".openMap").text( "지도 줄이기" )
          mapSwitch = 0;
       }else{
@@ -242,13 +241,10 @@ function setImageNext(){
 	}  
 	  if(i == 0){
 		  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.mainImageFile}"
-		  console.log("다음 i값 : " +i)			  
 	  }else if(i == 1){
 		  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile1}"
-		  console.log("다음 i값 : " +i);  
 	  }else if(i == 2){
 		  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile2}"
-		  console.log("다음 i값 : " +i)
 	  }	  
 }
 
@@ -260,13 +256,10 @@ function setImageNext(){
 		}  
 		  if(i == 0){
 			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.mainImageFile}"
-			  console.log("다음 i값 : " +i)			  
 		  }else if(i == 1){
 			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile1}"
-			  console.log("다음 i값 : " +i);  
 		  }else if(i == 2){
 			  document.getElementById("preview").src="${contextPath }/main/download?imageFile=${dto.imageFile2}"
-			  console.log("다음 i값 : " +i)
 		  }	  
   }
   
@@ -278,7 +271,6 @@ function setImageNext(){
    }
 </script>
 </head>
-
 <body onload="getReply()">
 <c:import url="../default/header.jsp"></c:import>
 
@@ -305,7 +297,7 @@ function setImageNext(){
          
          <form action="deleteView?placeName=${dto.placeName }" method="post">
 		   <input type="hidden" name="${dto.placeName }">    
-		    <input type="hidden" name="theme" value="${dto.mainCategory } ">    
+		    <input type="hidden" name="mainCategory" value="${dto.mainCategory } ">    
 		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
 		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
 		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
@@ -349,6 +341,7 @@ function setImageNext(){
                   
             <div class='flex'>
                <div class="flexA" id="map" style="width:50%;height:520px;"></div>
+
                <script>
                            var mapContainer = document.getElementById('map');
                            var mapOption = {
@@ -362,6 +355,7 @@ function setImageNext(){
                            });
                            marker.setMap(map);
                   </script>
+
                <div class="flexB">
                   <div  class="flexBa">
                     <strong>주변 맛집을 추천해주세요</strong>
@@ -385,6 +379,7 @@ function setImageNext(){
             </div>
 		  </div>          
           </div>            
+
       <c:import url="../default/footer.jsp"></c:import>         
    </body>
 </html>

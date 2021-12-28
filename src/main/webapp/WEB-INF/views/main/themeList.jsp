@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>    
 <!DOCTYPE html>
@@ -31,7 +31,6 @@
 							</header>
 							<a href="../index">뒤로가기 </a>
 							
-
 							<c:if test="${adminId != null}">
 							<button onclick="location.href='${contextPath}/main/addPlace?theme=${theme }' ">Add Place(관리자용)</button>
 							</c:if>
@@ -65,4 +64,6 @@
 			</div>
 <c:import url="../default/footer.jsp"></c:import>			
 	</body>
+
 </html>
+ 

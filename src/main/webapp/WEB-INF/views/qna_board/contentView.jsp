@@ -116,8 +116,8 @@
 		                html += "<form action='${contextPath }/qna/repModify' method='post'>"
 		                html += "<input type='hidden' name='qrId' value='"+data.qrId+"'>"
 		                html += "<textarea rows='5' cols='80' name='qrContent'>"+data.qrContent+"</textarea><br>"
-		                html += "<button type='submit'>답변수정</button>"
-		                html += "<button type='button' onclick='repDelete("+data.qrId+")'>답변삭제</button></div><hr>"
+		                html += "<button type='submit' >답변수정</button>"
+		                html += "<button type='button' onclick='repDelete("+data.qrId+")' >답변삭제</button></div><hr>"
 		                html += "</form>"
 	                }
 	             })
@@ -220,13 +220,13 @@
 	
 	<div align="right">
 	<c:if test="${dto.id == userId}">
-		<button type="button"  class="btn btn-dark" onclick="modify()">수정</button>	
+		<button type="button"   onclick="modify()">수정</button>	
 	</c:if>
 	<c:if test="${dto.id == userId or adminId != null}">
 		<button type="button"  
 		onclick="location.href='${contextPath }/qna/delete?qnaNo=${dto.qnaNo}'">삭제</button>
 	</c:if>	
-	<button type="button"  onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
+	<button type="button" onclick="location.href='${contextPath }/qna/allList?num=${num}&searchOption=${searchOption}&keyword=${keyword}'">목록</button>
 	</div>
 </div>
 <c:import url="../default/footer.jsp" />

@@ -34,6 +34,7 @@ import com.care.root.mybatis.main.MainMapper;
 public class MainServiceImpl implements MainService {
 	@Autowired
 	MainMapper mapper;
+	
 	@Override // 메인 이미지 경로 및 이름 설정
 	public MainDTO fileProcess(MultipartHttpServletRequest mul) {
 		
@@ -79,9 +80,18 @@ public class MainServiceImpl implements MainService {
 					return d;
 			}
 	}
-	private void deleteImage(MultipartHttpServletRequest mul) {
-		File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; // 저장한 레파지토리에서 삭제해줌 
+	private void deleteImage(MultipartHttpServletRequest mul) { // modify시 메인 이미지(오리지널이미지)만 교체(삭제)
+		File deleteOrigin = new File(IMAGE_REPO+"/"+mul.getParameter("originImageFile")) ; 
 		deleteOrigin.delete(); 
+	}
+	
+	private void deleteImageAll(MainDTO dto) {  //저장된 이미지 3개 모두 삭제 
+		File deleteMain = new File(IMAGE_REPO+"/"+dto.getMainImageFile()) ;
+		File deleteImage1 = new File(IMAGE_REPO+"/"+dto.getImageFile1()) ;
+		File deleteImage2 = new File(IMAGE_REPO+"/"+dto.getImageFile2()) ;
+		deleteMain.delete(); 
+		deleteImage1.delete(); 
+		deleteImage2.delete(); 
 	}
 					
 	private String saveImageFile(MultipartHttpServletRequest mul) {
@@ -126,34 +136,50 @@ public class MainServiceImpl implements MainService {
 				}else{
 					dto.setImageFile2("nan");
 				}
-			}			
+			}
 		}
 		return dto;
 	}
 
-	@Override
-	public void themeList(Model model, String theme) {
-		int like = 0;
-		List<MyListDTO> myList = mapper.getAllMyList();
-		List<MainDTO> list = mapper.themeList(theme);
-		
-		for(MainDTO dto : list) {
-			for(MyListDTO myListDTO : myList) {
-				if(dto.getPlaceName().equals(myListDTO.getPlace())) {
-					like += 1;
-				}
-			}
-			dto.setLikeHit(like);
-			like = 0;
-		}
-		
-		model.addAttribute("list", list);
-	}
 
+	public void modifyView(MultipartHttpServletRequest mul) {
+		MainDTO dto = fileProcess(mul);		
+		dto.setPlaceName(mul.getParameter("placeName"));
+//		dto.setContentOne(mul.getParameter("contentOne"));
+		dto.setContentTwo(mul.getParameter("contentTwo"));
+		mapper.modifyView(dto);				
+	}
+	
+	@Override
+	public void download(String imageFile, HttpServletResponse response) throws Exception {
+		response.addHeader("Content-disposition", "attachment; fileName=" + imageFile);
+		File file = new File(MainFileStorage.IMAGE_REPO + "/" + imageFile);
+		FileInputStream fis = new FileInputStream(file);
+		FileCopyUtils.copy(fis, response.getOutputStream());
+		fis.close();
+	}
+	
+	@Override
+	   public void themeList(Model model, String theme) {
+	      int like = 0;
+	      List<MyListDTO> myList = mapper.getAllMyList();
+	      List<MainDTO> list = mapper.themeList(theme);
+	      
+	      for(MainDTO dto : list) {
+	         for(MyListDTO myListDTO : myList) {
+	            if(dto.getPlaceName().equals(myListDTO.getPlace())) {
+	               like += 1;
+	            }
+	         }
+	         dto.setLikeHit(like);
+	         like = 0;
+	      }	      
+	      model.addAttribute("list", list);
+	   }
+	
 	@Override
 	public void register(MultipartHttpServletRequest mul, HttpServletResponse response, HttpServletRequest request) {
 		MainDTO dto = fileProcess(mul);
-
 		dto.setMainCategory(mul.getParameter("mainCategory"));
 		dto.setPlaceName(mul.getParameter("placeName"));
 		dto.setContentOne(mul.getParameter("contentOne"));
@@ -174,8 +200,10 @@ public class MainServiceImpl implements MainService {
 			msg = "새로운 관광지가 추가되었습니다";
 			url = "/main/themeList?theme=" + mul.getParameter("mainCategory");
 		} else {
-			msg = "문제가 발생되었습니다!!!";
-			url = "/main/addPlace";
+			deleteImageAll(dto);
+			
+			msg = "모든 값은 필수 입력사항입니다.";
+			url = "/main/addPlace?theme="+ mul.getParameter("mainCategory");
 		}
 
 		String message = getMessage(request, msg, url);
@@ -200,18 +228,10 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void themeView(String placeName, Model model) {
-		System.out.println("themeView 서비스 로그 확인 : " +placeName );
 		model.addAttribute("dto", mapper.themeView(placeName));
 	}
 
-	@Override
-	public void download(String mainImageFile, HttpServletResponse response) throws Exception {
-		response.addHeader("Content-disposition", "attachment; fileName=" + mainImageFile);
-		File file = new File(MainFileStorage.IMAGE_REPO + "/" + mainImageFile);
-		FileInputStream fis = new FileInputStream(file);
-		FileCopyUtils.copy(fis, response.getOutputStream());
-		fis.close();
-	}
+	
 
 	@Override
     public String addMyList(MyListDTO dto) {         
@@ -261,23 +281,8 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void deleteView(MainDTO dto) {
-		File deleteFileMain = new File(IMAGE_REPO+"/"+dto.getMainImageFile());
-		File deleteFile1 = new File(IMAGE_REPO+"/"+dto.getImageFile1());
-		File deleteFile2 = new File(IMAGE_REPO+"/"+dto.getImageFile2());
-		deleteFileMain.delete();
-		deleteFile1.delete();
-		deleteFile2.delete();
+		deleteImageAll(dto);
 		mapper.deleteView(dto.getPlaceName());			
-	}
-
-	@Override
-	public void modifyView(MultipartHttpServletRequest mul) {
-		MainDTO dto = fileProcess(mul);
-		dto.setPlaceName(mul.getParameter("placeName"));
-		dto.setContentOne(mul.getParameter("contentOne"));
-		dto.setContentTwo(mul.getParameter("contentTwo"));
-		mapper.modifyView(dto);		
-		
 	}
 
 	@Override
@@ -289,10 +294,11 @@ public class MainServiceImpl implements MainService {
 			return "{\"result\" : false}";
 		}
 	}
-
+	
 	@Override
 	   public Map<String, Object> getReply(String placeName, int num) {		
 	      int pageLetter = 3;	    
+
 	      int end = num * pageLetter;
 	      int start = end + 1 - pageLetter;
 	      
@@ -304,6 +310,7 @@ public class MainServiceImpl implements MainService {
 	
 	private Map<String, Object> pagingNum(String placeName, int num) {
 		  int pageLetter = 3;
+
 	      int dataCount = mapper.getDataCount(placeName);
 	      int repeat = dataCount / pageLetter;
 	      if(dataCount % pageLetter != 0) {
@@ -313,8 +320,10 @@ public class MainServiceImpl implements MainService {
 	      int beginPage = 0;
 	      int endPage = 0;
 	      
+
 	      int pagingCount = (num-1) / pagingNum;
 	      beginPage = pagingCount * pagingNum + 1 ;
+
 	      endPage = beginPage + 4;    // 10개로한다면 여기 +5해줘야한다
 	      
 	      if(repeat < endPage) {
@@ -327,7 +336,7 @@ public class MainServiceImpl implements MainService {
 		  
 	      return result;
 	}
-
+	
 	@Override
 	public String deleteReply(int repNo) {
 		int result = mapper.deleteReply(repNo);
@@ -339,20 +348,21 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public String likeCheck(int repNo, String id) {
-		List<MainRepLikeDTO> list = mapper.getLikeList();
-		if(list.size() != 0) {
-			for(MainRepLikeDTO dto : list) {
-				if(dto.getId().equals(id) && dto.getRepNo() == repNo) { // 추천하기를 눌렀다면 취소
-					mapper.cancelLike(repNo, id);
-					mapper.likeSet(repNo, 1);
-					return "{\"result\" : false}";
-				}
-			}
-		}
-		mapper.updateLike(repNo, id);	// 추천하기를 눌렀다면 추가
-		mapper.likeSet(repNo, 0);
-		return "{\"result\" : true}";
-	}
+	   public String likeCheck(int repNo, String id) {
+	      List<MainRepLikeDTO> list = mapper.getLikeList();
+	      if(list.size() != 0) {
+	         for(MainRepLikeDTO dto : list) {
+	            if(dto.getId().equals(id) && dto.getRepNo() == repNo) { // 추천하기를 눌렀다면 취소
+	               mapper.cancelLike(repNo, id);
+	               mapper.likeSet(repNo, 1);
+	               return "{\"result\" : false}";
+	            }
+	         }
+	      }
+	      mapper.updateLike(repNo, id);   // 추천하기를 눌렀다면 추가
+	      mapper.likeSet(repNo, 0);
+	      return "{\"result\" : true}";
+	   }
+
 
 }
