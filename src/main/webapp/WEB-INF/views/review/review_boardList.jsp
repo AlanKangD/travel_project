@@ -214,12 +214,11 @@
             </tr>
             <c:set var="boardNum" value="${boardNum-1 }"/>
          </c:forEach>
-      </table>   
-      
-      <div class="review_write_btn_div" align="left">
-		<button type="button" onclick="location.href='${contextPath}/review/review_write'">작성하기</button> 
-	</div>
-      
+      </table>
+		<div align="right">
+			<input type="button" value="리뷰 작성" onclick="location.href = '${contextPath}/review/review_write'">
+		</div>  
+      <hr>
          <div class="page_wrap">
 		 <div class="page_nation">
          <c:choose>
@@ -269,6 +268,7 @@
             </c:otherwise>
          </c:choose>
          </div>
+       		
          </div>
         <hr>
    </div>

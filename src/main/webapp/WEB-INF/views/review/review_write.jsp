@@ -32,8 +32,8 @@
 			alter("사진은 최대 10장까지 첨부할 수 있습니다.")
 		}else{
 			var str_photo = "<p><input type='file' name='review_file_name_"+(photo_num)+"' id='review_file_name_"+(photo_num)+"' onchange='load_preview(this); '/>"
-				+ "<a href='#this' onClick='$(this).parent().remove(); photo_count--; $(span_"+photo_num+").remove(); ' class='btn'>삭제하기</a></p>"
-			var str_preview = "<span id='span_"+photo_num+"' style='margin:2px;'><img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></span>"
+				+ "<a href='#this' onClick='$(this).parent().remove(); photo_count--; $(p_"+photo_num+").remove(); ' class='btn'>삭제하기</a></p>"
+			var str_preview = "<p id='p_"+photo_num+"' style='margin:2px;'><img id='preview_"+ photo_num +"' style='align:right;' alt='이미지가 없습니다.' src='#'  width='160' height='90'></p>"
 			$("#photo_div").append(str_photo);
 			$("#preview_div").append(str_preview);
 			photo_num++;
