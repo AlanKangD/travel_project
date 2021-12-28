@@ -262,7 +262,7 @@
 			</td>
 			<td>${dto.qnaHit}</td>
 			<td>
-				<span style="padding: 10px;">공지사항</span>
+				<span style="padding: 10px;"><b>공지사항</b></span>
 			</td>
 		</tr>
 	 </c:forEach>		
