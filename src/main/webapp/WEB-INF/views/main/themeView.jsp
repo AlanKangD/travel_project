@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Generic - Phantom by HTML5 UP</title>
+      <title>여행지 세부 내용</title>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
@@ -37,6 +37,8 @@
    .main-sub {
    	background-color: orange;
    }
+   .deleteBut { width: 70px; height: 30px; font-size: 5pt;}
+   .repBut { width: 70px; height: 50px; font-size: 9pt;}
 </style>
 <script>
 function addMyList() {      
@@ -124,7 +126,7 @@ function addMyList() {
                if('${userId}' != ""){
                   html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='updateLike("+data.repNo+','+num+")'>👍🏻</a> "+data.likeHit
                   if(data.id == '${userId}' || '${adminId}' != ""){   
-                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' style='width: 100px; height: 55px;' >삭제</button>"
+                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' class='deleteBut'>삭제</button>"
                      }
                   html += "<br>"+data.repContent+"</td></tr>"
                }else{
@@ -307,7 +309,10 @@ function setImageNext(){
 		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
 		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
 		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
-		    <input type="submit" value="삭제하기">
+
+		    <c:if test="${ adminid != null }">
+			    <input type="submit" value="삭제하기">
+		    </c:if>
           </form>
        <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
@@ -317,13 +322,13 @@ function setImageNext(){
                <h5><input type="hidden" name="mainCategory" value="${dto.mainCategory }">${dto.contentOne }</h5>                        
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
-	               
-		               <div style="background-color: pink;"><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
-		               <div>                                                 
-	                  	<a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&lt;</b> </a> 
-		               	<a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&gt;</b></a>
-		               </div>  
-	               
+
+	               <div style="background-color: pink;"><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
+	               <div>                                                 
+                  	<a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&lt;</b> </a> 
+	               	<a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&gt;</b></a>
+	               </div>  
+  
 	               <c:if test="${adminId != null }">
 	                  <input type="file" name="mainImageFile" onchange="readURL(this)" >
 	               </c:if>
@@ -374,7 +379,7 @@ function setImageNext(){
                        <input type="hidden" name="id" value="${userId }">   
                        <input type="hidden" name="placeName" value="${dto.placeName }">
                        <input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="나만의 맛집을 추천해주세요!">                                                            
-                       <button type="button" onclick="addReply()">등록</button>
+                       <button type="button" onclick="addReply()" class="repBut">등록</button>
                     </form>
             	</c:if>
             </div>

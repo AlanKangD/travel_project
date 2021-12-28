@@ -84,7 +84,7 @@
 									<a href="${contextPath }/main/themeList?theme=관광지" >
 										<h2>관광지</h2>
 										<div class="content">
-											<p>세부 내용 미정</p>
+											<p>제주도의 유명한 관광지를 여행하고싶은 당신을 위해 준비했어요.</p>
 										</div>
 									</a>
 								</article>
@@ -106,7 +106,7 @@
 									<a href="${contextPath }/main/themeList?theme=글램핑" >
 										<h2>글램핑</h2>
 										<div class="content">
-											<p>세부 내용 미정</p>
+											<p>자작한 불소리와 함께 조용함을 즐기고 싶은 당신을 위해 준비했어요.</p>
 										</div>
 									</a>
 								</article>
