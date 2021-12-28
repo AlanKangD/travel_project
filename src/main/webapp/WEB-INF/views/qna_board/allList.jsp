@@ -248,7 +248,7 @@
 	</div> --%>
 	
 
-<table class="table" style="background-color: #FF9900;">
+<table class="table" >
   <thead>
     <tr>
       <th scope="col">No.</th>
@@ -262,7 +262,7 @@
   <tbody>
   
  	 <c:forEach var="dto" items="${noticeList}">
-		<tr style="background-color: #FF9900;">
+		<tr>
 			<th scope="row">
 				&lt; 공지 &gt; 
 			</th>
@@ -332,7 +332,12 @@
 </table>
 		
 	<div class="qna_write_btn_div" align="left">
+	<c:if test="${adminId != null }">
+		<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">공지하기</button> 
+	</c:if>
+	<c:if test="${adminId == null }">
 		<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button> 
+	</c:if>
 	</div>
 		
 	<div class="page_wrap">

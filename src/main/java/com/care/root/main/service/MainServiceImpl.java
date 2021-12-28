@@ -228,7 +228,6 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void themeView(String placeName, Model model) {
-		System.out.println("themeView 서비스 로그 확인 : " +placeName );
 		model.addAttribute("dto", mapper.themeView(placeName));
 	}
 
