@@ -25,7 +25,7 @@ public class CommonIntercepter extends HandlerInterceptorAdapter implements Sess
 					//+ "location.href='" + request.getContextPath() + "/member/loginForm'; </script>");
 			StringBuffer sb=new StringBuffer();
 			sb.append("<script type='text/javascript'>");
-			 sb.append("var pop = window.open('"+request.getContextPath()+"/member/loginForm', 'loginpopup', 'top=0, left=0, width=290, height=230, resizable=no, scrollbars=no')");
+			 sb.append("var pop = window.open('"+request.getContextPath()+"/member/loginForm', 'loginpopup', 'top=50%, left=50%, width=400, height=350, resizable=no, scrollbars=no')");
 			 sb.append("</script>");
 			 response.setContentType("text/html; charset=UTF-8"); 
 			 out.println(sb);

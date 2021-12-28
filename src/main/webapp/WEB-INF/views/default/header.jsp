@@ -12,8 +12,8 @@
 </style>
 <script type="text/javascript">
 function loginpopup(url,name){
-	var popHeight=290;
-	var popWidth=230;
+	var popHeight=400;
+	var popWidth=350;
 	var winHeight=document.body.clientHeight;
 	var winWidth=document.body.clientWidth;
 	var winX=window.screenLeft;
