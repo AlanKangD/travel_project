@@ -37,6 +37,8 @@
    .main-sub {
    	background-color: orange;
    }
+   .deleteBut { width: 70px; height: 30px; font-size: 5pt;}
+   .repBut { width: 70px; height: 50px; font-size: 9pt;}
 </style>
 <script>
 function addMyList() {      
@@ -124,7 +126,7 @@ function addMyList() {
                if('${userId}' != ""){
                   html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='updateLike("+data.repNo+','+num+")'>👍🏻</a> "+data.likeHit
                   if(data.id == '${userId}' || '${adminId}' != ""){   
-                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' style='width: 100px; height: 55px;' >삭제</button>"
+                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' class='deleteBut'>삭제</button>"
                      }
                   html += "<br>"+data.repContent+"</td></tr>"
                }else{
@@ -307,7 +309,9 @@ function setImageNext(){
 		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
 		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
 		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
-		    <input type="submit" value="삭제하기">
+		    <c:if test="${adminId != null }">
+		    	<input type="submit" value="삭제하기">
+            </c:if>
           </form>
        <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
@@ -374,7 +378,7 @@ function setImageNext(){
                        <input type="hidden" name="id" value="${userId }">   
                        <input type="hidden" name="placeName" value="${dto.placeName }">
                        <input  style="background-color: white;" type="text" name="repContent"  id="repContent" placeholder="나만의 맛집을 추천해주세요!">                                                            
-                       <button type="button" onclick="addReply()">등록</button>
+                       <button type="button" onclick="addReply()" class="repBut">등록</button>
                     </form>
             	</c:if>
             </div>

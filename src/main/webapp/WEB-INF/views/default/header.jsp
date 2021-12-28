@@ -7,6 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.aa { background-color: white; width: 70px; height: 30px; font-size: 5pt;}
+</style>
 <script type="text/javascript">
 function loginpopup(url,name){
 	var popHeight=290;
@@ -40,9 +43,9 @@ text-align: center; padding-top:20px; padding-bottom: 10px; }
 					let html = "";
 					list.forEach(function(data){
 						var mainImageFile = data.image
-						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+						html += "<img style='width:150px; height:100px' src='${contextPath}/main/download?imageFile="+mainImageFile+" '><br>"	
 						html += " "+data.place
-						html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
+						html += "<button class='aa' onclick='deleteList("+data.listNo+")'>삭제</button><br> "
 					})
 					$("#replyList").html(html)
 				}

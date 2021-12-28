@@ -69,9 +69,6 @@
 	display: inline-block;
 	float: right;
 }
-
-
-
  .search_area{
     display: inline-block;
     margin-top: 30px;
@@ -85,9 +82,6 @@
      height: 30px;
      width: 250px;
   }
-  a { text-decoration: none; }
-  
-
   .answerComplete{
   	padding: 5px;
   	background-color: #86E57F;
@@ -150,6 +144,11 @@
 	color:#fff;
 	border:1px solid #42454c;
 }
+ a { text-decoration: none; } 
+
+.span1 {padding:10px 20px; border: solid 1px black; font-size: 10pt} 
+.span2 {padding:10px 20px; background-color: #D5D5D5; font-size: 10pt} 
+ 
 </style>
 <meta charset="UTF-8">
 <title>QnA 게시판</title>
@@ -212,20 +211,20 @@
 	   <div class="search_div_main" id="search_div"><!-- 리뷰 검색 기능 -->
 	      <form id="selectFo" method="get" action="${contextPath}/qna/allList">
 	         <div class="search_div_category">
-	        	<select name="searchOption" style="width: 100%;">
-	            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
-	            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
-	            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
-	            <option value="content"<c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
-	            <option value="id"<c:if test='${searchOption == "id" }'>selected</c:if> >작성자</option>
-	         </select>
+	        	<select name="searchOption" style="width: 100%; height: 30px;">
+		            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
+		            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
+		            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
+		            <option value="content"<c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
+		            <option value="id"<c:if test='${searchOption == "id" }'>selected</c:if> >작성자</option>
+	         	</select>
 	         </div>
 	         <div class="qna_write_cnt_div">
 	         	 총 ${dataCount}개의 글  ( Page <b>${num}</b> / ${repeat} )
 	         </div>
 	         <div class="search_div_sub">
-	       		<input name="keyword" style="height: 44px; "id="keyword" value="${keyword }">
-	         	<button type="button" onclick="selectFunc()">검색</button>
+	       		<input name="keyword" style="height: 30px; "id="keyword" value="${keyword }">
+	         	<button type="button" onclick="selectFunc()" style="width: 60px; height: 35px; font-size: 7pt;">검색</button>
 	         </div>
 	      </form>
 	   </div>
@@ -245,7 +244,7 @@
   <tbody>
   
  	 <c:forEach var="dto" items="${noticeList}">
-		<tr style="background-color: #FF9900;">
+		<tr style="background-color: ;">
 			<th scope="row">
 				&lt; 공지 &gt; 
 			</th>
@@ -263,7 +262,7 @@
 			</td>
 			<td>${dto.qnaHit}</td>
 			<td>
-				공지사항
+				<span style="padding: 10px;">공지사항</span>
 			</td>
 		</tr>
 	 </c:forEach>		
@@ -300,10 +299,10 @@
 						<td>${dto.qnaHit}</td>
 						<td>
 							<c:if test="${dto.repCheck == '답변완료'}">
-								<span style="background-color: #FAECC5; padding:10px;">답변완료</span>
+								<span class="span1"><b>답변완료</b></span>
 							</c:if>
 							<c:if test="${dto.repCheck == '답변예정'}">
-								<span style="background-color: white; padding: 10px; border:solid 1px black;">답변예정</span>
+								<span class="span2">답변예정</span>
 							</c:if>
 						</td>
 					</tr>
