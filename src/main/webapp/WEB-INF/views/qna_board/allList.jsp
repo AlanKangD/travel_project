@@ -47,13 +47,6 @@
 	width: 100%;
 	position: relative;
 }
-.search_div_category {
-	position: absolute;
-	text-align: right;
-	width: 100px;
-	left: 82%;
-	float: right;
-}
 .qna_write_cnt_div {
 	position: absolute;
 	top: 80px;
@@ -63,13 +56,21 @@
 	height: 45px;
 }
 .search_div_sub {
-	position: absolute;
+	position: relative;
+	width: 280px;
 	top: 55px;
+	float: right;
 	right: 0px;
 	display: inline-block;
-	float: right;
 }
-
+.search_div_category {
+	position: absolute;
+	text-align: left;
+	right: 99%;
+	bottom: 8px;
+	width: 100px;
+	float: left;
+}
 
 
  .search_area{
@@ -208,7 +209,35 @@
 			궁금한 점이나 불편한 점을 해결해드릴게요.</p>
 	</div>
 
+
 	<div class="search_div">
+	   <div class="search_div_main" id="search_div"><!-- 리뷰 검색 기능 -->
+	      <form id="selectFo" method="get" action="${contextPath}/qna/allList">
+	        
+	         <div class="qna_write_cnt_div">
+	         	 총 ${dataCount}개의 글  ( Page <b>${num}</b> / ${repeat} )
+	         </div>
+	         <div class="search_div_sub">
+	         <div class="search_div_category" style="float: left;">
+	        	<select name="searchOption">
+	            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
+	            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
+	            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
+	            <option value="content"<c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
+	            <option value="id"<c:if test='${searchOSption == "id" }'>selected</c:if> >작성자</option>
+	         </select>
+	         </div>
+	         <div style="float: right;"></div>
+	       		<input name="keyword" style="height: 44px; "id="keyword" value="${keyword }">
+	         	<button type="button" onclick="selectFunc()">검색</button>
+	         </div>
+	      </form>
+	   </div>
+   </div>
+
+
+
+	<%-- <div class="search_div">
 	   <div class="search_div_main" id="search_div"><!-- 리뷰 검색 기능 -->
 	      <form id="selectFo" method="get" action="${contextPath}/qna/allList">
 	         <div class="search_div_category">
@@ -229,23 +258,7 @@
 	         </div>
 	      </form>
 	   </div>
-   </div>
-	
-	
-	
-	<%-- <div class="searchDiv">
-	<form id="selectFo" method="get" action="${contextPath}/qna/allList" class="search_area">
-	    <select name="searchOption">
-		    	<option value="all"<c:if test='${searchOption == "all"}'>selected</c:if> >전체</option>
-		        <option value="tc"<c:if test='${searchOption == "tc"}'>selected</c:if> >제목+내용</option>
-		        <option value="title"<c:if test='${searchOption == "title"}'>selected</c:if> >제목</option>
-		        <option value="content"<c:if test='${searchOption == "content"}'>selected</c:if> >내용</option>
-		        <option value="id"<c:if test='${searchOption == "id"}'>selected</c:if> >작성자</option>
-	    </select>
-	    <input name="keyword" id="keyword" value="${keyword }">
-	    <button type="button" onclick="selectFunc()">검색</button>
-	</form>
-	</div> --%>
+   </div> --%>
 	
 
 <table class="table" style="background-color: #FF9900;">

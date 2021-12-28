@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Phantom by HTML5 UP</title>
+		<title>여행지 목록</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
@@ -19,10 +19,15 @@
 					<div id="main">
 						<div class="inner">
 							<header>
-								<h1 style="font-size: 40px; color: skyblue;"><i><strong style="color:#5aacf1;">'${ theme }'</strong> 테마를 선택하셨군요.</i></h1>
+								<h1>${ theme } 테마를 선택하셨군요.</h1>
 								<p>테마를 정했으니 이제 테마 속 다양한 여행지들을 확인해볼까요 ?<br>
 								자신의 취향에 맞는 여행지를 선택하고 일정에 추가하여 여행을 떠나보세요 !
-								</p>						
+								</p>
+					
+								<!--  <h1 style="font-size: 40px; color: skyblue;"><i><strong style="color:#5aacf1;">'${ theme }'</strong> 테마를 선택하셨군요.</i></h1>
+								<p>테마를 정했으니 이제 테마 속 다양한 여행지들을 확인해볼까요 ?<br>
+								자신의 취향에 맞는 여행지를 선택하고 일정에 추가하여 여행을 떠나보세요 !
+								</p> -->					
 							</header>
 							<a href="../index">뒤로가기 </a>
 							

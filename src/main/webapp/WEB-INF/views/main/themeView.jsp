@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Generic - Phantom by HTML5 UP</title>
+      <title>여행지 세부 내용</title>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
@@ -307,7 +307,9 @@ function setImageNext(){
 		    <input type="hidden" name="mainImageFile" value="${dto.mainImageFile }">    
 		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
 		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
-		    <input type="submit" value="삭제하기">
+		    <c:if test="${ adminid != null }">
+			    <input type="submit" value="삭제하기">
+		    </c:if>
           </form>
        <br><a href="../main/themeList?theme=${dto.mainCategory }">뒤로가기 </a>      
 
