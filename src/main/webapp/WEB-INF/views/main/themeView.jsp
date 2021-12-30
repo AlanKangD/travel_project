@@ -15,7 +15,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f74b78e78ff1ceeb17f3c9accbcac27c"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24ec50b0cc76770487f06156d036831d"></script>
 
    
 <style>

@@ -15,7 +15,7 @@
 		<property name="password" value="password" />
 	</bean>
 	 -->
-	   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
       <property name="jdbcUrl" value="jdbc:oracle:thin:@210.221.253.215:1521:xe" />
       <property name="username" value="foracle" />
