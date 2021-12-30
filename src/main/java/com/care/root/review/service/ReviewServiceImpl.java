@@ -46,18 +46,15 @@ public class ReviewServiceImpl implements ReviewService{
          MultipartFile file = mul.getFile("review_file_name_" + i);
          
          System.out.println("file : "+file);
-         if(file != null) {
+         if(file != null &&  file.getSize() != 0) {
             photo_dto.setId(mul.getParameter("id"));
             photo_dto.setReview_title(mul.getParameter("review_title"));
             photo_dto.setOriginal_file_name(rfs.save_original_file(file));
             photo_dto.setStored_file_name(rfs.save_stored_file(file));
+            result_photo.add(i, mapper.photo_save(photo_dto));
          }else {
-            photo_dto.setId(mul.getParameter("id"));
-            photo_dto.setReview_title("review_title");
-            photo_dto.setOriginal_file_name("nan");
-            photo_dto.setStored_file_name("nan");
+            result_photo.add(i, 1);
          }
-         result_photo.add(i, mapper.photo_save(photo_dto));
       }
       
       String msg, url;

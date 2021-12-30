@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" />
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -318,17 +320,9 @@
 			<tr>
 			</tr>
 			<tr>
-				<td>${ contentData.review_content }</td>
+				<td>${fn:replace(contentData.review_content, replaceChar, "<br/>")}</td>
 			</tr>
 		</table>
-		
-<%-- 		<div class="review_like_default">
-			<img src="${contextPath}/resources/img/like_on.png" height="50" width="50">
-			<div class="review_like_default_num">
-				<h2>${contentData.review_like}</h2>
-			</div>
-		</div> --%>
-		
 		<div class="review_like_set">
 			<c:choose>
 				<c:when test="${ userId == null }">
@@ -395,7 +389,8 @@
 				<td style="text-align: center;"><b>이 게시글에 달린 댓글 [&nbsp;${ contentData.r_reply_count }&nbsp;]</b></td>
 			</tr>
 		</table>
-		
+		<!-- 댓글 목록 -->
+		<div id="reply"></div>
 		<!-- 댓글 입력 창 -->
 		<form id="frm">
 			<table border="1">
@@ -421,9 +416,6 @@
 			</table>
 		</form>
 		<hr>
-		
-		<!-- 댓글 목록 -->
-		<div id="reply"></div>
 	</div>
 	<c:import url="../default/footer.jsp" />
 </body>

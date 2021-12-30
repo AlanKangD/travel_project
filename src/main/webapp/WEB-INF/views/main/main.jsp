@@ -13,7 +13,7 @@
 .travel_main_header {
 	width: 100%;
     height: 500px;
-    background-image: url(/root/resources/img/main_header.png);
+    background-image: url(/travel/resources/img/main_header.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
