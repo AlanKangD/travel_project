@@ -71,7 +71,7 @@ public class QnAServiceImpl implements QnAService{
 		model.addAttribute("repeat",repeat);
 	}
 	
-	private String makeNew() { // [new] 새글 로직
+	private String makeNew() {
 		   SimpleDateFormat simp = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		   Calendar cal = Calendar.getInstance();
 	       cal.add(Calendar.DAY_OF_MONTH, -1); //1일간 보이도록 하기위해서 (전날 현재시간과 비교)

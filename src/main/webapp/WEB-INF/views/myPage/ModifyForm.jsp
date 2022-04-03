@@ -58,7 +58,7 @@
 </script>
 </head>
 <body>
-<c:import url="../default/header.jsp" />
+<c:import url="../default/main_header.jsp" />
 	<div class="wrap"
 		style="padding-left: 50px; padding-right: 50px;">
 	<div align="center" class="info-modify-div">

@@ -45,7 +45,7 @@ function readURL(input) {
 </script>
 </head>
 <body>
-<c:import url="../default/header.jsp"></c:import>
+<c:import url="../default/main_header.jsp"></c:import>
 				<!-- Main -->		
 					<div id="main">
 							<h1>새로운 장소를 추가해주세요!</h1>

@@ -187,7 +187,7 @@
 </head>
 <body>
 
-<c:import url="../default/header.jsp" />
+<c:import url="../default/main_header.jsp" />
 <div class="wrap" align="center" 
 		style="padding-left: 50px; padding-right: 50px;">
 <!-- <div class="board_head" style="display: flex;">
@@ -223,12 +223,12 @@
 	         <div class="search_div_sub" style="height: 30px;">
 	         <div class="search_div_category" style="float: left;">
 	        	<select name="searchOption" style="height: 30px;">
-	            <option value="all"<c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
-	            <option value="tc"<c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
-	            <option value="title"<c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
-	            <option value="content"<c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
-	            <option value="id"<c:if test='${searchOSption == "id" }'>selected</c:if> >작성자</option>
-	         </select>
+		            <option value="all" <c:if test='${searchOption == "all" }'>selected</c:if> >전체</option>
+		            <option value="tc" <c:if test='${searchOption == "tc" }'>selected</c:if> >제목+내용</option>
+		            <option value="title" <c:if test='${searchOption == "title" }'>selected</c:if> >제목</option>
+		            <option value="content" <c:if test='${searchOption == "content" }'>selected</c:if> >내용</option>
+		            <option value="id" <c:if test='${searchOption == "id" }'>selected</c:if> >작성자</option>
+	         	</select>
 	         </div>
 	         <div style="float: right;"></div>
 	       		<input name="keyword" style="height: 30px; "id="keyword" value="${keyword }">
@@ -323,7 +323,12 @@
 </table>
 		
 	<div class="qna_write_btn_div" align="left">
-		<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button> 
+		<c:if test="${adminId != null }">
+			<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">공지하기</button> 
+		</c:if>
+		<c:if test="${adminId == null }">
+			<button type="button" onclick="location.href='${contextPath}/qna/writeForm'">문의하기</button> 
+		</c:if>
 	</div>
 		
 	<div class="page_wrap">

@@ -44,7 +44,7 @@
 </script>
 </head>
 <body>
-	<c:import url="../default/header.jsp" />
+	<c:import url="../default/main_header.jsp" />
 <div align="center">
 	<form id=fo action="${contextPath }/member/memberModify" method="post">
 		아이디 : <input type="text" name="id" value="${id }" readonly><br> 

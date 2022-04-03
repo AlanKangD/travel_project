@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <script type="text/javascript">
 function loginpopup(url,name){
 	var popHeight=400;
@@ -26,6 +27,8 @@ function loginpopup(url,name){
 .wrapp { width: 100%; height:0px; margin: auto; background-color: #066289;
 text-align: center; padding-top:0px  }
 }
+.aa { background-color: white; width: 70px; height: 30px; font-size: 5pt;}
+
 </style> 
 <script>
 
@@ -39,9 +42,9 @@ text-align: center; padding-top:0px  }
 				let html = "";
 				list.forEach(function(data){
 					var mainImageFile = data.image
-					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?mainImageFile="+mainImageFile+" '><br>"	
+					html += "<img style='width:150px; height:100px' src='${pageContext.request.contextPath}/main/download?imageFile="+mainImageFile+" '><br>"	
 					html += " "+data.place
-					html += "<button style='background-color: white' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
+					html += "<button class='aa' onclick='deleteList("+data.listNo+")' >삭제</button><br> "
 				})
 				$("#replyList").html(html)
 			}, error : function(){
@@ -81,7 +84,6 @@ text-align: center; padding-top:0px  }
 		</nav>
 	</header>	
 	<nav id="menu">
-	<h3>유저아이디 : ${userId }</h3>
 		<h2>Menu</h2>
 		<ul>
 			<li><a href="${contextPath }/index">HOME</a></li>
@@ -90,14 +92,14 @@ text-align: center; padding-top:0px  }
 			</c:if>
 			<c:choose>
 				<c:when test="${userId == null && adminId == null }">
-					<li><a href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');">로그인</a></li>
+					<li><a href="javascript:loginpopup('${contextPath }/member/loginForm','loginpopup');">LOGIN</a></li>
 				</c:when>
 				<c:otherwise>
-				<li><a href="${contextPath }/member/logout">로그아웃</a></li>
+				<li><a href="${contextPath }/member/logout">LOGOUT</a></li>
 				</c:otherwise>
 			</c:choose>
-			<li><a href="${contextPath }/review/review_boardList">리뷰 게시판</a></li>	
-			<li><a href="${contextPath }/qna/allList">QnA 게시판</a></li>	
+			<li><a href="${contextPath }/review/review_boardList">REVIEW</a></li>	
+			<li><a href="${contextPath }/qna/allList">QnA</a></li>	
 			<li><a href="${contextPath }/myPage/myPageList">MY PAGE</a></li>	
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
@@ -107,7 +109,7 @@ text-align: center; padding-top:0px  }
 			</c:when>
 			<c:otherwise>
 				<li><br>
-					<h2>[나의 여행 리스트 후보]</h2>
+					<h2 style="font-size: 15px;">[My Check List]</h2>
 					<div  id="replyList"></div>			
 				</li>	
 			</c:otherwise>

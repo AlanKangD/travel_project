@@ -91,10 +91,8 @@
 </script>
 </head>
 <body>
-
-<c:import url="../default/header.jsp" />
-	<div class="wrap"
-		style="padding-left: 50px; padding-right: 50px;">
+	<br><br><br>
+	<div class="wrap" style="padding-left: 50px; padding-right: 50px;">
 	<div align="center" class="info-register-div">
 	<form id=fo action="${contextPath }/member/registerWrite" method="post">
 	
@@ -113,6 +111,10 @@
 			<b style="text-align: left;">비밀번호</b>
 		</div>
 		<input type="text" name="pw" placeholder="(필수)가입할 비밀번호 입력"><br> 
+		<div class="info-register-label">
+			<b style="text-align: left;">비밀번호 확인</b>
+		</div>
+		<input type="text" name="pw" placeholder="(필수)가입할 비밀번호를 다시입력하세요"><br> 
 		
 		<div class="info-register-label">
 			<b style="text-align: left;">이메일</b>
@@ -122,7 +124,7 @@
 		<div class="info-register-label">
 			<b style="text-align: left;">전화번호</b>
 		</div>
-		<input type="text" name="phoneNumber" value="010--"><br> 
+		<input type="text" name="phoneNumber" value="010-"><br> 
 		
 		<div class="info-register-label">
 			<b style="text-align: left;">주소</b>

@@ -131,7 +131,7 @@
 </script>
 </head>
 <body>
-   <c:import url="../default/header.jsp" />
+   <c:import url="../default/main_header.jsp" />
    <div class="wrap" align="center" 
 		style="padding-left: 50px; padding-right: 50px;">
    
@@ -148,12 +148,12 @@
 	
 	<div class="review_list_title">
 		<div class="review_title">
-			<h1>리뷰 게시판</h1>
+			<h1 style="font-size: 30px;">리뷰 게시판</h1>
 		</div>
 		<div class="review_title_cnt">
 			
 		</div>
-		<p class="review_title_sub">여행의 마무리는 역시 자랑이죠.<br>
+		<p class="review_title_sub" style="font-size: 15px;">여행의 마무리는 역시 자랑이죠.<br>
 			여행하면서 느꼈던 점을 다른 회원님들에게도 공유해주세요 !</p>
 	</div>
    <div class="search_div">

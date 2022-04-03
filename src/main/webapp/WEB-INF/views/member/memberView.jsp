@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:import url="../default/header.jsp"/>
+<c:import url="../default/main_header.jsp"/>
 	<div align="center">
 		<table border="1">
 			<tr>

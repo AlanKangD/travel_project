@@ -102,15 +102,15 @@
     <update id="upHit">
     	update qna_board set qna_hit = qna_hit + 1 where qna_no = #{qnaNo}
     </update>
+        
+    <update id="modify">
+    	update qna_board set qna_title = #{qnaTitle}, qna_content = #{qnaContent}
+    	where qna_no = #{qnaNo}
+    </update>
     
     <delete id="delete">
     	delete from qna_board where qna_no = #{qnaNo}
     </delete>
-    
-     <update id="modify">
-    	update qna_board set qna_title = #{qnaTitle}, qna_content = #{qnaContent}
-    	where qna_no = #{qnaNo}
-    </update>
     
     <insert id="addReply">
     	insert into qna_reply(id,qr_content,qr_write_group,qr_id)
@@ -122,13 +122,13 @@
      	order by savedate desc
     </select>
     
-     <delete id="repDelete">
-    	delete from qna_reply where qr_id = #{qrId}
-    </delete>
-    
-     <update id="repModify">
+    <update id="repModify">
     	update qna_reply set qr_content = #{qrContent} where qr_id = #{qrId}
     </update>
+    
+    <delete id="repDelete">
+    	delete from qna_reply where qr_id = #{qrId}
+    </delete>
     
     <select id="noticeList" resultMap="qna">
     	select * from qna_board where id = 'admin' order by qna_no desc

@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="${contextPath }/assets/css/main.css" />
 </head>
 <body>
-<c:import url="../default/header.jsp"/>
+<c:import url="../default/main_header.jsp"/>
 <table border="1">
 	<tr>
 		<td>id</td> <td>pw</td> <td>email</td> <td>phoneNumber</td>

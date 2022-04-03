@@ -57,7 +57,7 @@
 </script>
 </head>
 <body>
-<c:import url="../default/header.jsp" />
+<c:import url="../default/main_header.jsp" />
 <div id="main">
 <h1>문의하고싶은 내용을 작성하세요.</h1>
 

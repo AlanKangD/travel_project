@@ -157,7 +157,7 @@
 </head>
 <body onload="getReply()">
 
-<c:import url="../default/header.jsp" />
+<c:import url="../default/main_header.jsp" />
 <div class="wrap" align="left" style="
 	padding-right: 50px; padding-left: 50px; padding-top: 0px; margin-top: 0px;">
 

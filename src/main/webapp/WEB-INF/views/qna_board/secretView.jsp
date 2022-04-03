@@ -29,7 +29,7 @@
 		alert('비밀번호가 일치하지 않습니다.');
 	</script>
 </c:if>
-<jsp:include page="../default/header.jsp" />
+<jsp:include page="../default/main_header.jsp" />
 <div class="wrap" style="padding-left: 50px; padding-right: 50px;">
 <div align="center" class="qua-secret-div">
 <h1>비밀글 보기</h1><br><br>

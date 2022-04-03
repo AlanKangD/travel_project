@@ -51,7 +51,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../default/header.jsp"></jsp:include>
+	<jsp:include page="../default/main_header.jsp"></jsp:include>
 	
 		<h1 style="text-align:center;">여행 리뷰 수정</h1>
 		

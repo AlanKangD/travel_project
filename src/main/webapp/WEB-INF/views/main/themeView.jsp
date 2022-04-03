@@ -15,14 +15,14 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="${contextPath }/assets/css/main.css" />      
          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24ec50b0cc76770487f06156d036831d"></script>
 
-   
 <style>
    #main {width: 80%; margin-left: 10%; margin-right: 10%;}
    .flex{display: flex;}
    .flexB{width: 50%;}
-   .flexBa{ font-size :30px; text-align: center; background-color: #D4F4FA;}
+   .flexBa{ font-size :30px; text-align: center; color: #5CD1E5}
    .imageFlex{margin-right: 10px;}
   .aa,  .bb{  font-size: 50px; }
    .aa {padding-right: 10px;}
@@ -31,9 +31,6 @@
    .main-set {
 		width: 100%;
 		height: 500px;
-   }
-   .mainbtn {
-   	background-color: pink;
    }
    .main-sub {
    	background-color: orange;
@@ -129,7 +126,7 @@ function addMyList() {
                if('${userId}' != ""){
                   html += "<tr><td>"+data.id+" / "+data.saveDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<a style='cursor:pointer' onclick='updateLike("+data.repNo+','+num+")'>👍🏻</a> "+data.likeHit
                   if(data.id == '${userId}' || '${adminId}' != ""){   
-                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' style='width: 100px; height: 55px;' >삭제</button>"
+                      html += "&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='deleteReply("+data.repNo+")' class='deleteBut' >삭제</button>"
                      }
                   html += "<br>"+data.repContent+"</td></tr>"
                }else{
@@ -272,7 +269,7 @@ function setImageNext(){
 </script>
 </head>
 <body onload="getReply()">
-<c:import url="../default/header.jsp"></c:import>
+<c:import url="../default/main_header.jsp"></c:import>
 
 <!-- Wrapper -->
 
@@ -302,7 +299,7 @@ function setImageNext(){
 		    <input type="hidden" name="imageFile1" value="${dto.imageFile1 }">    
 		    <input type="hidden" name="imageFile2" value="${dto.imageFile2 }">    
 
-		    <c:if test="${ adminid != null }">
+		    <c:if test="${ adminId != null }">
 			    <input type="submit" value="삭제하기">
 		    </c:if>
           </form>
@@ -315,7 +312,7 @@ function setImageNext(){
                <span class="image main">                             		
 	               <input type="hidden" name="originImageFile" value="${dto.mainImageFile }">	                    
 
-	               <div style="background-color: pink;"><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
+	               <div><img onmouseout="start()" onmouseover="stop()" id="preview" style="height:500px;" src="${contextPath }/main/download?imageFile=${dto.mainImageFile}" /></div>
 	               <div>                                                 
                   	<a onmouseout="start()" onmouseover="stop()"  onclick="setImageBefore()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&lt;</b> </a> 
 	               	<a onmouseout="start()" onmouseover="stop()" onclick="setImageNext()" style="cursor: pointer; padding: 10px; font-size: 20px;"> <b>&gt;</b></a>

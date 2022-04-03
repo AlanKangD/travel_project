@@ -12,7 +12,7 @@
 <title>내 정보</title>
 </head>
 <body>
-<c:import url="../default/header.jsp" />
+<c:import url="../default/main_header.jsp" />
 	<div class="wrap" align="center"
 		style="padding-left: 50px; padding-right: 50px;">
 		<div align="center">
