@@ -28,8 +28,7 @@
 </head>
 <body>
 <c:import url="../default/main_header.jsp" />
-	<div class="wrap" align="center"
-		style="padding-left: 50px; padding-right: 50px;">
+	<div class="wrap" align="center" style="background-color: #FBF5EF; ">
 		<div class="mp-div">
 			<div class="mp-div-title">
 				<h1>MY PAGE</h1>

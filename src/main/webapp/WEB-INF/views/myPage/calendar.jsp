@@ -175,9 +175,12 @@
 </script>
 </head>
 <body>
-
 	<div id='external-events' style="float:left; width:15%; padding-rigth:30px; padding-left:20px; margin-top:100px; ">
-	
+		<a href="${contextPath }/index">
+			<strong>
+				일정 찜하러 가기
+			</strong>
+		</a>
 		<p>
 			<strong>일정들을 드래그하여 배정하세요</strong>
 		</p>
@@ -191,8 +194,10 @@
 		
 
 		<p>
+			
 			<input type='checkbox' id='drop-remove' /> 
 			<label for='drop-remove'>체크 하면 안없어짐</label>
+			 
 		</p>
 		<button style="width:120px; height:40px; vertical-align:middle; 
 						font-size:17px; cursor:pointer" onclick="javascript:allSave();">전체 저장</button>

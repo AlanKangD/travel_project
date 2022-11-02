@@ -32,7 +32,7 @@ function registerForm(url,name){
   padding: 0;
   margin: 0;
 }
-body { background: #36384f; }
+body { background: #F7F8E0; }
 body, p, input, button, span {
   font-size: 14px;
   text-decoration: none;
@@ -46,6 +46,9 @@ button {
   cursor: pointer;
   border: 0;
 }
+h1 {
+  color : #C0C0B1;
+}
 
 /* STYLE */
 .main_con_form {
@@ -58,6 +61,7 @@ button {
 .form_inner {
   width: 100%;
   height: 100%;
+  
 }
 .main_con_form h1 {
   font-size: 28px;
@@ -97,7 +101,7 @@ button {
   overflow: hidden;
   width: 154px;
   height: 40px;
-  background: #e96c7c;
+  background: #C3B79A;
   border-radius: 20px;
 }
 </style>
@@ -114,7 +118,7 @@ ${ss}    <!-- 로그인 성공시 팝업창 닫힘 -->
 			</c:when>
 		</c:choose>
 	
-  		<div class="form_inner">
+  		<div class="form_inner" style="color: black;">
     		<span><h1>Login</h1></span>
     	<div>
     	<c:if test="${userId == null && adminId == null}">
@@ -122,7 +126,7 @@ ${ss}    <!-- 로그인 성공시 팝업창 닫힘 -->
       			<ul class="form_list_input">
         			<li><input type="text" id="id" name="id" placeholder="Input Id"></li>
         			<li><input type="password" id="pw" name="pw" placeholder="Input Password"></li>
-        			<li><a style="color: white;" href="javascript:registerForm('${contextPath }/member/registerForm','registerForm');">회원가입</a></li>
+        			<li><a style="color: black;" href="javascript:registerForm('${contextPath }/member/registerForm','registerForm');">회원가입</a></li>
       			</ul>
     		<div class="enter_btn">
     			<input type="button" class="login-btn" value="Login" onclick="parentRefresh()">

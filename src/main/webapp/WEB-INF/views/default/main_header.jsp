@@ -11,16 +11,16 @@
 <script type="text/javascript">
 function loginpopup(url,name){
 	var popHeight=400;
-	var popWidth=350;
+	var popWidth=400;
 	var winHeight=document.body.clientHeight;
 	var winWidth=document.body.clientWidth;
-	var winX=window.screenLeft;
-	var winY=window.screenTop;
+	var winX=(window.screen.width / 2) - (200 / 2);
+	var winY= (window.screen.height / 2) - (300 / 2);
 	
 	var popX=winX+(winWidth-popWidth)/2;
 	var popY=winY+(winHeight-popHeight)/2;
 	
-	window.open(url, "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+	window.open(url, "pop",  "top="+100+", left="+popY+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 }
 </script>
 <style type="text/css">
@@ -75,7 +75,7 @@ text-align: center; padding-top:0px  }
 </head> 
 <body >
 	<div class="wrapp">
-    <div><img src="${contextPath}/resources/img/traduler-logo.png" width="20%" style="margin-top: 30px;"></div> 
+    <div><a href="${contextPath}/index"><img src="${contextPath}/resources/img/traduler-logo.png" width="20%" style="margin-top: 30px;"></a></div> 
 	<header id="header">
 		<nav>
 			<ul>
@@ -98,13 +98,17 @@ text-align: center; padding-top:0px  }
 				<li><a href="${contextPath }/member/logout">LOGOUT</a></li>
 				</c:otherwise>
 			</c:choose>
+			<!-- 
 			<li><a href="${contextPath }/review/review_boardList">REVIEW</a></li>	
 			<li><a href="${contextPath }/qna/allList">QnA</a></li>	
+			 -->
+			<li><a href="${contextPath }/myPage/calendar?id=${userId}">CALENDAR</a></li>	
+			
 			<li><a href="${contextPath }/myPage/myPageList">MY PAGE</a></li>	
 			<c:choose>
 			<c:when test="${userId == null && adminId == null }">
 				<li><br>
-					<h2>로그인을 한 후 나만의 리스트를 만들어보세요!</h2>
+					<h3>로그인을 한 후 <br>나만의 일정을 <Br>만들어보세요!</h3>
 				</li>	
 			</c:when>
 			<c:otherwise>

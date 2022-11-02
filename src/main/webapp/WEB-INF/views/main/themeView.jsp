@@ -268,13 +268,13 @@ function setImageNext(){
    }
 </script>
 </head>
-<body onload="getReply()">
+<body onload="getReply()" style="background-color: #FBF5EF;">
 <c:import url="../default/main_header.jsp"></c:import>
-
+<br><br><br><br>
 <!-- Wrapper -->
 
       <!-- Main -->
-         <div id="main">   
+         <div id="main" >   
          <form id="listForm">
             <input type="hidden" name="place" value="${dto.placeName }">
             <input type="hidden" name="image" value="${dto.mainImageFile }">

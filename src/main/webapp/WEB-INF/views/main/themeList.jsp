@@ -13,9 +13,12 @@
 	</head>
 	<body>
 	<c:import url="../default/main_header.jsp"></c:import>
+	
+	
 		<!-- Wrapper -->
-			<div id="wrapper">
+			<div id="wrapper" style="background-color: #FBF5EF;">
 				<!-- Main -->
+				<br><br><br><br><br><br><br><br>
 					<div id="main">
 						<div class="inner">
 
