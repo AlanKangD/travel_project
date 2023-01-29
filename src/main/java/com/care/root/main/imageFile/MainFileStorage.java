@@ -8,7 +8,7 @@ import com.care.root.main.dto.MainDTO;
 public interface MainFileStorage {
 
 
-	public static final String IMAGE_REPO = "C:/Users/samsung/Desktop/image_repo";
+	public static final String IMAGE_REPO = "/Users/alankang/Documents/images/imagerepo";
 
 	public MainDTO fileProcess(MultipartHttpServletRequest mul);
 }

@@ -107,7 +107,7 @@ h1 {
 </style>
 </head>
 <body>
-${ss}    <!-- 로그인 성공시 팝업창 닫힘 -->
+   <!-- 로그인 성공시 팝업창 닫힘 -->
 	<div class="main_con_form">
 		<c:choose>
 			<c:when test="${adminId != null}">

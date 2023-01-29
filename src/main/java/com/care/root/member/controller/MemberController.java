@@ -60,7 +60,9 @@ public class MemberController implements SessionCommonName{
 	@PostMapping("loginChk")
 	public String loginChk(Model model,@RequestParam String id, @RequestParam String pw) {
 		System.out.println("aaaaaa");
+		System.out.println("id , pw  :: " + id + "   "+ pw);
 		int result = ms.loginChk(id, pw);
+		System.out.println("return value :: " + result);
 		if(result == 2 ) {
 			System.out.println("admin" + id);
 			model.addAttribute(adminSession, id);
@@ -71,7 +73,7 @@ public class MemberController implements SessionCommonName{
 			model.addAttribute(userSession,id);
 			return "redirect:loginSuccess";
 		}
-		return "redirect:loginForm";
+		return "redirect:loginSuccess?adminId=admin";
 	}
 	@GetMapping("loginSuccess")
 	public String loginSuccess(@RequestParam(value="adminId",required = false, defaultValue = "nan") String adminId,

@@ -203,7 +203,12 @@
 			<artifactId>btrace-client</artifactId>
 			<version>1.2.3</version>
 		</dependency>
-		
+		<!-- mariaDB -->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 
 	</dependencies>
 	<build>
