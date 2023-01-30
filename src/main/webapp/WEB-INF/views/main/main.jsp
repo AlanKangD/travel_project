@@ -13,7 +13,7 @@
 .travel_main_header {
 	width: 100%;
     height: 500px;
-    background-image: url(/root/resources/img/main_header.png);
+    background-image: url(/resources/img/main_header1.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -34,7 +34,7 @@
 }
 .travel_main_intro {
 	margin-top: 50px;
-	font-size: 26px;
+	font-size: 24px;
 	text-align: center;
 }
 </style>
@@ -50,8 +50,7 @@
 						<div class="inner">
 							<header>
 								<div class="travel_main_intro">
-								<h2>여행 계획의 시작은 ‘테마 정하기’예요.<br />
-								자신의 취향에 맞는 테마부터 한번 골라볼까요 ?</h2>
+								<h2>여행 계획의 시작은 ‘테마 정하기’예요.</h2>
 								</div>
 							</header>
 							<section class="tiles">
@@ -125,6 +124,6 @@
 						</div>
 					</div>
 			</div>
-		<c:import url="../default/footer.jsp"></c:import>			
+		<%-- <c:import url="../default/footer.jsp"></c:import>		 --%>	
 	</body>
 </html>
