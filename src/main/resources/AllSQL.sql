@@ -1,16 +1,16 @@
 
 CREATE TABLE member 
-   (   "ID" VARCHAR2(30 BYTE) NOT NULL ENABLE, 
-   "PW" VARCHAR2(110 BYTE) NOT NULL ENABLE, 
-   "ADDR1" VARCHAR2(20 BYTE) NOT NULL ENABLE, 
-   "ADDR2" VARCHAR2(110 BYTE) NOT NULL ENABLE, 
-   "ADDR3" VARCHAR2(110 BYTE) NOT NULL ENABLE, 
-   "EMAIL" VARCHAR2(100 BYTE) NOT NULL ENABLE, 
-   "SESSION_ID" VARCHAR2(100 BYTE) DEFAULT 'nan' NOT NULL ENABLE, 
-   "PHONE_NUMBER" VARCHAR2(100 BYTE) NOT NULL ENABLE, 
-   "REGISTER_DATE" DATE DEFAULT sysdate, 
-   "LIMIT_TIME" DATE, 
-    PRIMARY KEY ("ID")
+   ( ID varchar(30 ) NOT NULL , 
+   PW varchar(110 ) NOT NULL , 
+   ADDR1 varchar(20 ) NOT NULL , 
+   ADDR2 varchar(110 ) NOT NULL , 
+   ADDR3 varchar(110 ) NOT NULL , 
+   EMAIL varchar(100 ) NOT NULL , 
+   SESSION_ID varchar(100 ) DEFAULT 'nan' NOT NULL , 
+   PHONE_int varchar(100 ) NOT NULL , 
+   REGISTER_DATE DATE DEFAULT current_timestamp(),
+   LIMIT_TIME DATE, 
+    PRIMARY KEY (ID)
     );
 
 
@@ -18,13 +18,13 @@ CREATE TABLE member
 
 CREATE TABLE qna_board
 (
-    qna_no         NUMBER(10), 
-    qna_title      VARCHAR2(50)     NOT NULL, 
-    qna_content    VARCHAR2(300)    NOT NULL, 
-    qna_hit        NUMBER(4)default 0, 
-    savedate       date default sysdate, 
-    qna_pwd        VARCHAR2(100), 
-    id             VARCHAR2(20),
+    qna_no         int(10), 
+    qna_title      varchar(50)     NOT NULL, 
+    qna_content    varchar(300)    NOT NULL, 
+    qna_hit        int(4)default 0, 
+    savedate       date default current_timestamp(), 
+    qna_pwd        varchar(100), 
+    id             varchar(20),
     PRIMARY KEY (qna_no)
 );
 
@@ -32,91 +32,91 @@ CREATE TABLE qna_board
 --------------------------------------------------------------------------------------------------------------
 CREATE TABLE qna_reply
 (
-    id                VARCHAR2(20)     NOT NULL, 
-    qr_content        VARCHAR2(300)    NOT NULL, 
-    qr_write_group    NUMBER(10),        
-    savedate       date default sysdate,
-    qr_id number(4) primary key
-)
+    id                varchar(20)     NOT NULL, 
+    qr_content        varchar(300)    NOT NULL, 
+    qr_write_group    int(10),        
+    savedate       date default current_timestamp(),
+    qr_id int(4) primary key
+);
 --------------------------------------------------------------------------------------------------------------
 CREATE TABLE calendar
 (
-    calendar_no  NUMBER(30)primary key, 
-    id        VARCHAR2(50), 
-    title    VARCHAR2(100),         
-    start_date  VARCHAR2(100), 
-    end_date VARCHAR2(100),  
-    allday VARCHAR2(10)
+    calendar_no  int(30)primary key, 
+    id        varchar(50), 
+    title    varchar(100),         
+    start_date  varchar(100), 
+    end_date varchar(100),  
+    allday varchar(10)
 );
 --------------------------------------------------------------------------------------------------------------
 CREATE TABLE mylist(
-list_no NUMBER(10) PRIMARY KEY,  
-id VARCHAR2(50),
-place VARCHAR2(50),
-image VARCHAR2(300)
+list_no int(10) PRIMARY KEY,  
+id varchar(50),
+place varchar(50),
+image varchar(300)
 );
 --------------------------------------------------------------------------------------------------------------
 CREATE TABLE main(
-place_name VARCHAR2(50) NOT NULL,
-main_category VARCHAR2(50) NOT NULL, 
-content_one VARCHAR2(100) NOT NULL, 
-content_two VARCHAR2(3000) NOT NULL,
-main_image_file VARCHAR2(100) NOT NULL,
-image_file1 VARCHAR2(150) NOT NULL, 
-image_file2 VARCHAR2(150) NOT NULL,
-latitude VARCHAR2(100) NOT NULL,
-longitude VARCHAR2(100) NOT NULL,
-address VARCHAR2(200) NOT NULL
+place_name varchar(50) NOT NULL,
+main_category varchar(50) NOT NULL, 
+content_one varchar(100) NOT NULL, 
+content_two varchar(3000) NOT NULL,
+main_image_file varchar(100) NOT NULL,
+image_file1 varchar(150) NOT NULL, 
+image_file2 varchar(150) NOT NULL,
+latitude varchar(100) NOT NULL,
+longitude varchar(100) NOT NULL,
+address varchar(200) NOT NULL
 );
 --------------------------------------------------------------------------------------------------------------
 create table main_LIKE(
-rep_no NUMBER(10) NOT NULL,
-id VARCHAR2(30) NOT NULL
+rep_no int(10) NOT NULL,
+id varchar(30) NOT NULL
 );
 --------------------------------------------------------------------------------------------------------------
 CREATE TABLE main_reply(
-rep_no NUMBER(10) PRIMARY KEY,
-place_name varchar2(100),
-id varchar2(50),
-rep_content VARCHAR2(300) NOT NULL, 
-likeHit NUMBER(10),
-savedate date default sysdate
+rep_no int(10) PRIMARY KEY,
+place_name varchar(100),
+id varchar(50),
+rep_content varchar(300) NOT NULL, 
+likeHit int(10),
+savedate date default current_timestamp()
 );
 --------------------------------------------------------------------------------------------------------------
 CREATE TABLE R_LIKE(
-LIKE_NO NUMBER NOT NULL PRIMARY KEY,
-REVIEW_NO NUMBER,
-ID VARCHAR2(30) NOT NULL,
-LIKE_CHECK NUMBER DEFAULT 0 NOT NULL,
-LIKE_DATE DATE DEFAULT SYSDATE NOT NULL
+LIKE_NO int NOT NULL PRIMARY KEY,
+REVIEW_NO int,
+ID varchar(30) NOT NULL,
+LIKE_CHECK int DEFAULT 0 NOT NULL,
+LIKE_DATE DATE DEFAULT current_timestamp() NOT NULL
 );
 --------------------------------------------------------------------------------------------------------------
 create table r_reply(
-id varchar2(30),
-r_reply_content varchar2(150),
-r_reply_date date default sysdate,
-r_write_group number,
-r_reply_tag varchar2(30),
-r_reply_no number primary key
+id varchar(30),
+r_reply_content varchar(150),
+r_reply_date date default current_timestamp(),
+r_write_group int,
+r_reply_tag varchar(30),
+r_reply_no int primary key
 );
 --------------------------------------------------------------------------------------------------------------
 create table review(
-review_no number primary key,
-review_title varchar2(110),
-review_content varchar2(300),
-review_hit_num number default 0,
-review_like number,
-review_date date default sysdate,
-id varchar2(30),
-r_reply_count number
+review_no int primary key,
+review_title varchar(110),
+review_content varchar(300),
+review_hit_num int default 0,
+review_like int,
+review_date date default current_timestamp(),
+id varchar(30),
+r_reply_count int
 );
 --------------------------------------------------------------------------------------------------------------
 create table r_photo(
-id varchar2(30) not null,
-origin_file_name varchar2(150),
-stored_file_name varchar2(200),
-r_write_group number not null,
-photo_num number
+id varchar(30) not null,
+origin_file_name varchar(150),
+stored_file_name varchar(200),
+r_write_group int not null,
+photo_num int
 );
 --------------------------------------------------------------------------------------------------------------
 create sequence qna_board_SEQ;

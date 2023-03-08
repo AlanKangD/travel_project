@@ -26,7 +26,7 @@ function loginpopup(url,name){
 <style type="text/css">
 .wrapp { width: 100%; height:0px; margin: auto; background-color: #066289;
 text-align: center; padding-top:0px  }
-}
+
 .aa { background-color: white; width: 70px; height: 30px; font-size: 5pt;}
 
 </style> 
